@@ -3,6 +3,7 @@ import React from "react";
 import "./footer.css";
 import { footer } from "../../../constains/data";
 import { Box } from "@mui/material";
+import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
@@ -14,7 +15,9 @@ const Footer = () => {
               <h1>Do You Have Questions ?</h1>
               <p>We'll help you to grow your career and growth.</p>
             </div>
-            <button className="btn5">Contact Us Today</button>
+            <button className="btn5">
+              <Link to="/app/contact">Contact Us Today</Link>
+            </button>
           </div>
         </div>
       </section>
@@ -25,7 +28,7 @@ const Footer = () => {
             <div className="logo">
               <Box sx={{ height: "70px", width: 120 }}>
                 <img
-                  src={require(`../../../assets/image/car/logo-car.png`)}
+                  src={require(`../../../assets/image/car/auto-car.jpg`)}
                   alt=""
                   className="carimg w-full h-full"
                 />

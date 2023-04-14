@@ -52,7 +52,7 @@ const NavBarAdmin = () => {
       <div>
         <Box sx={{ height: "70px", width: 120 }}>
           <img
-            src={require(`../../assets/image/car/logo-car.png`)}
+            src={require(`../../assets/image/car/auto-car.jpg`)}
             alt=""
             className="carimg w-full h-full"
           />
@@ -74,6 +74,9 @@ const NavBarAdmin = () => {
           </li>
           <li className="item-link">
             <Link to="/admin/user">USER</Link>
+          </li>
+          <li className="item-link">
+            <Link to="/admin/blog">Blog</Link>
           </li>
         </ul>
       </div>

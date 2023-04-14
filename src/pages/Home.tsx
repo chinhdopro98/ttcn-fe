@@ -9,9 +9,7 @@ import Button from "@mui/material/Button";
 import { Icar } from "../interfaces/interface";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
-import dayjs from "dayjs";
-import moment from "moment";
-import car from "../assets/image/car/bg-home.jpg";
+import car from "../assets/image/car/bg-car.png";
 import Navigation from "../components/component/Navigation";
 import { LIMIT } from "../constains/url";
 import SelectSort from "../components/component/SelectSort";
@@ -69,7 +67,7 @@ const Home: React.FC = () => {
         <section className="recent padding">
           <div className="container">
             <Heading
-              title="Recent Property Listed"
+              title="Rental Car List"
               subtitle="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam."
             />
             <Box sx={{ display: "flex", justifyContent: "space-between" }}>
@@ -113,10 +111,10 @@ const styles = {
   bg_img: {
     backgroundImage: "url(" + car + ")",
     backgroundSize: "cover",
-    backgroundPosition: "center bottom",
+    backgroundPosition: "center",
     backgroundRepeat: "no-repeat",
     position: "relative",
-    height: "400px",
+    height: "60vh",
     padding: "6rem 0 8rem",
   },
 } as const;

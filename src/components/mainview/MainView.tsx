@@ -6,6 +6,7 @@ import Booking from "../../pages/Booking";
 import ListBookings from "../../pages/ListBookings";
 import Contact from "../../pages/Contact";
 import About from "../../pages/about/About";
+import New from "../../pages/New";
 const MainContent = styled.div``;
 const Content = styled.div``;
 const MainView: React.FC = () => {
@@ -18,6 +19,7 @@ const MainView: React.FC = () => {
           <Route path="listbookings" element={<ListBookings />} />
           <Route path="contact" element={<Contact />} />
           <Route path="about" element={<About />} />
+          <Route path="new" element={<New />} />
         </Routes>
       </Content>
     </MainContent>

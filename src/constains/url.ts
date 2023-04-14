@@ -18,5 +18,6 @@ export const URL = {
   CREATE_BOOKING: "/bookings/bookingcar",
   UPDATE_STATUS: "/bookings/update-status",
   GET_ONE_CAR: "cars/get-one",
+  CREATE_BLOG_CATEGORY: "blog-category/create",
 };
 export const LIMIT = 9;

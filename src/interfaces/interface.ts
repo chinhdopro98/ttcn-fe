@@ -142,3 +142,8 @@ export interface pageSearch {
   sort: string;
   search: string;
 }
+export interface BlogCategory {
+  title: string;
+  description: string;
+  image: any;
+}

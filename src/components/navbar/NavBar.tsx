@@ -55,7 +55,9 @@ const NavBar = () => {
       <div>
         <Box sx={{ height: "70px", width: 120 }}>
           <img
-            src={require(`../../assets/image/car/logo-car.png`)}
+            src={
+              "http://localhost:5000/uploads/ae8699c0575ffc6450da355e15d1e2e6"
+            }
             alt=""
             className="carimg w-full h-full"
           />

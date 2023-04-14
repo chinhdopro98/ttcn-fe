@@ -49,10 +49,10 @@ body {
   display: flex;
 }
 .menu-header {
-  box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+  background-color: #fff;
+  box-shadow: 0 5px 30px rgb(0 22 84 / 10%);
   height: 70px;
   position: sticky;
-  background-image: linear-gradient(to right, #fc5c7d, #6a82fb);
   z-index: 9999;
   top: 0;
   display: flex;
@@ -79,21 +79,31 @@ body {
 .menu-header .menu ul {
   display: flex;
 }
+.menu-header .menu ul li a {
+  text-decoration: none;
+  color: #000;
+  text-transform: capitalize;
+  transition: 0.5s;
+  font-weight: 500;
+}
 .product--image {
   width: 100%;
   height: calc(100% - 50px);
+  object-fit: contain;
 }
 
 .card {
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px,
+    rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
   max-width: 320px;
   margin: auto 1rem;
+  margin-top: 10px;
   height: 280px;
   text-align: center;
   font-family: arial;
 }
 .container {
-  max-width: 80%;
+  max-width: 90%;
   margin: auto;
 }
 .price {
@@ -104,7 +114,7 @@ body {
   box-shadow: 0 0 20px 0 rgb(112 121 138 / 18%);
 }
 .padding {
-  padding: 80px 0;
+  padding: 60px 0;
 }
 .grid3 {
   display: grid;
@@ -117,7 +127,7 @@ body {
   padding: 12px;
   text-transform: uppercase;
   color: white;
-  background-color: #000;
+  background-color: #27ae60;
   text-align: center;
   cursor: pointer;
   width: 100%;
@@ -125,7 +135,7 @@ body {
 }
 
 .mtop {
-  margin-top: 50px;
+  margin-top: 5 0px;
 }
 .btn2 {
   border-radius: 50px;
@@ -210,4 +220,11 @@ img {
 }
 .carousel-automaker {
   padding: 40px 0;
+}
+
+.react-multi-carousel-list {
+  padding-bottom: 30px;
+}
+.react-multi-carousel-dot-list {
+  margin-bottom: 0;
 }
