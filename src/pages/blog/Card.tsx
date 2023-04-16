@@ -8,31 +8,44 @@ import {
 } from "react-icons/ai";
 import "./blog.css";
 import { Link } from "react-router-dom";
-const Card = () => {
+import { Blog, BlogCategory } from "../../interfaces/interface";
+import { URL_LOCAL } from "../../constains/url";
+interface Iprops {
+  blogs: Blog[];
+  blogCategorys: BlogCategory[];
+}
+const Card: React.FC<Iprops> = (props) => {
+  const { blogs, blogCategorys } = props;
   return (
     <>
       <section className="blog">
         <div className="container grid3-blog">
-          {blog.map((item) => (
-            <div className="box boxItems" key={item.id}>
+          {blogs.map((item) => (
+            <div className="box boxItems" key={item._id}>
               <div className="img">
-                <img
-                  src={require(`../../assets/image/blog/${item.cover}`)}
-                  alt=""
-                />
+                <img src={`${URL_LOCAL}${item.image}`} alt="" />
               </div>
-              <div className="details">
+              <div className="details-new">
                 <div className="tag">
                   <AiOutlineTags className="icon" />
-                  <a href="/">#{item.category}</a>
+                  <a href="/">
+                    #{" "}
+                    {blogCategorys?.map((blogCategory: BlogCategory) =>
+                      blogCategory._id === item.category
+                        ? blogCategory.title
+                        : ""
+                    )}
+                  </a>
                 </div>
-                <Link to={`/details/${item.id}`} className="link">
+                <Link to={`/details/${item._id}`} className="link">
                   <h3>{item.title}</h3>
                 </Link>
-                <p>{item.desc.slice(0, 180)}...</p>
+                <p>{item.description.slice(0, 180)}...</p>
                 <div className="date">
                   <AiOutlineClockCircle className="icon" />{" "}
-                  <label htmlFor="">{item.date}</label>
+                  <label htmlFor="">
+                    {new Date(item.createdAt).toLocaleString()}
+                  </label>
                   <AiOutlineComment className="icon" />{" "}
                   <label htmlFor="">27</label>
                   <AiOutlineShareAlt className="icon" />{" "}

@@ -6,6 +6,8 @@ import "./category.css";
 import { GrFormPrevious } from "react-icons/gr";
 import { MdNavigateNext, MdOutlineNavigateNext } from "react-icons/md";
 import { categorys } from "../../constains/data";
+import { BlogCategory } from "../../interfaces/interface";
+import { URL_LOCAL } from "../../constains/url";
 const SampleNextArrow = (props) => {
   const { onClick } = props;
   return (
@@ -26,7 +28,11 @@ const SamplePrevArrow = (props) => {
     </div>
   );
 };
-const Category = () => {
+interface Iprops {
+  blogCategorys: BlogCategory[];
+}
+const Category: React.FC<Iprops> = (props) => {
+  const { blogCategorys } = props;
   const settings = {
     dots: false,
     infinite: true,
@@ -51,16 +57,13 @@ const Category = () => {
       <section className="category">
         <div className="content">
           <Slider {...settings}>
-            {categorys.map((item) => (
+            {blogCategorys.map((item) => (
               <div className="boxs">
-                <div className="box" key={item.id}>
-                  <img
-                    src={require(`../../assets/image/category/${item.cover}`)}
-                    alt="cover"
-                  />
+                <div className="box" key={item._id}>
+                  <img src={`${URL_LOCAL}${item.image}`} alt="cover" />
                   <div className="overlay">
-                    <h4>{item.category}</h4>
-                    <p>{item.title}</p>
+                    <h4>{item.title}</h4>
+                    <p>{item.description}</p>
                   </div>
                 </div>
               </div>

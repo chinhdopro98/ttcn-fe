@@ -17,6 +17,7 @@ interface UserState {
   labelSuccess: string;
   registrationStatus: string;
   accessToken: string;
+  role: string;
 }
 const initialState: UserState = {
   loading: false,
@@ -27,6 +28,7 @@ const initialState: UserState = {
   labelSuccess: "",
   openSnackbar: false,
   accessToken: null,
+  role: "",
 };
 const userSlice = createSlice({
   name: "user",
@@ -45,7 +47,9 @@ const userSlice = createSlice({
     });
     builder.addCase(userLogin.fulfilled, (state, action) => {
       state.success = true;
+      console.log(action.payload);
       state.accessToken = action.payload.token;
+      state.role = action.payload.role;
     });
     builder.addCase(userLogin.rejected, (state, action) => {
       state.success = false;

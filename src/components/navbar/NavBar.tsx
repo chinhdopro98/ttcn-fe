@@ -15,8 +15,8 @@ const NavBar = () => {
     localStorage.clear();
     navigate("/login");
   };
-  const user = JSON.parse(localStorage.getItem("userToken"))
-    ? JSON.parse(localStorage.getItem("userToken"))
+  const user = JSON.parse(localStorage.getItem("user"))
+    ? JSON.parse(localStorage.getItem("user"))
     : null;
   const [open, setOpen] = React.useState(false);
   const anchorRef = React.useRef<HTMLButtonElement>(null);
@@ -53,11 +53,9 @@ const NavBar = () => {
   return (
     <div className="menu-header">
       <div>
-        <Box sx={{ height: "70px", width: 120 }}>
+        <Box sx={{ height: "70px", width: 120, marginLeft: "100px" }}>
           <img
-            src={
-              "http://localhost:5000/uploads/ae8699c0575ffc6450da355e15d1e2e6"
-            }
+            src={require(`../../assets/image/car/auto-car.jpg`)}
             alt=""
             className="carimg w-full h-full"
           />
@@ -72,9 +70,6 @@ const NavBar = () => {
             <Link to="/app/new">New</Link>
           </li>
           <li className="item-link">
-            <Link to="/app/service">Service</Link>
-          </li>
-          <li className="item-link">
             <Link to="/app/about">About</Link>
           </li>
           <li className="item-link">
@@ -82,6 +77,12 @@ const NavBar = () => {
           </li>
           <li className="item-link">
             <Link to="/app/listbookings">My bookings</Link>
+          </li>
+          <li className="item-link">
+            <Link to="/app/register">Resgister Car</Link>
+          </li>
+          <li className="item-link">
+            <Link to="/app/listcar">List Car</Link>
           </li>
         </ul>
       </div>
@@ -98,7 +99,7 @@ const NavBar = () => {
             aria-haspopup="true"
             onClick={handleToggle}
           >
-            {user?.fullname}
+            {user?.username}
           </Button>
           <Popper
             open={open}

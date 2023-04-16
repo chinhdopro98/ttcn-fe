@@ -53,7 +53,7 @@ body {
   box-shadow: 0 5px 30px rgb(0 22 84 / 10%);
   height: 70px;
   position: sticky;
-  z-index: 9999;
+  z-index: 999;
   top: 0;
   display: flex;
   padding: 0 20px;
@@ -227,4 +227,28 @@ img {
 }
 .react-multi-carousel-dot-list {
   margin-bottom: 0;
+}
+.sidebar-on {
+  left: 0;
+}
+.sidebar-off {
+  left: -100%;
+}
+.icon-menu-on,
+.icon-menu-off {
+  color: black !important;
+}
+.dropdownLink {
+  display: flex;
+  align-items: center;
+}
+.dashboard-container {
+  display: flex;
+  flex-direction: row;
+}
+.dashboard-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background-color: #f0f2f5;
 }

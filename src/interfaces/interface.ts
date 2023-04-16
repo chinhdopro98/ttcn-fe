@@ -85,6 +85,8 @@ export interface AddCar {
   popular: true;
   gear: number;
   note: string;
+  address?: string;
+  provider?: string;
 }
 
 export interface IAutoMaker {
@@ -143,7 +145,20 @@ export interface pageSearch {
   search: string;
 }
 export interface BlogCategory {
+  _id?: string;
   title: string;
   description: string;
-  image: any;
+  image?: any;
+  createdAt?: string;
+}
+export interface Blog {
+  _id?: string;
+  title: string;
+  description: string;
+  image?: any;
+  createdAt?: string;
+  numViews?: number;
+  category?: string;
+  author?: number;
+  likes?: any;
 }

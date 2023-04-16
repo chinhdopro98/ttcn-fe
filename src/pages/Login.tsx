@@ -34,6 +34,7 @@ const Login = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const accessToken = useSelector((state: RootState) => state.user.accessToken);
+  const role = useSelector((state: RootState) => state.user.role);
   const handleLogin = async (data: IUser) => {
     dispatch(
       userLogin({
@@ -41,17 +42,19 @@ const Login = () => {
         password: data.password,
       })
     );
-    // window.location.reload();
   };
   useEffect(() => {
-    if (accessToken) {
+    if (accessToken && role === "user") {
       navigate("/app");
     }
-  }, [accessToken, navigate]);
+    if (accessToken && role === "admin") {
+      navigate("/admin");
+    }
+  }, [accessToken]);
   return (
     <HomeLogin className="home-form" style={styles.bg_img}>
       <BoxForm>
-        <h2>Login Member</h2>
+        <h2>Login</h2>
         <form action="" autoComplete="off" onSubmit={handleSubmit(handleLogin)}>
           <Controller
             name="username"
@@ -98,18 +101,6 @@ const Login = () => {
             }}
           >
             Login
-          </Button>
-
-          <Button
-            type="button"
-            variant="contained"
-            sx={{
-              backgroundColor: "#f24b50",
-              textTransform: "capitalize",
-              margin: "0 5px",
-            }}
-          >
-            <Link to="/login-admin">Admin</Link>
           </Button>
         </form>
       </BoxForm>

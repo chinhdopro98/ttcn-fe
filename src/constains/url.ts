@@ -19,5 +19,13 @@ export const URL = {
   UPDATE_STATUS: "/bookings/update-status",
   GET_ONE_CAR: "cars/get-one",
   CREATE_BLOG_CATEGORY: "blog-category/create",
+  UPDATE_BLOG_CATEGORY: "blog-category/update",
+  DELETE_BLOG_CATEGORY: "blog-category/delete",
+  GET_ALL_BLOG_CATEGORY: "blog-category/get-all",
+  CREATE_BLOG: "blogs/create",
+  GET_ALL_BLOG: "blogs/get-all",
+  UPDATE_BLOG: "blogs/update",
+  DELETE_BLOG: "blogs/delete",
 };
 export const LIMIT = 9;
+export const URL_LOCAL = "http://localhost:5000/";

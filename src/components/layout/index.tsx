@@ -3,8 +3,8 @@ import NavBar from "../navbar/NavBar";
 import styled from "styled-components";
 import MainContainer from "../mainview/MainView";
 import Box from "@mui/material/Box/Box";
-import SideBar from "../sidebar/SideBar";
 import Footer from "../../pages/common/footer/Footer";
+import SideBar from "../sidebar/SideBar";
 
 const MainContent = styled.div``;
 const index = () => {
@@ -12,7 +12,7 @@ const index = () => {
     <div>
       <NavBar />
       <Box>
-        {/* <SideBar /> */}
+        <SideBar />
         <MainContent>
           <MainContainer />
         </MainContent>

@@ -10,6 +10,7 @@ import AdminDashUser from "../../pages/admin/AdminDashUser";
 import AdminAutomaker from "../../pages/admin/AdminDashAutomaker";
 import AdminDashListBooking from "../../pages/admin/AdminDashListBooking";
 import AdminBlog from "../../pages/admin/blog/AdminBlog";
+import NewAdmin from "../../pages/admin/new/NewAdmin";
 const MainContent = styled.div``;
 const Content = styled.div``;
 const MainViewAdmin: React.FC = () => {
@@ -23,6 +24,7 @@ const MainViewAdmin: React.FC = () => {
           <Route path="automaker" element={<AdminAutomaker />} />
           <Route path="listbooking" element={<AdminDashListBooking />} />
           <Route path="blog" element={<AdminBlog />} />
+          <Route path="new" element={<NewAdmin />} />
         </Routes>
       </Content>
     </MainContent>

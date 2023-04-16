@@ -12,7 +12,8 @@ const ListBookings = () => {
   const bookings = useSelector(
     (state: RootState) => state.booking.listBookings
   );
-  const user = JSON.parse(localStorage.getItem("userToken"));
+  const user = JSON.parse(localStorage.getItem("user"));
+  console.log(user);
   useEffect(() => {
     dispatch(getListBooking());
   }, []);

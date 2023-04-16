@@ -49,6 +49,7 @@ const bookingSlice = createSlice({
     builder.addCase(getListBooking.fulfilled, (state, { payload }) => {
       state.success = false;
       state.listBookings = payload;
+      console.log(payload);
     });
     builder.addCase(getListBooking.rejected, (state, { payload }) => {
       state.success = false;
