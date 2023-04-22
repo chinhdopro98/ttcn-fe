@@ -19,24 +19,19 @@ const DeleteCar: React.FC<Iprops> = (props) => {
   const dispatch = useAppDispatch();
   const handleDelete = async () => {
     setOpen(false);
-    await dispatch(deleteCar(car));
+    await dispatch(deleteCar(car._id));
   };
   return (
     <>
       <Button
         type="button"
         sx={{
-          backgroundColor: "#fb483a",
-          lineHeight: "36.5px",
-          color: "#000",
-          width: "100%",
           textTransform: "Capitalize",
-          height: "36.5px",
           textAlign: "center",
         }}
         onClick={handleClick}
       >
-        Delete
+        <i className="fa-sharp fa-solid fa-trash"></i>
       </Button>
 
       <Modal

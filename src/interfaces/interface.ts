@@ -21,6 +21,12 @@ export interface Icar {
   gear: number;
   note: string;
   bookedTimeSlots: bookingTime[];
+  updatedAt?: string;
+  active?: any;
+  address?: string;
+  provider?: string;
+  user?: string;
+  createdAt?: string;
 }
 
 export interface bookingTime {
@@ -44,7 +50,8 @@ export interface IRegister {
 }
 
 export interface IBooking {
-  userid: string;
+  _id?: string;
+  userid?: string;
   carid?: any;
   totalHours: number;
   totalMoney: number;
@@ -74,19 +81,20 @@ export interface AddCar {
   yearCreated: number;
   autoMarket: string;
   price: number;
-  numbereatSeats: number;
+  numbereatSeats?: number;
   origin: string;
-  image: string;
+  image?: any;
   status: number;
   colorOutSide: string;
   colorInSide: string;
   consumeFuel: string;
   doorNumber: number;
-  popular: true;
+  popular?: true;
   gear: number;
   note: string;
   address?: string;
   provider?: string;
+  user?: string;
 }
 
 export interface IAutoMaker {
@@ -119,6 +127,9 @@ export interface UpdateCar {
   gear: number;
   note: string;
   bookedTimeSlots?: any;
+  address?: string;
+  provider?: string;
+  user?: string;
 }
 export interface IUserData {
   _id: string;
@@ -161,4 +172,16 @@ export interface Blog {
   category?: string;
   author?: number;
   likes?: any;
+}
+export interface ProviderData {
+  _id: string;
+  name: string;
+  slug: string;
+  type: string;
+  name_with_type: string;
+  code: string;
+}
+export interface ApproveCar {
+  id?: string;
+  active?: number;
 }

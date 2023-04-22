@@ -1,11 +1,15 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { AddCar, Icar, UpdateCar } from "../../interfaces/interface";
 import {
+  approveCar,
   createCar,
+  createCarFormdata,
   deleteCar,
   editCar,
   getCar,
+  getCarByUser,
   getCarOne,
+  updateCar,
 } from "../action/carAction";
 
 interface CarState {
@@ -50,6 +54,17 @@ const carSlice = createSlice({
       state.success = false;
     });
 
+    //get-car-by-user
+    builder.addCase(getCarByUser.pending, (state, action) => {
+      state.loading = true;
+    });
+    builder.addCase(getCarByUser.fulfilled, (state, { payload }) => {
+      console.log(payload);
+      state.cars = payload;
+    });
+    builder.addCase(getCarByUser.rejected, (state, { payload }) => {
+      state.success = false;
+    });
     //get-one
 
     builder.addCase(getCarOne.pending, (state, action) => {
@@ -62,6 +77,106 @@ const carSlice = createSlice({
       state.success = false;
     });
 
+    //  expried;
+    builder.addCase(approveCar.pending, (state, action) => {
+      state.loading = true;
+    });
+    builder.addCase(approveCar.fulfilled, (state, { payload }) => {
+      console.log(payload);
+      if (payload.status === "success") {
+        state.error = "";
+        state.labelSuccess = `Update car success!`;
+        state.openSnackbar = true;
+        state.cars = state.cars.map((car) => {
+          if (car._id === payload.id) {
+            const activeCar = payload.active === 1 ? "true" : "false";
+            car.active = activeCar;
+          }
+          return car;
+        });
+      }
+    });
+    builder.addCase(approveCar.rejected, (state, { payload }) => {
+      state.labelSuccess = "";
+      state.error = `Approve car failed`;
+      state.openSnackbar = true;
+    });
+    //update
+    builder.addCase(updateCar.pending, (state, action) => {
+      state.loading = true;
+    });
+    builder.addCase(updateCar.fulfilled, (state, { payload }) => {
+      if (payload.status === "success") {
+        state.error = "";
+        state.labelSuccess = `Update car success!`;
+        state.openSnackbar = true;
+        state.cars = state.cars.map((car) => {
+          if (car._id === payload.updateCar._id) {
+            car.name = payload.updateCar.name;
+            car.capacity = payload.updateCar.capacity;
+            car.fuelType = payload.updateCar.fuelType;
+            car.autoMarket = payload.updateCar.autoMarket;
+            car.status = payload.updateCar.status;
+            car.doorNumber = payload.updateCar.doorNumber;
+            car.yearCreated = payload.updateCar.yearCreated;
+            car.price = payload.updateCar.price;
+            car.numbereatSeats = payload.updateCar.numbereatSeats;
+            car.origin = payload.updateCar.origin;
+            car.colorOutSide = payload.updateCar.colorOutSide;
+            car.colorInSide = payload.updateCar.colorInSide;
+            car.popular = payload.updateCar.popular;
+            car.gear = payload.updateCar.gear;
+            car.note = payload.updateCar.note;
+            car.image = payload.updateCar.image;
+            car.origin = payload.updateCar.origin;
+          }
+          return car;
+        });
+      }
+    });
+    builder.addCase(updateCar.rejected, (state, { payload }) => {
+      state.labelSuccess = "";
+      state.error = `Update car failed`;
+      state.openSnackbar = true;
+    });
+    //createCar
+    builder.addCase(createCarFormdata.fulfilled, (state, { payload }) => {
+      console.log(payload);
+      if (payload.status === "success") {
+        state.error = "";
+        state.labelSuccess = `Register car success!`;
+        state.openSnackbar = true;
+
+        state.cars.push({
+          _id: "",
+          name: payload.newCar.name,
+          capacity: payload.newCar.capacity,
+          fuelType: payload.newCar.fuelType,
+          autoMarket: payload.newCar.autoMarket,
+          status: payload.newCar.status,
+          doorNumber: payload.newCar.doorNumber,
+          yearCreated: payload.newCar.yearCreated,
+          price: payload.newCar.price,
+          consumeFuel: payload.newCar.consumeFuel,
+          numbereatSeats: payload.newCar.numbereatSeats,
+          colorOutSide: payload.newCar.colorOutSide,
+          colorInSide: payload.newCar.colorInSide,
+          popular: payload.newCar.popular,
+          gear: payload.newCar.gear,
+          note: payload.newCar.note,
+          image: payload.newCar.image,
+          origin: payload.newCar.origin,
+          createdAt: payload.newCar.createdAt,
+          bookedTimeSlots: [],
+        });
+      }
+    });
+    builder.addCase(createCarFormdata.rejected, (state, action) => {
+      state.labelSuccess = "";
+      state.error = `Register car failed`;
+      state.openSnackbar = true;
+    });
+    //addcar
     builder.addCase(createCar.fulfilled, (state, action) => {
       if (action.payload.status === 200) {
         state.error = "";
@@ -120,15 +235,24 @@ const carSlice = createSlice({
         });
       }
     });
+    builder.addCase(deleteCar.pending, (state, action) => {
+      state.loading = true;
+    });
     builder.addCase(deleteCar.fulfilled, (state, action) => {
-      if (action.payload.status === 200) {
+      console.log(action.payload);
+      if (action.payload.status === "success") {
         state.error = "";
-        state.labelSuccess = action.payload.data;
+        state.labelSuccess = `Delete car success`;
         state.openSnackbar = true;
-        state.cars.map((car) => {
-          return car._id !== action.meta.arg._id;
+        state.cars = state.cars.filter((car) => {
+          return car._id !== action.payload.id;
         });
       }
+    });
+    builder.addCase(deleteCar.rejected, (state, { payload }) => {
+      state.labelSuccess = "";
+      state.error = `Delete car failed`;
+      state.openSnackbar = true;
     });
   },
 });

@@ -4,6 +4,7 @@ import userReducer from "../reducer/userSlice";
 import bookingReducer from "../reducer/bookingSlice";
 import autoMakerReducer from "../reducer/automakerSlice";
 import blogReducer from "../reducer/blogSlice";
+import providerReducer from "../reducer/providerSlice";
 export const store = configureStore({
   reducer: {
     car: carReducer,
@@ -11,6 +12,7 @@ export const store = configureStore({
     booking: bookingReducer,
     automaker: autoMakerReducer,
     blog: blogReducer,
+    provider: providerReducer,
   },
 });
 export type AppDispatch = typeof store.dispatch;

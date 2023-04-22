@@ -30,6 +30,8 @@ import { getAllAutoMaker } from "../redux/action/autoMakerAction";
 import { closeSnackBar } from "../redux/reducer/bookingSlice";
 import car from "../assets/image/car/bg-book1.jpg";
 import styled from "styled-components";
+import Back from "./common/Back";
+import img from "../assets/image/car/bg-booking2.jpg";
 const style = {
   position: "absolute" as "absolute",
   top: "30%",
@@ -45,6 +47,9 @@ const HomeLogin = styled.div`
   width: 100%;
 `;
 const Booking = () => {
+  const user = JSON.parse(localStorage.getItem("user"))
+    ? JSON.parse(localStorage.getItem("user"))
+    : null;
   const { RangePicker } = DatePicker;
   const paramId = useParams();
   const dispatch = useAppDispatch();
@@ -101,7 +106,7 @@ const Booking = () => {
       setOpenModal(true);
     } else {
       const objectBook: IBooking = {
-        userid: JSON.parse(localStorage.getItem("userToken") || "{}")._id,
+        userid: user._id,
         carid: car?._id,
         totalHours: totalHours,
         totalMoney: totalMoney,
@@ -123,7 +128,7 @@ const Booking = () => {
       setOpenModal(true);
     } else {
       const objectBook: IBooking = {
-        userid: JSON.parse(localStorage.getItem("userToken") || "{}")._id,
+        userid: user._id,
         carid: car?._id,
         totalHours: totalHours,
         totalMoney: totalMoney,
@@ -141,6 +146,11 @@ const Booking = () => {
   }
   return (
     <>
+      <Back
+        name="Book Now"
+        title="Đặt xe & chinh phục những cung đường"
+        cover={img}
+      />
       <HomeLogin className="home-form" style={styles.bg_img}>
         <Box sx={{ backgroundImage: `url(../assets/image/car/pg-admin.jpg)` }}>
           <Box
@@ -158,7 +168,7 @@ const Booking = () => {
                 <Box>
                   {car?.image ? (
                     <img
-                      src={require(`../assets/image/car/${car?.image}`)}
+                      src={`http://localhost:5000/${car.image}`}
                       alt=""
                       className="carimg w-full h-full"
                     />
@@ -277,7 +287,7 @@ const Booking = () => {
                     format="MM/DD/YYYY HH:mm A"
                     onChange={calculateHours}
                   />
-                  <Button
+                  {/* <Button
                     variant="contained"
                     onClick={handleOpen}
                     sx={{
@@ -287,7 +297,7 @@ const Booking = () => {
                     }}
                   >
                     See book slots
-                  </Button>
+                  </Button> */}
                 </Box>
                 <Grid item sm={4} xs={6} md={3}>
                   <FormControl sx={{ display: "flex" }}>
@@ -322,27 +332,29 @@ const Booking = () => {
               <Typography variant="h6" sx={{}} mb={1}>
                 Total Money: {totalMoney?.toLocaleString()} VND
               </Typography>
-              <Box sx={{ display: "flex", paddingBottom: "40px" }}>
-                <StripeCheckout
-                  token={onToken}
-                  stripeKey="pk_test_51MLq0vDswle805HzRg29Zx4VUNm49azYkiOdnC6cZmd2manYdeqnWaiCFsmyJdrTnpK3lC6H18wRehD2HW7qXf3a00gLz9F2em"
-                  name="Tesla Roadster"
-                  amount={totalMoney}
-                  currency="inr"
-                  shippingAddress
-                />
-                <Button
-                  variant="contained"
-                  type="submit"
-                  onClick={submitBooking}
-                  sx={{
-                    margin: "0 10px",
-                    textTransform: "capitalize",
-                  }}
-                >
-                  Booking now
-                </Button>
-              </Box>
+              {user.role !== "user" ? null : (
+                <Box sx={{ display: "flex", paddingBottom: "40px" }}>
+                  <StripeCheckout
+                    token={onToken}
+                    stripeKey="pk_test_51MLq0vDswle805HzRg29Zx4VUNm49azYkiOdnC6cZmd2manYdeqnWaiCFsmyJdrTnpK3lC6H18wRehD2HW7qXf3a00gLz9F2em"
+                    name="Tesla Roadster"
+                    amount={totalMoney}
+                    currency="inr"
+                    shippingAddress
+                  />
+                  <Button
+                    variant="contained"
+                    type="submit"
+                    onClick={submitBooking}
+                    sx={{
+                      margin: "0 10px",
+                      textTransform: "capitalize",
+                    }}
+                  >
+                    Booking now
+                  </Button>
+                </Box>
+              )}
             </Box>
           </Box>
         </Box>

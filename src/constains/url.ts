@@ -6,8 +6,12 @@ export const URL = {
   LISTBOOKINGS: "/bookings/getallbookings",
   ALL_AUTOMAKER: "/automakers/getall",
   ADD_CAR: "cars/add-car",
+  CREATE_CAR: "cars/create",
   EDIT_CAR: "cars/edit-car",
-  DELETE_CAR: "cars/delete-car",
+  UPDATE_CAR: "cars/update",
+  DELETE_CAR: "cars/delete",
+  GET_CAR_USER: "cars/user-car",
+  APPROVE_CAR: "cars/approve",
   ALL_USER: "users/getall",
   UPDATE_USER: "users/edit-user",
   DELETE_USER: "users/delete-user",
@@ -26,6 +30,7 @@ export const URL = {
   GET_ALL_BLOG: "blogs/get-all",
   UPDATE_BLOG: "blogs/update",
   DELETE_BLOG: "blogs/delete",
+  GET_ALL_PROVIDER: "providers/get-all",
 };
 export const LIMIT = 9;
 export const URL_LOCAL = "http://localhost:5000/";

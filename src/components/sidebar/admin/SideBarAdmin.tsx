@@ -71,6 +71,13 @@ const SideBarAdmin = () => {
                     </Link>
                   </li>
                   <li className="item-link">
+                    <Link to="/admin/listbooking" className="sidebar-item">
+                      {" "}
+                      <i className="fa-solid fa-user"></i>
+                      <span className="sidebar-item-label">Bookings</span>
+                    </Link>
+                  </li>
+                  <li className="item-link">
                     <Link to="/admin/blog" className="sidebar-item">
                       {" "}
                       <i className="fa-solid fa-blog"></i>

@@ -31,9 +31,6 @@ const BoxForm = styled.div`
   border-radius: 10px;
   background: rgba(255, 255, 255, 0.8);
 `;
-// function Alert(props) {
-//   return <MuiAler elevation={6} variant="filled" {...props} />;
-// }
 const Register = () => {
   const {
     reset,

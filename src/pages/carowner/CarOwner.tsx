@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Back from "../common/Back";
 import img from "../../assets/image/car/bg-mioto.jpg";
@@ -19,6 +18,12 @@ import { AddCar } from "../../interfaces/interface";
 import FormControl from "@mui/material/FormControl";
 import InputLabel from "@mui/material/InputLabel";
 import { getAllAutoMaker } from "../../redux/action/autoMakerAction";
+import { getAllProvider } from "../../redux/action/providerAction";
+import { createCarFormdata } from "../../redux/action/carAction";
+import Box from "@mui/material/Box";
+import Snackbar from "@mui/material/Snackbar";
+import MuiAlert from "@mui/material/Alert";
+import { closeSnackBar } from "../../redux/reducer/carSlice";
 const LabelIput = styled.div`
   font-size: 14px;
   color: #000;
@@ -34,19 +39,73 @@ const GroupInput = styled.div`
 
 const CarOwner = () => {
   const dispatch = useAppDispatch();
+  const labelSuccess = useSelector(
+    (state: RootState) => state.car.labelSuccess
+  );
+  const labelError = useSelector((state: RootState) => state.car.error);
+  const openSnackbar = useSelector(
+    (state: RootState) => state.car.openSnackbar
+  );
+  const handleCloseSnackBar = () => {
+    dispatch(closeSnackBar());
+  };
   const {
     reset,
     control,
     handleSubmit,
     formState: { errors },
   } = useForm<AddCar>({});
-
   const automakers = useSelector(
     (state: RootState) => state.automaker.automakers
   );
+  const providers = useSelector((state: RootState) => state.provider.providers);
   useEffect(() => {
     dispatch(getAllAutoMaker());
+    dispatch(getAllProvider());
   }, [dispatch]);
+  const handleRegister = async (data: AddCar) => {
+    const newcar: AddCar = {
+      name: data.name,
+      image: data.image,
+      capacity: +data.capacity,
+      fuelType: data.fuelType,
+      yearCreated: +data.yearCreated,
+      autoMarket: data.autoMarket,
+      price: +data.price,
+      status: data.status,
+      // numbereatSeats: +data.numbereatSeats,
+      origin: data.origin,
+      colorOutSide: data.colorOutSide,
+      colorInSide: data.colorInSide,
+      consumeFuel: data.consumeFuel,
+      doorNumber: +data.doorNumber,
+      popular: data.popular,
+      gear: +data.gear,
+      note: data.note,
+      provider: data.provider,
+      address: data.address,
+    };
+    await reset({
+      name: "",
+      image: "",
+      capacity: 0,
+      fuelType: 0,
+      yearCreated: 0,
+      autoMarket: "",
+      price: 0,
+      status: 0,
+      origin: "",
+      colorOutSide: "",
+      colorInSide: "",
+      consumeFuel: "",
+      doorNumber: 0,
+      gear: 0,
+      note: "",
+      provider: "",
+      address: "",
+    });
+    await dispatch(createCarFormdata(newcar));
+  };
   type FileInputProps = {
     control: any;
     name: string;
@@ -121,7 +180,7 @@ const CarOwner = () => {
         <form
           action=""
           autoComplete="off"
-          // onSubmit={handleSubmit(handleUpdate)}
+          onSubmit={handleSubmit(handleRegister)}
         >
           <GroupInput>
             <Controller
@@ -130,7 +189,7 @@ const CarOwner = () => {
                 return (
                   <TextField
                     {...field}
-                    label="Name Car"
+                    label="Tên xe"
                     style={{ width: "100%", marginRight: "60px" }}
                     InputLabelProps={{ style: { fontSize: 14 } }}
                   />
@@ -146,7 +205,7 @@ const CarOwner = () => {
                 return (
                   <TextField
                     {...field}
-                    label="Capacity Car"
+                    label="Dung tích"
                     type="number"
                     style={{ width: "100%", marginRight: "60px" }}
                     InputLabelProps={{ style: { fontSize: 14 } }}
@@ -155,13 +214,13 @@ const CarOwner = () => {
                 );
               }}
               control={control}
-              defaultValue={0}
+              defaultValue={null}
             />
             <FormControl fullWidth>
-              <InputLabel id="demo-simple-select-label">Fuel Type</InputLabel>
+              <InputLabel id="demo-simple-select-label">Nhiên liệu</InputLabel>
               <Controller
                 name="fuelType"
-                defaultValue={0}
+                defaultValue={null}
                 control={control}
                 render={({ field }) => (
                   <Select
@@ -174,9 +233,9 @@ const CarOwner = () => {
                       textAlign: "left",
                     }}
                   >
-                    <MenuItem value={1}>Petrol</MenuItem>
-                    <MenuItem value={2}>Oil</MenuItem>
-                    <MenuItem value={3}>Electricity</MenuItem>
+                    <MenuItem value={1}>Xăng</MenuItem>
+                    <MenuItem value={2}>Dầu</MenuItem>
+                    <MenuItem value={3}>Điện</MenuItem>
                   </Select>
                 )}
               />
@@ -189,7 +248,7 @@ const CarOwner = () => {
                 return (
                   <TextField
                     {...field}
-                    label="Create Year"
+                    label="Năm sản xuất"
                     type="number"
                     style={{ width: "100%", marginRight: "60px" }}
                     InputLabelProps={{ style: { fontSize: 14 } }}
@@ -198,7 +257,7 @@ const CarOwner = () => {
                 );
               }}
               control={control}
-              defaultValue={2023}
+              defaultValue={null}
             />
             <Controller
               name="price"
@@ -206,7 +265,7 @@ const CarOwner = () => {
                 return (
                   <TextField
                     {...field}
-                    label="Price"
+                    label="Giá"
                     type="number"
                     style={{ width: "100%", marginRight: "60px" }}
                     InputLabelProps={{ style: { fontSize: 14 } }}
@@ -215,10 +274,10 @@ const CarOwner = () => {
                 );
               }}
               control={control}
-              defaultValue={0}
+              defaultValue={null}
             />
             <FormControl fullWidth>
-              <InputLabel id="demo-simple-select-label">Automaker</InputLabel>
+              <InputLabel id="demo-simple-select-label">Dòng xe</InputLabel>
               <Controller
                 name="autoMarket"
                 defaultValue={""}
@@ -227,7 +286,7 @@ const CarOwner = () => {
                   <Select
                     labelId="demo-simple-select-label"
                     id="demo-simple-select"
-                    label="Automaker"
+                    label="Dòng xe"
                     style={{
                       width: "100%",
                       textAlign: "left",
@@ -251,7 +310,7 @@ const CarOwner = () => {
                 return (
                   <TextField
                     {...field}
-                    label="Origin Country"
+                    label="Nước sản xuất"
                     style={{ width: "100%", marginRight: "60px" }}
                     InputLabelProps={{ style: { fontSize: 14 } }}
                     required
@@ -267,7 +326,7 @@ const CarOwner = () => {
                 return (
                   <TextField
                     {...field}
-                    label="Color Outside"
+                    label="Màu ngoại thất"
                     style={{ width: "100%", marginRight: "60px" }}
                     InputLabelProps={{ style: { fontSize: 14 } }}
                     required
@@ -278,24 +337,24 @@ const CarOwner = () => {
               defaultValue=""
             />
             <FormControl fullWidth>
-              <InputLabel id="demo-simple-select-label">Status</InputLabel>
+              <InputLabel id="demo-simple-select-label">Tình trạng</InputLabel>
               <Controller
                 name="status"
-                defaultValue={0}
+                defaultValue={null}
                 control={control}
                 render={({ field }) => (
                   <Select
                     labelId="demo-simple-select-label"
                     id="demo-simple-select"
-                    label="Status"
+                    label="Tình trạng"
                     style={{
                       width: "100%",
                       textAlign: "left",
                     }}
                     {...field}
                   >
-                    <MenuItem value={0}>New</MenuItem>
-                    <MenuItem value={1}>Old</MenuItem>
+                    <MenuItem value={0}>Mới</MenuItem>
+                    <MenuItem value={1}>Cũ</MenuItem>
                   </Select>
                 )}
               />
@@ -308,7 +367,7 @@ const CarOwner = () => {
                 return (
                   <TextField
                     {...field}
-                    label="Color Inside"
+                    label="Màu nội thất"
                     style={{ width: "100%", marginRight: "60px" }}
                     InputLabelProps={{ style: { fontSize: 14 } }}
                     required
@@ -325,7 +384,7 @@ const CarOwner = () => {
                 return (
                   <TextField
                     {...field}
-                    label="Consume Fuel"
+                    label="Mức tiêu thụ"
                     style={{ width: "100%", marginRight: "60px" }}
                     InputLabelProps={{ style: { fontSize: 14 } }}
                     required
@@ -342,7 +401,7 @@ const CarOwner = () => {
                 return (
                   <TextField
                     {...field}
-                    label="Door Number"
+                    label="Số cửa"
                     type="number"
                     style={{ width: "100%" }}
                     InputLabelProps={{ style: { fontSize: 14 } }}
@@ -351,7 +410,7 @@ const CarOwner = () => {
                 );
               }}
               control={control}
-              defaultValue={0}
+              defaultValue={null}
             />
           </GroupInput>
           <GroupInput>
@@ -361,7 +420,7 @@ const CarOwner = () => {
                 return (
                   <TextField
                     {...field}
-                    label="Gear"
+                    label="Số ghế"
                     type="number"
                     style={{ width: "100%", marginRight: "60px" }}
                     InputLabelProps={{ style: { fontSize: 14 } }}
@@ -370,7 +429,7 @@ const CarOwner = () => {
                 );
               }}
               control={control}
-              defaultValue={0}
+              defaultValue={null}
             />
             <Controller
               name="address"
@@ -378,8 +437,7 @@ const CarOwner = () => {
                 return (
                   <TextField
                     {...field}
-                    label="Address"
-                    type="number"
+                    label="Địa chỉ"
                     style={{ width: "100%", marginRight: "60px" }}
                     InputLabelProps={{ style: { fontSize: 14 } }}
                     required
@@ -389,24 +447,30 @@ const CarOwner = () => {
               control={control}
               defaultValue={""}
             />
-            <Controller
-              name="provider"
-              defaultValue={""}
-              control={control}
-              render={({ field }) => (
-                <Select
-                  labelId="level-label"
-                  style={{
-                    width: "100%",
-                    textAlign: "left",
-                  }}
-                  {...field}
-                >
-                  <MenuItem value={0}>New</MenuItem>
-                  <MenuItem value={1}>Old</MenuItem>
-                </Select>
-              )}
-            />
+            <FormControl fullWidth>
+              <InputLabel id="demo-simple-select-label">
+                Tỉnh - Thành phố
+              </InputLabel>
+              <Controller
+                name="provider"
+                defaultValue={""}
+                control={control}
+                render={({ field }) => (
+                  <Select
+                    labelId="level-label"
+                    style={{
+                      width: "100%",
+                      textAlign: "left",
+                    }}
+                    {...field}
+                  >
+                    {providers.map((provider) => (
+                      <MenuItem value={provider._id}>{provider?.name}</MenuItem>
+                    ))}
+                  </Select>
+                )}
+              />
+            </FormControl>
           </GroupInput>
           <Controller
             name="note"
@@ -414,7 +478,7 @@ const CarOwner = () => {
               return (
                 <TextField
                   {...field}
-                  label="Note"
+                  label="Ghi chú"
                   multiline
                   rows={4}
                   maxRows={4}
@@ -454,7 +518,7 @@ const CarOwner = () => {
               fontWeight: "bold",
             }}
           >
-            Save
+            Lưu
           </Button>
           <Box
             sx={{
@@ -471,6 +535,36 @@ const CarOwner = () => {
           ></Box>
         </form>
       </Box>
+      <Snackbar
+        anchorOrigin={{
+          vertical: "bottom",
+          horizontal: "right",
+        }}
+        open={openSnackbar}
+        autoHideDuration={5000}
+        onClose={handleCloseSnackBar}
+      >
+        <Box>
+          {labelSuccess && (
+            <MuiAlert
+              onClose={handleCloseSnackBar}
+              variant="filled"
+              severity="success"
+            >
+              {labelSuccess}
+            </MuiAlert>
+          )}
+          {labelError && (
+            <MuiAlert
+              onClose={handleCloseSnackBar}
+              variant="filled"
+              severity="error"
+            >
+              {labelError}
+            </MuiAlert>
+          )}
+        </Box>
+      </Snackbar>
     </section>
   );
 };

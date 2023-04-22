@@ -67,7 +67,7 @@ const NavBarAdmin = () => {
             <Link to="/admin/car">CAR</Link>
           </li>
           <li className="item-link">
-            <Link to="/admin/listbooking">LIST BOOKING</Link>
+            <Link to="/admin/listbooking">BOOKINGS</Link>
           </li>
           <li className="item-link">
             <Link to="/admin/automaker">AUTOMAKER</Link>

@@ -1,13 +1,18 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import {
+  approveCarApi,
   createCarApi,
+  createCarFormDataApi,
   deleteCarApi,
+  findCarUser,
   getAll,
   getOneCar,
   updateCarApi,
+  updateCarFormDataApi,
 } from "../../api/carApi";
 import {
   AddCar,
+  ApproveCar,
   Icar,
   UpdateCar,
   pageSearch,
@@ -35,6 +40,18 @@ export const getCarOne = createAsyncThunk(
     }
   }
 );
+export const createCarFormdata = createAsyncThunk(
+  "car/createCar",
+  async (data: AddCar, { rejectWithValue }) => {
+    try {
+      const res = await createCarFormDataApi(data);
+      return res;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+);
+
 export const createCar = createAsyncThunk(
   "car/addCar",
   async (data: AddCar, { rejectWithValue }) => {
@@ -57,14 +74,49 @@ export const editCar = createAsyncThunk(
     }
   }
 );
-export const deleteCar = createAsyncThunk(
-  "car/deleteCar",
-  async (data: Icar, { rejectWithValue }) => {
+export const updateCar = createAsyncThunk(
+  "car/updateCar",
+  async (data: UpdateCar, { rejectWithValue }) => {
     try {
-      const res = await deleteCarApi(data);
+      const res = await updateCarFormDataApi(data);
       return res;
     } catch (error) {
       console.log(error);
+    }
+  }
+);
+export const deleteCar = createAsyncThunk(
+  "car/deleteCar",
+  async (id: string, { rejectWithValue }) => {
+    console.log(id);
+    try {
+      const res = await deleteCarApi(id);
+      return res.data;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+);
+export const getCarByUser = createAsyncThunk(
+  "car/get-by-user",
+  async (arg, { rejectWithValue }) => {
+    try {
+      const data = await findCarUser();
+      return data;
+    } catch (err) {
+      console.error(err);
+    }
+  }
+);
+
+export const approveCar = createAsyncThunk(
+  "car/approve",
+  async (dataAprove: ApproveCar, { rejectWithValue }) => {
+    try {
+      const data = await approveCarApi(dataAprove);
+      return data;
+    } catch (err) {
+      console.error(err);
     }
   }
 );

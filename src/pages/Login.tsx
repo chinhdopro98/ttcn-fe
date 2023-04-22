@@ -44,7 +44,7 @@ const Login = () => {
     );
   };
   useEffect(() => {
-    if (accessToken && role === "user") {
+    if ((accessToken && role === "owner") || (accessToken && role === "user")) {
       navigate("/app");
     }
     if (accessToken && role === "admin") {

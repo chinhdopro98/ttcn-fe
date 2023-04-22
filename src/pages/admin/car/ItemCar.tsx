@@ -1,15 +1,20 @@
 import React, { useEffect } from "react";
-import { IBooking } from "../../../interfaces/interface";
-import { useAppDispatch } from "../../../redux/hook/hook";
-import { useSelector } from "react-redux";
+import { IAutoMaker, Icar } from "../../../interfaces/interface";
+import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
 import { RootState } from "../../../redux/store/store";
+import { useAppDispatch } from "../../../redux/hook/hook";
 import { getAllAutoMaker } from "../../../redux/action/autoMakerAction";
+import { useSelector } from "react-redux";
+import EditCar from "./EditCar";
+import DeleteCar from "./DeleteCar";
+import ExpiredCar from "./ExpiredCar";
 interface Iprops {
-  booking: IBooking;
+  car: Icar;
   index: number;
 }
-const ItemBooking: React.FC<Iprops> = (props) => {
-  const { booking, index } = props;
+const ItemCar: React.FC<Iprops> = (props) => {
+  const { car, index } = props;
   const dispatch = useAppDispatch();
   const automakers = useSelector(
     (state: RootState) => state.automaker.automakers
@@ -18,12 +23,12 @@ const ItemBooking: React.FC<Iprops> = (props) => {
     dispatch(getAllAutoMaker());
   }, [dispatch]);
   return (
-    <tr key={booking._id}>
+    <tr key={car._id}>
       <td>
         <span>{index + 1}</span>
       </td>
-      {/* <td>
-        <span>{booking.name}</span>
+      <td>
+        <span>{car.name}</span>
       </td>
       <td>
         <div className="dashboard-content-avatar">
@@ -51,9 +56,9 @@ const ItemBooking: React.FC<Iprops> = (props) => {
       </td>
       <td>
         <DeleteCar car={car} />
-      </td> */}
+      </td>
     </tr>
   );
 };
 
-export default ItemBooking;
+export default ItemCar;

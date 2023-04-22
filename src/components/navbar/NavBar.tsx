@@ -13,7 +13,7 @@ const NavBar = () => {
   const navigate = useNavigate();
   const logout = () => {
     localStorage.clear();
-    navigate("/login");
+    window.location.reload();
   };
   const user = JSON.parse(localStorage.getItem("user"))
     ? JSON.parse(localStorage.getItem("user"))
@@ -75,15 +75,21 @@ const NavBar = () => {
           <li className="item-link">
             <Link to="/app/contact">Contact</Link>
           </li>
-          <li className="item-link">
-            <Link to="/app/listbookings">My bookings</Link>
-          </li>
-          <li className="item-link">
-            <Link to="/app/register">Resgister Car</Link>
-          </li>
-          <li className="item-link">
-            <Link to="/app/listcar">List Car</Link>
-          </li>
+          {user.role === "user" ? (
+            <li className="item-link">
+              <Link to="/app/listbookings">Bookings</Link>
+            </li>
+          ) : null}
+          {user.role === "owner" ? (
+            <li className="item-link">
+              <Link to="/app/register">Resgister Car</Link>
+            </li>
+          ) : null}
+          {user.role === "owner" ? (
+            <li className="item-link">
+              <Link to="/app/listcar">List Car</Link>
+            </li>
+          ) : null}
         </ul>
       </div>
       <div>

@@ -21,7 +21,7 @@ const CarItem: React.FC<Iprops> = (props) => {
   return (
     <div className="box shadow" key={car._id}>
       <div className="img">
-        <img src={require(`../../../assets/image/car/${car.image}`)} alt="" />
+        <img src={`http://localhost:5000/${car.image}`} alt="" />
       </div>
       <div className="text">
         <div className="category flex">
