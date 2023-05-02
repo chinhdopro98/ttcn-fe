@@ -56,6 +56,7 @@ export const deleteAutomaker = createAsyncThunk(
 export const createAutomaker = createAsyncThunk(
   "automaker/create",
   async (data: CreateAutoMaker, { rejectWithValue }) => {
+    console.log(data);
     try {
       const res = await createAutomakerApi(data);
       return res;

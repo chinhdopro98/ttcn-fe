@@ -73,7 +73,6 @@ const CarOwner = () => {
       autoMarket: data.autoMarket,
       price: +data.price,
       status: data.status,
-      // numbereatSeats: +data.numbereatSeats,
       origin: data.origin,
       colorOutSide: data.colorOutSide,
       colorInSide: data.colorInSide,
@@ -85,6 +84,7 @@ const CarOwner = () => {
       provider: data.provider,
       address: data.address,
     };
+    await dispatch(createCarFormdata(newcar));
     await reset({
       name: "",
       image: "",
@@ -104,7 +104,6 @@ const CarOwner = () => {
       provider: "",
       address: "",
     });
-    await dispatch(createCarFormdata(newcar));
   };
   type FileInputProps = {
     control: any;

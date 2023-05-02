@@ -7,6 +7,7 @@ import {
   deleteBlogCategory,
   getAllBlog,
   getAllBlogCategory,
+  getOneBlog,
   updateBlog,
   updateBlogCategory,
 } from "../action/blogAction";
@@ -43,14 +44,15 @@ const blogSlice = createSlice({
     builder.addCase(updateBlogCategory.fulfilled, (state, action) => {
       if (action.payload.status === "success") {
         state.blogCategorys = state.blogCategorys.map((item) => {
-          if (item._id === action.payload.updateBlogCategory._id) {
+          if (item._id === action.payload.updateBlogCategory.id) {
             return {
+              _id: action.payload.updateBlogCategory._id,
               title: action.payload.updateBlogCategory.title,
               description: action.payload.updateBlogCategory.description,
               image: action.payload.updateBlogCategory.image,
             };
-            return item;
           }
+          return item;
         });
       }
     });
@@ -65,6 +67,10 @@ const blogSlice = createSlice({
     });
 
     // blog
+    builder.addCase(getOneBlog.fulfilled, (state, { payload }) => {
+      state.blog = payload.getBlog;
+    });
+    builder.addCase(getOneBlog.rejected, (state, { payload }) => {});
     builder.addCase(createBlog.fulfilled, (state, action) => {
       state.blogCategory = action.payload.data;
     });
@@ -73,9 +79,11 @@ const blogSlice = createSlice({
     });
     builder.addCase(updateBlog.fulfilled, (state, action) => {
       if (action.payload.status === "success") {
+        console.log(action.payload.updateBlog);
         state.blogs = state.blogs.map((item) => {
           if (item._id === action.payload.updateBlog._id) {
             return {
+              _id: action.payload.updateBlog._id,
               title: action.payload.updateBlog.title,
               description: action.payload.updateBlog.description,
               category: action.payload.updateBlog.category,
@@ -83,8 +91,8 @@ const blogSlice = createSlice({
               numViews: action.payload.updateBlog.numViews,
               likes: action.payload.updateBlog.likes,
             };
-            return item;
           }
+          return item;
         });
       }
     });

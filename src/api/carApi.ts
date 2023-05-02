@@ -206,6 +206,7 @@ export const updateCarFormDataApi = async ({
 }: UpdateCar) => {
   try {
     const formData = new FormData();
+
     formData.append("name", name);
     formData.append("image", image);
     formData.append("capacity", capacity.toString());

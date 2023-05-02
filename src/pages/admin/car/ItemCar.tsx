@@ -49,6 +49,18 @@ const ItemCar: React.FC<Iprops> = (props) => {
         </span>
       </td>
       <td>
+        <span>{car.user.firstname + " " + car.user.lastname}</span>
+      </td>
+      <td>
+        <span
+          className={`${
+            car.user.role === "admin" ? "color-red" : "color-blue"
+          }`}
+        >
+          {car.user.role === "admin" ? "admin" : "owner"}
+        </span>
+      </td>
+      <td>
         <ExpiredCar car={car} />
       </td>
       <td>

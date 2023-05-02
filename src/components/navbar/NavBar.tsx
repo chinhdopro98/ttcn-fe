@@ -9,6 +9,7 @@ import MenuItem from "@mui/material/MenuItem";
 import Box from "@mui/material/Box";
 import MenuList from "@mui/material/MenuList";
 import Stack from "@mui/material/Stack";
+import Profile from "../component/user/Profile";
 const NavBar = () => {
   const navigate = useNavigate();
   const logout = () => {
@@ -64,30 +65,30 @@ const NavBar = () => {
       <div className="menu">
         <ul>
           <li className="item-link">
-            <Link to="/app">Home</Link>
+            <Link to="/app">Trang chủ</Link>
           </li>
           <li className="item-link">
-            <Link to="/app/new">New</Link>
+            <Link to="/app/new">Tin tức</Link>
           </li>
           <li className="item-link">
-            <Link to="/app/about">About</Link>
+            <Link to="/app/about">Giới thiệu</Link>
           </li>
           <li className="item-link">
-            <Link to="/app/contact">Contact</Link>
+            <Link to="/app/contact">Liên hệ</Link>
           </li>
           {user.role === "user" ? (
             <li className="item-link">
-              <Link to="/app/listbookings">Bookings</Link>
+              <Link to="/app/listbookings">Đặt xe</Link>
             </li>
           ) : null}
           {user.role === "owner" ? (
             <li className="item-link">
-              <Link to="/app/register">Resgister Car</Link>
+              <Link to="/app/register">Đăng ký</Link>
             </li>
           ) : null}
           {user.role === "owner" ? (
             <li className="item-link">
-              <Link to="/app/listcar">List Car</Link>
+              <Link to="/app/listcar">Danh sách</Link>
             </li>
           ) : null}
         </ul>
@@ -136,7 +137,7 @@ const NavBar = () => {
                         style={{ textDecoration: "none" }}
                         onClick={handleClose}
                       >
-                        <MenuItem>Home</MenuItem>
+                        <MenuItem>Trang chủ</MenuItem>
                       </Link>
 
                       <Link
@@ -144,11 +145,14 @@ const NavBar = () => {
                         style={{ textDecoration: "none" }}
                         onClick={handleClose}
                       >
-                        <MenuItem>My bookings</MenuItem>
+                        <MenuItem>Đặt xe</MenuItem>
                       </Link>
+                      <MenuItem>
+                        <Profile />
+                      </MenuItem>
                       <MenuItem onClick={handleClose}>
                         <Button className="btn-logout" onClick={logout}>
-                          Logout
+                          Đăng xuất
                         </Button>
                       </MenuItem>
                     </MenuList>

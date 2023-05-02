@@ -20,12 +20,12 @@ const SelectSort: React.FC<Iprops> = (props) => {
   return (
     <Box sx={{ minWidth: 120 }}>
       <FormControl fullWidth>
-        <InputLabel id="demo-simple-select-label">Sort</InputLabel>
+        <InputLabel id="demo-simple-select-label">Sắp xếp</InputLabel>
         <Select
           labelId="demo-simple-select-label"
           id="demo-simple-select"
           value={option}
-          label="Age"
+          label="Sắp xếp"
           onChange={handleChange}
         >
           <MenuItem value={1}>{`Thap -> Cao`}</MenuItem>

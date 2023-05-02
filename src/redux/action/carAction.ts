@@ -57,7 +57,7 @@ export const createCar = createAsyncThunk(
   async (data: AddCar, { rejectWithValue }) => {
     try {
       const res = await createCarApi(data);
-      return res;
+      return res.data;
     } catch (error) {
       console.log(error);
     }

@@ -12,6 +12,7 @@ import moment from "moment";
 import ItemBooking from "./ItemBooking";
 import { getAllBooking } from "../../../api/bookingApi";
 import { getListBooking } from "../../../redux/action/bookAction";
+
 const BookingAdmin = () => {
   const [search, setSearch] = useState("");
   const bookings = useSelector(
@@ -57,6 +58,7 @@ const BookingAdmin = () => {
               <th>Bắt đầu</th>
               <th>Kết thúc</th>
               <th>Ngày tạo</th>
+              <th>Người tạo</th>
               <th>Giá</th>
               <th>Trạng thái</th>
               <th>Edit</th>

@@ -10,6 +10,7 @@ import New from "../../pages/New";
 import NotFound from "../../pages/notfound/NotFound";
 import CarOwner from "../../pages/carowner/CarOwner";
 import ListCar from "../../pages/listcar/ListCar";
+import DetailBlog from "../../pages/detail/DetailBlog";
 const MainContent = styled.div``;
 const Content = styled.div``;
 const MainView: React.FC = () => {
@@ -24,6 +25,7 @@ const MainView: React.FC = () => {
           <Route path="contact" element={<Contact />} />
           <Route path="about" element={<About />} />
           <Route path="new" element={<New />} />
+          <Route path="new/:newid" element={<DetailBlog />} />
           <Route path="listcar" element={<ListCar />} />
           <Route path="register" element={<CarOwner />} />
         </Routes>

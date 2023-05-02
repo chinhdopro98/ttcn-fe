@@ -17,7 +17,7 @@ const CarouselImage = () => {
   ));
   return (
     <div className="carousel-automaker">
-      <h1 className="popular-name">Popular Car Brand</h1>
+      <h1 className="popular-name">Dòng xe phổ biến</h1>
       <Carousel showDots={true} responsive={responsive}>
         {automakers}
       </Carousel>

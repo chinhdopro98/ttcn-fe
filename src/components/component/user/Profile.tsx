@@ -6,12 +6,11 @@ import Grid from "@mui/material/Grid";
 import styled from "styled-components";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
-import { IRegister, IUserData } from "../../../interfaces/interface";
 import { Controller, useForm } from "react-hook-form";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
+import { IUserData } from "../../../interfaces/interface";
 import { useAppDispatch } from "../../../redux/hook/hook";
-import { userRegister } from "../../../redux/action/userAction";
 const LabelIput = styled.div`
   font-size: 14px;
   color: #000;
@@ -26,11 +25,11 @@ const style = {
   left: "50%",
   transform: "translate(-50%, -50%)",
   maxWidth: "70vw",
-  width: "1350px",
+  width: "700px",
   padding: "24px",
   borderRadius: "4px",
   bgcolor: "#ffffff",
-  height: "90%",
+  height: "500px",
 };
 const style1 = {
   position: "absolute",
@@ -41,51 +40,51 @@ const style1 = {
   padding: "20px",
   borderRadius: "10px",
   bgcolor: "#ffffff",
-  height: "96%",
+  height: "500px",
   zIndex: "999",
 };
-const AddUser = () => {
+const Profile = () => {
+  const user = JSON.parse(localStorage.getItem("user"))
+    ? JSON.parse(localStorage.getItem("user"))
+    : null;
   const [open, setOpen] = useState(false);
-
+  const dispatch = useAppDispatch();
+  const {
+    reset,
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<IUserData>({});
+  useEffect(() => {
+    reset({
+      firstname: user.firstname,
+      lastname: user.lastname,
+      username: user.username,
+      password: user.password,
+      email: user.email,
+      phone: user.phone,
+      nameCustomer: user.nameCustomer,
+    });
+  }, [user]);
   const handleOpen = async () => {
     setOpen(true);
   };
   const handleClose = () => {
     setOpen(false);
   };
-  const {
-    reset,
-    control,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<IRegister>({});
-  const dispatch = useAppDispatch();
-  const handleRegister = async (data: IRegister) => {
-    setOpen(false);
-    await dispatch(
-      userRegister({
-        firstname: data.firstname,
-        lastname: data.lastname,
-        username: data.username,
-        password: data.password,
-        email: data.email,
-        phone: data.phone,
-        role: data.role,
-      })
-    );
-  };
   return (
     <>
       <Box>
         <Button
-          variant="contained"
+          variant="outlined"
           onClick={handleOpen}
           sx={{
             textTransform: "capitalize",
-            marginBottom: "10px",
+            width: "100%",
+            border: "none",
           }}
         >
-          Add User
+          Hồ sơ
         </Button>
         <Modal
           open={open}
@@ -113,15 +112,15 @@ const AddUser = () => {
                 <Typography
                   variant="h6"
                   mb={1}
-                  sx={{ fontSize: "18px", textAlign: "left" }}
+                  sx={{ fontSize: "22px", textAlign: "center" }}
                 >
-                  Create User
+                  Thông tin cá nhân
                 </Typography>
               </Box>
               <form
                 action=""
                 autoComplete="off"
-                onSubmit={handleSubmit(handleRegister)}
+                // onSubmit={handleSubmit(handleUpdate)}
               >
                 <Grid
                   container
@@ -134,7 +133,7 @@ const AddUser = () => {
                     md={3}
                     sx={{ marginBottom: { xs: "10px", sm: 0 } }}
                   >
-                    <LabelIput>Full Name*</LabelIput>
+                    <LabelIput>First name*</LabelIput>
                   </Grid>
                   <Grid item xs={12} sm={9} md={9}>
                     <Controller
@@ -143,7 +142,39 @@ const AddUser = () => {
                         return (
                           <TextField
                             {...field}
-                            label="First Name"
+                            label="First name"
+                            style={{ width: "100%", marginBottom: "10px" }}
+                            InputLabelProps={{ style: { fontSize: 14 } }}
+                            required
+                          />
+                        );
+                      }}
+                      control={control}
+                      defaultValue=""
+                    />
+                  </Grid>
+                </Grid>
+                <Grid
+                  container
+                  sx={{ marginBottom: { xs: "10px", sm: "10px" } }}
+                >
+                  <Grid
+                    item
+                    xs={12}
+                    sm={3}
+                    md={3}
+                    sx={{ marginBottom: { xs: "10px", sm: 0 } }}
+                  >
+                    <LabelIput>Last name*</LabelIput>
+                  </Grid>
+                  <Grid item xs={12} sm={9} md={9}>
+                    <Controller
+                      name="lastname"
+                      render={({ field }) => {
+                        return (
+                          <TextField
+                            {...field}
+                            label="Last name"
                             style={{ width: "100%", marginBottom: "10px" }}
                             InputLabelProps={{ style: { fontSize: 14 } }}
                             required
@@ -187,39 +218,7 @@ const AddUser = () => {
                     />
                   </Grid>
                 </Grid>
-                <Grid
-                  container
-                  sx={{ marginBottom: { xs: "10px", sm: "10px" } }}
-                >
-                  <Grid
-                    item
-                    xs={12}
-                    sm={3}
-                    md={3}
-                    sx={{ marginBottom: { xs: "10px", sm: 0 } }}
-                  >
-                    <LabelIput>Password*</LabelIput>
-                  </Grid>
-                  <Grid item xs={12} sm={9} md={9}>
-                    <Controller
-                      name="password"
-                      render={({ field }) => {
-                        return (
-                          <TextField
-                            {...field}
-                            type="password"
-                            label="Password"
-                            style={{ width: "100%", marginBottom: "10px" }}
-                            InputLabelProps={{ style: { fontSize: 14 } }}
-                            required
-                          />
-                        );
-                      }}
-                      control={control}
-                      defaultValue=""
-                    />
-                  </Grid>
-                </Grid>
+
                 <Grid
                   container
                   sx={{ marginBottom: { xs: "10px", sm: "10px" } }}
@@ -263,7 +262,7 @@ const AddUser = () => {
                     md={3}
                     sx={{ marginBottom: { xs: "10px", sm: 0 } }}
                   >
-                    <LabelIput>Phone*</LabelIput>
+                    <LabelIput>Điện thoại*</LabelIput>
                   </Grid>
                   <Grid item xs={12} sm={9} md={9}>
                     <Controller
@@ -283,45 +282,6 @@ const AddUser = () => {
                       defaultValue=""
                     />
                   </Grid>
-                </Grid>
-                <Grid
-                  container
-                  sx={{ marginBottom: { xs: "10px", sm: "10px" } }}
-                >
-                  <Grid
-                    item
-                    xs={12}
-                    sm={3}
-                    md={3}
-                    sx={{ marginBottom: { xs: "10px", sm: 0 } }}
-                  >
-                    <LabelIput>Role*</LabelIput>
-                  </Grid>
-                  <Grid item xs={12} sm={9} md={9}>
-                    <Controller
-                      name="role"
-                      defaultValue={"user"}
-                      control={control}
-                      render={({ field }) => (
-                        <Select
-                          labelId="level-label"
-                          {...field}
-                          style={{
-                            width: "100%",
-                            marginBottom: "10px",
-                            textAlign: "left",
-                          }}
-                        >
-                          <MenuItem value={0}>Admin</MenuItem>
-                          <MenuItem value={1}>OWNER</MenuItem>
-                          <MenuItem value={2}>USER</MenuItem>
-                        </Select>
-                      )}
-                    />
-                  </Grid>
-                  {/* <FormHelperText error={true}>
-            {errors.level?.message}
-            </FormHelperText> */}
                 </Grid>
 
                 <Box
@@ -349,7 +309,7 @@ const AddUser = () => {
                         marginRight: "15px",
                       }}
                     >
-                      Cancel
+                      Hủy
                     </Button>
                     <Button
                       type="submit"
@@ -360,7 +320,7 @@ const AddUser = () => {
                         margin: "0 5px",
                       }}
                     >
-                      Save
+                      Lưu
                     </Button>
                   </Box>
                 </Box>
@@ -373,4 +333,4 @@ const AddUser = () => {
   );
 };
 
-export default AddUser;
+export default Profile;

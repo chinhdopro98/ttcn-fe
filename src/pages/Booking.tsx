@@ -66,10 +66,14 @@ const Booking = () => {
   const [endTime, setEndTime] = useState("");
   const [totalHours, setTotalHours] = useState(0);
   const [driver, setDriver] = useState("no");
+  const [text, setText] = useState("");
   const [totalMoney, setTotalMoney] = useState(0);
   const [open, setOpen] = React.useState(false);
   const [openModal, setOpenModal] = React.useState(false);
   const handleOpen = () => setOpen(true);
+  const handleNoteChange = (event) => {
+    setText(event.target.value);
+  };
   const handleClose = () => {
     setOpen(false);
     setOpenModal(false);
@@ -97,7 +101,7 @@ const Booking = () => {
       setTotalMoney(totalHours * car.price);
     }
     if (driver !== "no") {
-      setTotalMoney(totalMoney + 50000 * totalHours);
+      setTotalMoney(totalMoney + 30000 * totalHours);
     }
   }, [driver, totalHours]);
   const submitBooking = async (e: React.SyntheticEvent) => {
@@ -155,155 +159,154 @@ const Booking = () => {
         <Box sx={{ backgroundImage: `url(../assets/image/car/pg-admin.jpg)` }}>
           <Box
             sx={{
-              display: "flex",
+              display: "block",
               paddingBottom: "50px",
-              padding: "20px 20px 50px 20px",
+              padding: "40px 20px 30px 20px",
+              maxWidth: "1200px",
+              margin: "0 auto",
             }}
           >
-            <Box>
-              <div className="h-64">
-                <Typography variant="h3" sx={{ fontWeight: "bold" }} mb={1}>
+            <Box sx={{ display: "flex" }}>
+              <Box sx={{ width: "450px", height: "350px" }}>
+                {car?.image ? (
+                  <img
+                    src={`http://localhost:5000/${car.image}`}
+                    alt=""
+                    className="carimg w-full h-full"
+                  />
+                ) : (
+                  ""
+                )}
+              </Box>
+              <Box
+                sx={{
+                  paddingLeft: "25px",
+                  textAlign: "left",
+                  width: "calc(100% - 475px);",
+                }}
+              >
+                <Typography
+                  variant="h5"
+                  sx={{
+                    fontWeight: "bold",
+                    fontSize: "22px",
+                    textTransform: "uppercase",
+                  }}
+                  mb={1.5}
+                >
                   {car?.name}
                 </Typography>
-                <Box>
-                  {car?.image ? (
-                    <img
-                      src={`http://localhost:5000/${car.image}`}
-                      alt=""
-                      className="carimg w-full h-full"
-                    />
-                  ) : (
-                    ""
-                  )}
-                </Box>
-              </div>
-              <Typography variant="h5" mb={1}>
-                {car?.capacity === 1 ? "Petrol" : ""}
-              </Typography>
-            </Box>
-            <Box sx={{ width: "60%", paddingLeft: "25px" }}>
-              <TableContainer component={Paper}>
-                <Table
-                  sx={{ minWidth: 650 }}
-                  size="small"
-                  aria-label="a dense table"
-                >
-                  <TableRow>
-                    <TableCell align="left">Name</TableCell>
-                    <TableCell align="left">{car?.name}</TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell align="left">Capacity</TableCell>
-                    <TableCell align="left">{car?.capacity}(lit)</TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell align="left">Auto Maker</TableCell>
-                    <TableCell align="left">
+                <Box sx={{ display: "flex" }}>
+                  <Box sx={{ width: "50%" }}>
+                    <Typography variant="h6" sx={{ fontSize: "16px" }} mb={1}>
+                      Dòng xe:
                       {automakers?.map((automaker: IAutoMaker) =>
                         automaker._id === car.autoMarket
                           ? automaker.name_automaker
                           : ""
                       )}
-                    </TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell align="left">Fuel Type</TableCell>
-                    <TableCell align="left">
-                      {car?.capacity === 1
-                        ? "Petrol"
-                        : car?.capacity === 2
-                        ? "Oil"
-                        : "Electricity"}
-                    </TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell align="left">Create Year</TableCell>
-                    <TableCell align="left">{car?.yearCreated}</TableCell>
-                  </TableRow>
-
-                  <TableRow>
-                    <TableCell align="left" sx={{ width: 180 }}>
-                      Country Origin
-                    </TableCell>
-                    <TableCell align="left">{car?.origin}</TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell align="left">Number Seats</TableCell>
-                    <TableCell align="left">{car?.numbereatSeats}</TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell align="left">Status</TableCell>
-                    <TableCell align="left">
-                      {car?.status === 1 ? "New" : "Old"}
-                    </TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell align="left">Color OutSide</TableCell>
-                    <TableCell align="left">{car?.colorOutSide}</TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell align="left">Color InSide</TableCell>
-                    <TableCell align="left">{car?.colorInSide}</TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell align="left">Door Number</TableCell>
-                    <TableCell align="left">{car?.doorNumber}</TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell align="left">Consume Fuel</TableCell>
-                    <TableCell align="left">{car?.consumeFuel}</TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell align="left">Gear Number</TableCell>
-                    <TableCell align="left">{car?.gear}</TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell align="left">Notes</TableCell>
-                    <TableCell align="left">{car?.note}</TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell align="left">Price</TableCell>
-                    <TableCell align="left">
-                      {car?.price.toLocaleString()}VND/1h
-                    </TableCell>
-                  </TableRow>
-                </Table>
-              </TableContainer>
+                    </Typography>
+                    <Typography variant="h6" sx={{ fontSize: "16px" }} mb={1}>
+                      Nhiên liệu:{" "}
+                      {car?.fuelType === 1
+                        ? "Xăng"
+                        : car?.fuelType === 2
+                        ? "Dầu"
+                        : "Điện"}
+                    </Typography>
+                    <Typography variant="h6" sx={{ fontSize: "16px" }} mb={1}>
+                      Năm sản xuất :{car?.yearCreated}
+                    </Typography>
+                    <Typography variant="h6" sx={{ fontSize: "16px" }} mb={1}>
+                      Dung tích:{car?.capacity}(lit)
+                    </Typography>
+                    <Typography variant="h6" sx={{ fontSize: "16px" }} mb={1}>
+                      Tình trạng: {car?.status === 1 ? "Mới" : "Cũ"}
+                    </Typography>
+                    <Typography variant="h6" sx={{ fontSize: "16px" }} mb={1}>
+                      Gara: {car?.user.nameCustomer}
+                    </Typography>
+                  </Box>
+                  <Box sx={{ width: "50%" }}>
+                    <Typography variant="h6" sx={{ fontSize: "16px" }} mb={1}>
+                      Tiêu thụ: {car?.consumeFuel}
+                    </Typography>
+                    <Typography variant="h6" sx={{ fontSize: "16px" }} mb={1}>
+                      Số chỗ ngồi: {car?.gear}
+                    </Typography>
+                    <Typography variant="h6" sx={{ fontSize: "16px" }} mb={1}>
+                      Màu nội thất: {car?.colorInSide}
+                    </Typography>
+                    <Typography variant="h6" sx={{ fontSize: "16px" }} mb={1}>
+                      Màu ngoại thất thất: {car?.colorInSide}
+                    </Typography>
+                    <Typography variant="h6" sx={{ fontSize: "16px" }} mb={1}>
+                      Số cửa: {car?.doorNumber}
+                    </Typography>
+                    <Typography variant="h6" sx={{ fontSize: "16px" }} mb={1}>
+                      Xuất xứ: {car?.origin}
+                    </Typography>
+                  </Box>
+                </Box>
+                <Box>
+                  <Typography variant="h6" sx={{ fontSize: "16px" }} mb={1}>
+                    Ghi chí: {car?.note}
+                  </Typography>
+                  <Typography variant="h6" sx={{ fontSize: "16px" }} mb={1}>
+                    Địa chỉ: {car?.address}
+                  </Typography>
+                </Box>
+                <Box>
+                  {" "}
+                  <Typography
+                    variant="h6"
+                    sx={{
+                      display: "inline-block",
+                      fontSize: "18px",
+                      background: "#27ae60",
+                      padding: "12px",
+                    }}
+                    mb={1}
+                  >
+                    {" "}
+                    Giá thuê: {car?.price.toLocaleString()}VND/1h{" "}
+                  </Typography>
+                </Box>
+              </Box>
             </Box>
           </Box>
           <Box>
             <Box
               sx={{
-                width: "400px",
+                maxWidth: "1200px",
                 textAlign: "left",
                 display: "block",
+                padding: "0px 20px 30px 20px",
                 margin: "0 auto",
               }}
             >
               <form action="">
-                <Box sx={{ display: "block" }}>
-                  <RangePicker
-                    showTime={{ format: "HH:mm" }}
-                    format="MM/DD/YYYY HH:mm A"
-                    onChange={calculateHours}
-                  />
-                  {/* <Button
-                    variant="contained"
-                    onClick={handleOpen}
+                <Box sx={{ display: "flex" }}>
+                  <Box sx={{ display: "block" }}>
+                    <RangePicker
+                      showTime={{ format: "HH:mm" }}
+                      format="MM/DD/YYYY HH:mm A"
+                      onChange={calculateHours}
+                    />
+                  </Box>
+                  <FormControl
                     sx={{
-                      display: "block",
-                      margin: "20px 0",
-                      textAlign: "center",
+                      display: "flex",
+                      flexDirection: "inherit",
+                      alignItems: "center",
                     }}
                   >
-                    See book slots
-                  </Button> */}
-                </Box>
-                <Grid item sm={4} xs={6} md={3}>
-                  <FormControl sx={{ display: "flex" }}>
                     <FormLabel id="demo-controlled-radio-buttons-group">
-                      <Typography variant="h5" sx={{}} mb={1}>
-                        DRIVER
+                      <Typography
+                        variant="h5"
+                        sx={{ marginLeft: "50px", marginRight: "20px" }}
+                      >
+                        Driver
                       </Typography>
                     </FormLabel>
                     <RadioGroup
@@ -311,6 +314,7 @@ const Booking = () => {
                       name="controlled-radio-buttons-group"
                       value={driver}
                       onChange={handleChangeDriver}
+                      sx={{ display: "inline-block" }}
                     >
                       <FormControlLabel
                         value="no"
@@ -324,7 +328,15 @@ const Booking = () => {
                       />
                     </RadioGroup>
                   </FormControl>
-                </Grid>
+                </Box>
+                <textarea
+                  cols={20}
+                  rows={3}
+                  className="text-booking"
+                  placeholder="Ghi chú"
+                  value={text}
+                  onChange={handleNoteChange}
+                ></textarea>
               </form>
               <Typography variant="h6" sx={{}} mb={1}>
                 Total Hours: {totalHours} h

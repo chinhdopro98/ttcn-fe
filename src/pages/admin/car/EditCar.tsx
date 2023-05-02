@@ -404,7 +404,7 @@ const EditCar: React.FC<Iprops> = (props) => {
                     return (
                       <TextField
                         {...field}
-                        label="Màu nội thất"
+                        label="Mức tiêu thụ"
                         style={{ width: "100%", marginRight: "70px" }}
                         InputLabelProps={{ style: { fontSize: 14 } }}
                         required

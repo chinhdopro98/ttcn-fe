@@ -11,7 +11,6 @@ export const userLogin = createAsyncThunk(
   "users/login",
   async (data: IUser, { rejectWithValue }) => {
     try {
-      console.log(data);
       const res = await loginApi(data);
       localStorage.setItem("user", JSON.stringify(res));
       if (JSON.parse(JSON.stringify(res)).token) {
@@ -55,7 +54,7 @@ export const updateUser = createAsyncThunk(
   async (data: IUserData, { rejectWithValue }) => {
     try {
       const res = await updateUserApi(data);
-      return res;
+      return res.data;
     } catch (error) {
       console.log(error);
     }

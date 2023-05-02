@@ -28,8 +28,8 @@
   width: 100%;
 }
 .sidebar-item {
-  padding: 1.5em;
-  padding-left: 2em;
+  padding: 12px 15px;
+  padding-left: 1em;
   display: flex;
   color: #ffffff;
   list-style: none;

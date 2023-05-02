@@ -75,24 +75,36 @@ const userSlice = createSlice({
     });
 
     builder.addCase(updateUser.fulfilled, (state, action) => {
-      if (action.payload) {
+      if (action.payload.status === "success") {
         state.error = "";
-        state.labelSuccess = action.payload.data;
+        state.labelSuccess = "Update user success";
         state.openSnackbar = true;
         state.userInfos.map((user) => {
-          if (user._id === action.meta.arg._id) {
-            user.firstname = action.meta.arg.firstname;
-            user.username = action.meta.arg.username;
-            user.email = action.meta.arg.email;
-            user.phone = action.meta.arg.phone;
-            user.password = action.meta.arg.password;
-            user.role = action.meta.arg.role;
+          if (user._id === action.payload.updateUser._id) {
+            user.firstname = action.payload.updateUser.firstname;
+            user.lastname = action.payload.updateUser.lastname;
+            user.username = action.payload.updateUser.username;
+            user.email = action.payload.updateUser.email;
+            user.phone = action.payload.updateUser.phone;
+            user.role = action.payload.updateUser.role;
           }
         });
+      } else {
+        state.labelSuccess = "";
+        state.error = `Update user failed`;
+        state.openSnackbar = true;
       }
+    });
+    builder.addCase(updateUser.rejected, (state, action) => {
+      state.labelSuccess = "";
+      state.error = `Create user failed`;
+      state.openSnackbar = true;
     });
     builder.addCase(deleteUser.fulfilled, (state, action) => {
       console.log(action);
+      state.error = "";
+      state.labelSuccess = `Create user success!`;
+      state.openSnackbar = true;
       if (action.payload.status === 200) {
         state.error = "";
         state.labelSuccess = action.payload.data;

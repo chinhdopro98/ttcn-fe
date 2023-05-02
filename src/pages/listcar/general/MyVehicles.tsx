@@ -10,12 +10,12 @@ import { getAllAutoMaker } from "../../../redux/action/autoMakerAction";
 import EditCar from "../../admin/car/EditCar";
 import { Typography } from "@mui/material";
 import Button from "@mui/material/Button";
+import HideShowCar from "../../../components/component/car/HideShowCar";
 interface Iprops {
   car: Icar;
 }
 const MyVehicles: React.FC<Iprops> = (props) => {
   const { car } = props;
-  console.log(car);
   const dispatch = useAppDispatch();
   const automakers = useSelector(
     (state: RootState) => state.automaker.automakers
@@ -47,16 +47,25 @@ const MyVehicles: React.FC<Iprops> = (props) => {
             display: "flex",
             padding: "5px 0",
             justifyContent: "space-between",
+            alignItems: "center",
           }}
         >
           <h4>{car.name}</h4>
-          <Typography
-            variant="h6"
-            sx={{ fontWeight: "bold" }}
-            className="carowner-edit"
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "center",
+            }}
           >
-            <EditCar car={car} />
-          </Typography>
+            <Typography
+              variant="h6"
+              sx={{ fontWeight: "bold", marginRight: "20px" }}
+              className="carowner-edit"
+            >
+              <EditCar car={car} />
+            </Typography>
+            <HideShowCar />
+          </Box>
         </Box>
         <p>
           <i className="fa fa-location-dot"></i> {car.origin}

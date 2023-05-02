@@ -25,7 +25,7 @@ export interface Icar {
   active?: any;
   address?: string;
   provider?: string;
-  user?: string;
+  user?: any;
   createdAt?: string;
 }
 
@@ -51,7 +51,7 @@ export interface IRegister {
 
 export interface IBooking {
   _id?: string;
-  userid?: string;
+  userid?: any;
   carid?: any;
   totalHours: number;
   totalMoney: number;
@@ -60,6 +60,7 @@ export interface IBooking {
   bookedTimeSlots: bookingTime;
   statusPayment?: number;
   approve?: number;
+  createdAt?: string;
 }
 
 export interface IBookingStore {
@@ -73,6 +74,7 @@ export interface IBookingStore {
   bookedTimeSlots: bookingTime;
   statusPayment?: number;
   approve?: number;
+  createdAt?: string;
 }
 export interface AddCar {
   name: string;
@@ -137,9 +139,12 @@ export interface IUserData {
   lastname: string;
   email: string;
   username: string;
-  password: string;
+  password?: string;
   phone: string;
-  role: string;
+  role: any;
+  createdAt?: any;
+  nameCustomer?: string;
+  tax?: number;
 }
 export interface Category {
   _id: string;
@@ -147,7 +152,8 @@ export interface Category {
 }
 export interface UpdateStatus {
   _id: string;
-  status: number;
+  status?: number;
+  approve?: any;
 }
 export interface pageSearch {
   page: number;
@@ -184,4 +190,10 @@ export interface ProviderData {
 export interface ApproveCar {
   id?: string;
   active?: number;
+}
+export interface UpdateBooking {
+  id?: string;
+  from?: any;
+  to?: any;
+  driver: any;
 }

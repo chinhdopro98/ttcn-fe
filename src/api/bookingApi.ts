@@ -61,11 +61,52 @@ export const createBookingApi = async ({
     console.log(err);
   }
 };
-export const updateStatusBookingApi = async ({ _id, status }: UpdateStatus) => {
+export const updateStatusBookingApi = async ({
+  _id,
+  approve,
+}: UpdateStatus) => {
   try {
     const response = await instance.post(URL.UPDATE_STATUS, {
       _id,
-      status,
+      approve,
+    });
+    return response;
+  } catch (err) {
+    console.log(err);
+  }
+};
+export const getAllBookingOwnerApi = async () => {
+  try {
+    const response = await instance.get(URL.GET_BOOKING_OWNER);
+    return response.data;
+  } catch (err) {
+    console.log(err);
+  }
+};
+export const updateBookingApi = async ({
+  _id,
+  bookedTimeSlots,
+  totalHours,
+  totalMoney,
+  driverRequired,
+}: IBooking) => {
+  try {
+    const response = await instance.post(`${URL.UPDATE_BOOKING}`, {
+      _id,
+      bookedTimeSlots,
+      totalHours,
+      totalMoney,
+      driverRequired,
+    });
+    return response;
+  } catch (err) {
+    console.log(err);
+  }
+};
+export const deleteBookingApi = async (_id: string) => {
+  try {
+    const response = await instance.post(URL.DELETE_BOOKING, {
+      _id: _id,
     });
     return response;
   } catch (err) {

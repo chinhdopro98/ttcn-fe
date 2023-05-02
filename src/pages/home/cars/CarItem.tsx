@@ -6,6 +6,8 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../../redux/store/store";
 import { getAllAutoMaker } from "../../../redux/action/autoMakerAction";
 import { Link } from "react-router-dom";
+import { getAllProvider } from "../../../redux/action/providerAction";
+import { Box, Chip } from "@mui/material";
 interface Iprops {
   car: Icar;
 }
@@ -15,8 +17,10 @@ const CarItem: React.FC<Iprops> = (props) => {
   const automakers = useSelector(
     (state: RootState) => state.automaker.automakers
   );
+  const providers = useSelector((state: RootState) => state.provider.providers);
   useEffect(() => {
     dispatch(getAllAutoMaker());
+    dispatch(getAllProvider());
   }, [dispatch]);
   return (
     <div className="box shadow" key={car._id}>
@@ -40,9 +44,39 @@ const CarItem: React.FC<Iprops> = (props) => {
         <h4>
           <Link to={`booking/${car._id}`}>{car.name}</Link>
         </h4>
-        <p>
-          <i className="fa fa-location-dot"></i> {car.origin}
-        </p>
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        >
+          <p>
+            <i className="fa fa-location-dot"></i>{" "}
+            {providers?.map((provider) =>
+              provider._id === car.provider ? provider.name : ""
+            )}
+          </p>
+          <Box sx={{ display: "flex" }}>
+            <Chip
+              label={
+                car?.fuelType === 1
+                  ? "Xăng"
+                  : car?.fuelType === 2
+                  ? "Dầu"
+                  : "Điện"
+              }
+              color="success"
+              sx={{ marginRight: "10px" }}
+            />
+            <Chip
+              label={car?.yearCreated}
+              color="secondary"
+              sx={{ marginRight: "10px" }}
+            />
+            <Chip label={car?.origin} color="primary" />
+          </Box>
+        </Box>
       </div>
       <div className="button flex">
         <div>

@@ -252,3 +252,39 @@ img {
   flex-direction: column;
   background-color: #f0f2f5;
 }
+.color-red {
+  text-transform: uppercase;
+  background: #1976d2;
+  padding: 2px;
+  border-radius: 5px;
+  color: #f0f2f5;
+}
+.color-blue {
+  text-transform: uppercase;
+  background: hsl(155, 93%, 47%);
+  padding: 2px;
+  border-radius: 5px;
+  color: #f0f2f5;
+}
+.color-yellow {
+  text-transform: uppercase;
+  background: #e3d516;
+  padding: 2px;
+  border-radius: 5px;
+  color: #f0f2f5;
+}
+.text-booking {
+  background: white;
+  width: 400px;
+  border: 1px solid #333;
+  margin: 20px 0;
+  padding: 10px 10px;
+}
+
+.ant-picker-panel {
+  z-index: 9999999 !important;
+}
+.icon-on-off > i {
+  color: #1976d2;
+  font-size: 26px;
+}

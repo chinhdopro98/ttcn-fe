@@ -8,8 +8,8 @@ const Model = () => {
       <section className="location padding">
         <div className="container">
           <Heading
-            title="Various Car Models"
-            subtitle="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam."
+            title="Các mẫu xe khác nhau"
+            subtitle="Xe có đầy đủ các tiện nghi, chắc chắn sẽ mang đến cho bạn cảm giác thoải mái, thư thái khi sử dụng dịch vụ của chúng tôi."
           />
 
           <div className="content grid3 mtop">

@@ -64,7 +64,7 @@ table {
 }
 th {
   text-align: left;
-  padding: 12px 24px;
+  padding: 10px 12px;
   background: transparent;
   box-shadow: none;
   color: #2d83b5;
@@ -86,7 +86,7 @@ thead {
 }
 td {
   text-align: left;
-  padding: 12px 24px;
+  padding: 10px 14px;
   background: transparent;
   box-shadow: none;
   border-bottom: 0.05rem solid rgb(240, 242, 245);

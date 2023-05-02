@@ -34,7 +34,6 @@ export const updateCategoryBlogApi = async ({
   image,
 }: BlogCategory) => {
   try {
-    console.log(image);
     const formData = new FormData();
     formData.append("title", title);
     formData.append("description", description);
@@ -140,6 +139,14 @@ export const deleteBlogApi = async (id: string) => {
   try {
     const response = await instance.delete(`${URL.DELETE_BLOG}/${id}`);
     return response;
+  } catch (err) {
+    console.log(err);
+  }
+};
+export const getOneBlogApi = async (id: string) => {
+  try {
+    const response = await instance.get(`${URL.GET_ONE_BLOG}/${id}`);
+    return response.data;
   } catch (err) {
     console.log(err);
   }

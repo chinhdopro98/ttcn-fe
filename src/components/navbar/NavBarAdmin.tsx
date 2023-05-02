@@ -13,7 +13,7 @@ const NavBarAdmin = () => {
   const navigate = useNavigate();
   const logout = () => {
     localStorage.clear();
-    navigate("/login");
+    window.location.reload();
   };
   const user = JSON.parse(localStorage.getItem("userToken"));
   const [open, setOpen] = React.useState(false);
@@ -61,7 +61,7 @@ const NavBarAdmin = () => {
       <div className="menu">
         <ul>
           <li className="item-link">
-            <Link to="/admin">HOME</Link>
+            <Link to="/admin">Trang chủ</Link>
           </li>
           <li className="item-link">
             <Link to="/admin/car">CAR</Link>

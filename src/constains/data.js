@@ -70,22 +70,22 @@ export const awards = [
   {
     icon: <i class="fa-solid fa-car"></i>,
     num: "132 +	",
-    name: "Car",
+    name: "Xe",
   },
   {
     icon: <i class="fa-solid fa-users"></i>,
     num: "1433 +",
-    name: "Customer",
+    name: "Khách hàng",
   },
   {
     icon: <i class="fa-solid fa-globe"></i>,
     num: "50 +",
-    name: "Country",
+    name: "Tỉnh thành",
   },
   {
     icon: <i class="fa-solid fa-heart"></i>,
-    num: "10000 +",
-    name: "Like and Share",
+    num: "1000 +",
+    name: "Đặt xe",
   },
 ];
 export const footer = [

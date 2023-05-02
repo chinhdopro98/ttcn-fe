@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Typography from "@mui/material/Typography";
 import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
+import { LIMIT } from "../../constains/url";
 interface Iprops {
   page: number;
   setPage: (value) => void;
@@ -16,7 +17,7 @@ const Navigation: React.FC<Iprops> = (props) => {
     <Stack spacing={2}>
       <Pagination
         sx={{ display: "flex", justifyContent: "center", marginBottom: "40px" }}
-        count={Math.ceil(total / 10)}
+        count={Math.ceil(total / LIMIT)}
         page={page}
         onChange={handleChange}
       />

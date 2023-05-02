@@ -9,6 +9,8 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Back from "./common/Back";
 import img from "../assets/image/car/bg-list.jpg";
+import EditBooking from "../components/component/booking/EditBooking";
+import DeleteBooking from "../components/component/booking/DeleteBooking";
 const ListBookings = () => {
   const dispatch = useAppDispatch();
   const bookings = useSelector(
@@ -25,176 +27,124 @@ const ListBookings = () => {
         title="Đặt xe & chinh phục những cung đường"
         cover={img}
       />
-      <Box sx={{ backgroundColor: "#7cd8d6" }}>
-        {bookings
-          .filter((book) => book.userid === user._id)
-          .map((booking, index) => {
-            return (
-              <>
-                <Box
-                  sx={{
-                    display: "flex",
-                    padding: "10px",
-                    background: "#ECE2E2",
-                    boxShadow:
-                      "rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px",
-                  }}
-                  mb={4}
-                >
-                  <Box sx={{ marginRight: "30px" }}>
-                    <Typography
-                      variant="h6"
-                      sx={{
-                        color: "#5E17EB",
-                        fontSize: "45px",
-                        textAlign: "center",
-                        lineHeight: "120px",
-                      }}
-                    >
-                      {index + 1}
-                    </Typography>
-                  </Box>
-                  <Box
-                    sx={{
-                      width: "150px",
-                      height: "120px",
-                      marginRight: "30px",
-                    }}
-                  >
-                    {/* <Link to={`/app/booking/${booking.carid._id}`}>
-                  <img
-                    src={`http://localhost:5000/${carid.image}`}
-                    alt=""
-                    className="carimg w-full h-full"
-                  />
-                </Link> */}
-                  </Box>
-                  <Box sx={{ textAlign: "left", display: "flex" }}>
-                    <Box sx={{ width: "250px" }}>
-                      <Typography
-                        variant="h5"
-                        mb={0.5}
-                        sx={{ fontSize: "17px", textAlign: "left" }}
-                      >
-                        Name: {booking.carid?.name}
-                      </Typography>
-                      <Typography
-                        variant="h6"
-                        mb={0.5}
-                        sx={{ fontSize: "16px", textAlign: "left" }}
-                      >
-                        Price : {booking.carid?.price.toLocaleString()} vnd/1h
-                      </Typography>
-                      <Typography
-                        variant="h6"
-                        mb={0.5}
-                        sx={{ fontSize: "16px", textAlign: "left" }}
-                      >
-                        Total hours :{booking.totalHours}h
-                      </Typography>
-                      <Typography
-                        variant="h6"
-                        mb={0.5}
-                        sx={{ fontSize: "16px", textAlign: "left" }}
-                      >
-                        Total amount : {booking.totalMoney.toLocaleString()}vnd
-                      </Typography>
-                      <Typography
-                        variant="h5"
-                        sx={{ fontSize: "16px", textAlign: "left" }}
-                      >
-                        {" "}
-                        Status payment :
-                        {booking.statusPayment === 0 ? (
-                          <Box
-                            sx={{
-                              background: "red",
-                              display: "inline-block",
-                              padding: "4px",
-                              borderRadius: "4px",
-                            }}
-                          >
-                            Not
-                          </Box>
-                        ) : (
-                          <Box
-                            sx={{
-                              background: "#58CE81",
-                              display: "inline-block",
-                              padding: "4px",
-                              borderRadius: "4px",
-                            }}
-                          >
-                            Yes
-                          </Box>
-                        )}
-                      </Typography>
-                    </Box>
-                    <Box>
-                      <Typography
-                        variant="h6"
-                        mb={0.5}
-                        sx={{ fontSize: "16px", textAlign: "left" }}
-                      >
-                        Transaction ID: {booking?.transactionId}
-                      </Typography>
-                      <Typography
-                        variant="h6"
-                        mb={0.5}
-                        sx={{ fontSize: "16px", textAlign: "left" }}
-                      >
-                        Start time:{" "}
-                        {moment(booking.bookedTimeSlots.from).format(
-                          "DD-MM-YYYY HH:mm"
-                        )}
-                      </Typography>
-                      <Typography
-                        variant="h6"
-                        mb={0.5}
-                        sx={{ fontSize: "16px", textAlign: "left" }}
-                      >
-                        End time:{" "}
-                        {moment(booking.bookedTimeSlots.to).format(
-                          "DD-MM-YYYY HH:mm"
-                        )}{" "}
-                      </Typography>
+      <Box sx={{ padding: "40px 30px" }}>
+        <Typography
+          variant="h3"
+          mb={1}
+          sx={{
+            fontSize: "26px",
+            fontWeight: "bold",
+            textAlign: "center",
+            padding: "0 0 40px 0",
+          }}
+        >
+          DANH SÁCH ĐẶT XE
+        </Typography>
+        <table>
+          <thead>
+            <th>ID</th>
+            <th>Tên</th>
+            <th>Ảnh</th>
+            <th>Bắt đầu</th>
+            <th>Kết thúc</th>
+            <th>Ngày tạo</th>
+            <th>Giá</th>
+            <th>Trạng thái</th>
+            <th>Edit</th>
+            <th>Delete</th>
+          </thead>
+          {bookings
+            .filter((book) => book.userid._id === user._id)
+            .map((booking, index) => {
+              return (
+                <tr key={booking._id}>
+                  <td>
+                    <span>{index + 1}</span>
+                  </td>
+                  <td>
+                    <span>{booking.carid.name}</span>
+                  </td>
+                  <td>
+                    <div className="dashboard-content-avatar">
+                      <img
+                        src={`http://localhost:5000/${booking.carid.image}`}
+                        alt={``}
+                      />
+                    </div>
+                  </td>
+                  <td>
+                    <span>
+                      {moment(booking.bookedTimeSlots.from).format(
+                        "DD-MM-YYYY HH:mm"
+                      )}
+                    </span>
+                  </td>
+                  <td>
+                    <span>
+                      {moment(booking.bookedTimeSlots.to).format(
+                        "DD-MM-YYYY HH:mm"
+                      )}
+                    </span>
+                  </td>
+                  <td>
+                    <span>{new Date(booking.createdAt).toLocaleString()}</span>
+                  </td>
 
-                      <Typography
-                        variant="h5"
-                        sx={{ fontSize: "16px", textAlign: "left" }}
+                  <td>
+                    <span>{booking.totalMoney.toLocaleString()}VND</span>
+                  </td>
+                  <td>
+                    {booking.approve === 0 ? (
+                      <Box
+                        sx={{
+                          width: "80px",
+                          background: "#ffe000",
+                          display: "inline-block",
+                          padding: "6px",
+                          borderRadius: "4px",
+                          textAlign: "center",
+                        }}
                       >
-                        {" "}
-                        Status Booking :
-                        {booking.approve === 0 ? (
-                          <Box
-                            sx={{
-                              background: "red",
-                              display: "inline-block",
-                              padding: "4px",
-                              borderRadius: "4px",
-                            }}
-                          >
-                            Waiting
-                          </Box>
-                        ) : (
-                          <Box
-                            sx={{
-                              background: "#58CE81",
-                              display: "inline-block",
-                              padding: "4px",
-                              borderRadius: "4px",
-                            }}
-                          >
-                            Success
-                          </Box>
-                        )}
-                      </Typography>
-                    </Box>
-                  </Box>
-                </Box>
-              </>
-            );
-          })}
+                        Waiting
+                      </Box>
+                    ) : booking.approve === 1 ? (
+                      <Box
+                        sx={{
+                          width: "80px",
+                          background: "#58CE81",
+                          display: "inline-block",
+                          textAlign: "center",
+                          padding: "6px",
+                          borderRadius: "4px",
+                        }}
+                      >
+                        Success
+                      </Box>
+                    ) : (
+                      <Box
+                        sx={{
+                          width: "80px",
+                          background: "#f00017",
+                          display: "inline-block",
+                          padding: "6px",
+                          borderRadius: "4px",
+                          textAlign: "center",
+                        }}
+                      >
+                        Reject
+                      </Box>
+                    )}
+                  </td>
+                  <td>
+                    <EditBooking booking={booking} role={user.role} />
+                  </td>
+                  <td>
+                    <DeleteBooking booking={booking} />
+                  </td>
+                </tr>
+              );
+            })}
+        </table>
       </Box>
     </>
   );

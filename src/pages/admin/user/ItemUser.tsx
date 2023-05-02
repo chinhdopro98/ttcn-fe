@@ -27,7 +27,20 @@ const ItemUser: React.FC<Iprops> = (props) => {
       <TableCell align="left">{user.email}</TableCell>
       <TableCell align="left">{user.phone}</TableCell>
       <TableCell align="left">
-        {user.role === "user" ? "Admin" : "Customer"}
+        {new Date(user.createdAt).toLocaleString()}
+      </TableCell>
+      <TableCell align="left" sx={{ textTransform: "capitalize" }}>
+        <span
+          className={
+            user.role === "admin"
+              ? "color-red"
+              : user.role === "user"
+              ? "color-blue"
+              : "color-yellow"
+          }
+        >
+          {user.role}
+        </span>
       </TableCell>
       <TableCell align="left">
         <EditUser user={user} />

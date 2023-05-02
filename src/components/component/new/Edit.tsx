@@ -24,7 +24,6 @@ interface Iprops {
 }
 const Edit: React.FC<Iprops> = (props) => {
   const { blog } = props;
-
   const dispatch = useAppDispatch();
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);

@@ -13,8 +13,10 @@ import CreateCarAdmin from "../../../components/component/car/CreateCarAdmin";
 import { closeSnackBar } from "../../../redux/reducer/carSlice";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
+import Navigation from "../../../components/component/Navigation";
 const AdminCar = () => {
   const [search, setSearch] = useState("");
+  const total = useSelector((state: RootState) => state.car.total);
   const cars = useSelector((state: RootState) => state.car.cars);
   const labelSuccess = useSelector(
     (state: RootState) => state.car.labelSuccess
@@ -41,7 +43,7 @@ const AdminCar = () => {
         search: "",
       })
     );
-  }, [dispatch]);
+  }, [page, dispatch]);
   return (
     <>
       <div className="dashboard-content">
@@ -67,15 +69,17 @@ const AdminCar = () => {
               <th>Price</th>
               <th>Ngày tạo</th>
               <th>Danh mục</th>
+              <th>Người tạo</th>
+              <th>Quyền</th>
               <th>Phê duyệt</th>
               <th>Edit</th>
               <th>Delete</th>
             </thead>
 
-            {cars.length !== 0 ? (
+            {cars.length > 0 ? (
               <tbody>
                 {cars.map((car, index) => (
-                  <ItemCar car={car} index={index} />
+                  <ItemCar car={car} index={(page - 1) * 10 + index} />
                 ))}
               </tbody>
             ) : null}
@@ -112,6 +116,7 @@ const AdminCar = () => {
           )}
         </Box>
       </Snackbar>{" "}
+      <Navigation page={page} setPage={setPage} total={total} />
     </>
   );
 };

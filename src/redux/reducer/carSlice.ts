@@ -140,33 +140,32 @@ const carSlice = createSlice({
       state.openSnackbar = true;
     });
     //createCar
-    builder.addCase(createCarFormdata.fulfilled, (state, { payload }) => {
-      console.log(payload);
-      if (payload.status === "success") {
+    builder.addCase(createCarFormdata.fulfilled, (state, action) => {
+      if (action.payload.status === "success") {
         state.error = "";
-        state.labelSuccess = `Register car success!`;
+        state.labelSuccess = "Create User Success!";
         state.openSnackbar = true;
-
         state.cars.push({
-          _id: "",
-          name: payload.newCar.name,
-          capacity: payload.newCar.capacity,
-          fuelType: payload.newCar.fuelType,
-          autoMarket: payload.newCar.autoMarket,
-          status: payload.newCar.status,
-          doorNumber: payload.newCar.doorNumber,
-          yearCreated: payload.newCar.yearCreated,
-          price: payload.newCar.price,
-          consumeFuel: payload.newCar.consumeFuel,
-          numbereatSeats: payload.newCar.numbereatSeats,
-          colorOutSide: payload.newCar.colorOutSide,
-          colorInSide: payload.newCar.colorInSide,
-          popular: payload.newCar.popular,
-          gear: payload.newCar.gear,
-          note: payload.newCar.note,
-          image: payload.newCar.image,
-          origin: payload.newCar.origin,
-          createdAt: payload.newCar.createdAt,
+          _id: action.payload.newCar._id,
+          name: action.payload.newCar.name,
+          capacity: action.payload.newCar.capacity,
+          fuelType: action.payload.newCar.fuelType,
+          autoMarket: action.payload.newCar.autoMarket,
+          status: action.payload.newCar.status,
+          doorNumber: action.payload.newCar.doorNumber,
+          yearCreated: action.payload.newCar.yearCreated,
+          price: action.payload.newCar.price,
+          consumeFuel: action.payload.newCar.consumeFuel,
+          numbereatSeats: action.payload.newCar.numbereatSeats,
+          colorOutSide: action.payload.newCar.colorOutSide,
+          colorInSide: action.payload.newCar.colorInSide,
+          popular: action.payload.newCar.popular,
+          gear: action.payload.newCar.gear,
+          active: action.payload.newCar.active,
+          note: action.payload.newCar.note,
+          image: action.payload.newCar.image,
+          origin: action.payload.newCar.origin,
+          user: action.payload.user,
           bookedTimeSlots: [],
         });
       }
@@ -178,29 +177,30 @@ const carSlice = createSlice({
     });
     //addcar
     builder.addCase(createCar.fulfilled, (state, action) => {
-      if (action.payload.status === 200) {
+      if (action.payload.status === "success") {
         state.error = "";
-        state.labelSuccess = action.payload.data;
+        state.labelSuccess = "Create User Success!";
         state.openSnackbar = true;
         state.cars.push({
-          _id: "",
-          name: action.meta.arg.name,
-          capacity: action.meta.arg.capacity,
-          fuelType: action.meta.arg.fuelType,
-          autoMarket: action.meta.arg.autoMarket,
-          status: action.meta.arg.status,
-          doorNumber: action.meta.arg.doorNumber,
-          yearCreated: action.meta.arg.yearCreated,
-          price: action.meta.arg.price,
-          consumeFuel: action.meta.arg.consumeFuel,
-          numbereatSeats: action.meta.arg.numbereatSeats,
-          colorOutSide: action.meta.arg.colorOutSide,
-          colorInSide: action.meta.arg.colorInSide,
-          popular: action.meta.arg.popular,
-          gear: action.meta.arg.gear,
-          note: action.meta.arg.note,
-          image: action.meta.arg.image,
-          origin: action.meta.arg.origin,
+          _id: action.payload.newCar._id,
+          name: action.payload.newCar.name,
+          capacity: action.payload.newCar.capacity,
+          fuelType: action.payload.newCar.fuelType,
+          autoMarket: action.payload.newCar.autoMarket,
+          status: action.payload.newCar.status,
+          doorNumber: action.payload.newCar.doorNumber,
+          yearCreated: action.payload.newCar.yearCreated,
+          price: action.payload.newCar.price,
+          consumeFuel: action.payload.newCar.consumeFuel,
+          numbereatSeats: action.payload.newCar.numbereatSeats,
+          colorOutSide: action.payload.newCar.colorOutSide,
+          colorInSide: action.payload.newCar.colorInSide,
+          popular: action.payload.newCar.popular,
+          gear: action.payload.newCar.gear,
+          note: action.payload.newCar.note,
+          image: action.payload.newCar.image,
+          origin: action.payload.newCar.origin,
+          user: action.payload.user,
           bookedTimeSlots: [],
         });
       }

@@ -17,7 +17,7 @@ const SideBarAdmin = () => {
   };
   const logout = () => {
     localStorage.clear();
-    navigate("/login");
+    window.location.reload();
   };
   return (
     <div className="menu-admin">

@@ -6,14 +6,14 @@ import * as RiIcons from "react-icons/ri";
 
 export const SidebarData = [
   {
-    title: "Home",
+    title: "Trang chủ",
     path: "/app",
     icon: <AiIcons.AiFillHome />,
     iconClosed: <RiIcons.RiArrowDownSFill />,
     iconOpened: <RiIcons.RiArrowUpSFill />,
   },
   {
-    title: "New",
+    title: "Tin tức",
     path: "/app/new",
     icon: <IoIcons.IoIosPaper />,
     iconClosed: <RiIcons.RiArrowDownSFill />,
@@ -40,12 +40,12 @@ export const SidebarData = [
     // ],
   },
   {
-    title: "About",
+    title: "Giới thiệu",
     path: "/app/about",
     icon: <IoIcons.IoMdPeople />,
   },
   {
-    title: "Contact",
+    title: "Liên hệ",
     path: "/app/contact",
     icon: <FaIcons.FaEnvelopeOpenText />,
 
@@ -66,13 +66,13 @@ export const SidebarData = [
     // ],
   },
   {
-    title: "List Car",
+    title: "Danh sách",
     path: "/app/listcar",
     icon: <IoIcons.IoIosPaper />,
   },
 
   {
-    title: "Mybooking",
+    title: "Đặt xe",
     path: "/app/listbookings",
     icon: <IoIcons.IoMdHelpCircle />,
   },

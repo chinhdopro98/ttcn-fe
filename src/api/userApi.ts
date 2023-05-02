@@ -50,22 +50,23 @@ export const updateUserApi = async ({
   firstname,
   lastname,
   username,
-  password,
+  nameCustomer,
+  tax,
   email,
   phone,
   role,
   _id,
 }: IUserData) => {
   try {
-    const response = await instance.post(URL.UPDATE_USER, {
+    const response = await instance.patch(`${URL.UPDATE_USER}/${_id}`, {
       firstname,
       lastname,
       username,
-      password,
       email,
       phone,
       role,
-      _id,
+      nameCustomer,
+      tax,
     });
     return response;
   } catch (err) {

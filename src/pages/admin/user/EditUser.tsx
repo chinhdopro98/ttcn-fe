@@ -42,7 +42,7 @@ const style1 = {
   padding: "20px",
   borderRadius: "10px",
   bgcolor: "#ffffff",
-  height: "430px",
+  height: "96%",
   zIndex: "999",
 };
 interface Iprops {
@@ -57,6 +57,17 @@ const EditUser: React.FC<Iprops> = (props) => {
   };
   const handleClose = () => {
     setOpen(false);
+    reset({
+      firstname: user.firstname,
+      lastname: user.lastname,
+      username: user.username,
+      password: user.password,
+      email: user.email,
+      phone: user.phone,
+      tax: user.tax,
+      nameCustomer: user.nameCustomer,
+      role: user.role === "admin" ? 0 : user.role === "owner" ? 1 : 2,
+    });
   };
   const {
     reset,
@@ -73,24 +84,27 @@ const EditUser: React.FC<Iprops> = (props) => {
       password: user.password,
       email: user.email,
       phone: user.phone,
-      role: user.role,
+      tax: user.tax,
+      nameCustomer: user.nameCustomer,
+      role: user.role === "admin" ? 0 : user.role === "owner" ? 1 : 2,
     });
   }, [user]);
   const dispatch = useAppDispatch();
   const handleUpdate = async (data: IUserData) => {
-    setOpen(false);
     await dispatch(
       updateUser({
         _id: user._id,
-        firstname: user.firstname,
-        lastname: user.lastname,
+        firstname: data.firstname,
+        lastname: data.lastname,
         username: data.username,
-        password: data.password,
         email: data.email,
         phone: data.phone,
         role: data.role,
+        tax: data.tax,
+        nameCustomer: data.nameCustomer,
       })
     );
+    setOpen(false);
   };
   return (
     <>
@@ -113,7 +127,7 @@ const EditUser: React.FC<Iprops> = (props) => {
         >
           <Box sx={style}>
             <Box
-              sx={{ height: "430px", overflowY: "scroll", paddingTop: "55px" }}
+              sx={{ height: "96%", overflowY: "scroll", paddingTop: "55px" }}
             >
               <Box
                 sx={{
@@ -152,11 +166,43 @@ const EditUser: React.FC<Iprops> = (props) => {
                     md={3}
                     sx={{ marginBottom: { xs: "10px", sm: 0 } }}
                   >
-                    <LabelIput>Full Name*</LabelIput>
+                    <LabelIput>First name*</LabelIput>
                   </Grid>
                   <Grid item xs={12} sm={9} md={9}>
                     <Controller
-                      name="username"
+                      name="firstname"
+                      render={({ field }) => {
+                        return (
+                          <TextField
+                            {...field}
+                            label="Full Nmae"
+                            style={{ width: "100%", marginBottom: "10px" }}
+                            InputLabelProps={{ style: { fontSize: 14 } }}
+                            required
+                          />
+                        );
+                      }}
+                      control={control}
+                      defaultValue=""
+                    />
+                  </Grid>
+                </Grid>
+                <Grid
+                  container
+                  sx={{ marginBottom: { xs: "10px", sm: "10px" } }}
+                >
+                  <Grid
+                    item
+                    xs={12}
+                    sm={3}
+                    md={3}
+                    sx={{ marginBottom: { xs: "10px", sm: 0 } }}
+                  >
+                    <LabelIput>Last name*</LabelIput>
+                  </Grid>
+                  <Grid item xs={12} sm={9} md={9}>
+                    <Controller
+                      name="lastname"
                       render={({ field }) => {
                         return (
                           <TextField
@@ -205,39 +251,7 @@ const EditUser: React.FC<Iprops> = (props) => {
                     />
                   </Grid>
                 </Grid>
-                <Grid
-                  container
-                  sx={{ marginBottom: { xs: "10px", sm: "10px" } }}
-                >
-                  <Grid
-                    item
-                    xs={12}
-                    sm={3}
-                    md={3}
-                    sx={{ marginBottom: { xs: "10px", sm: 0 } }}
-                  >
-                    <LabelIput>Password*</LabelIput>
-                  </Grid>
-                  <Grid item xs={12} sm={9} md={9}>
-                    <Controller
-                      name="password"
-                      render={({ field }) => {
-                        return (
-                          <TextField
-                            {...field}
-                            type="password"
-                            label="Password"
-                            style={{ width: "100%", marginBottom: "10px" }}
-                            InputLabelProps={{ style: { fontSize: 14 } }}
-                            required
-                          />
-                        );
-                      }}
-                      control={control}
-                      defaultValue=""
-                    />
-                  </Grid>
-                </Grid>
+
                 <Grid
                   container
                   sx={{ marginBottom: { xs: "10px", sm: "10px" } }}
@@ -281,7 +295,7 @@ const EditUser: React.FC<Iprops> = (props) => {
                     md={3}
                     sx={{ marginBottom: { xs: "10px", sm: 0 } }}
                   >
-                    <LabelIput>Phone*</LabelIput>
+                    <LabelIput>Điện thoại*</LabelIput>
                   </Grid>
                   <Grid item xs={12} sm={9} md={9}>
                     <Controller
@@ -329,13 +343,84 @@ const EditUser: React.FC<Iprops> = (props) => {
                             marginBottom: "10px",
                             textAlign: "left",
                           }}
+                          disabled
                         >
-                          <MenuItem value={0}>Customer</MenuItem>
-                          <MenuItem value={1}>Admin</MenuItem>
+                          <MenuItem value={0}>Admin</MenuItem>
+                          <MenuItem value={1}>Owner</MenuItem>
+                          <MenuItem value={2}>User</MenuItem>
                         </Select>
                       )}
                     />
                   </Grid>
+                  {user.role === "owner" ? (
+                    <Grid
+                      container
+                      sx={{ marginBottom: { xs: "10px", sm: "10px" } }}
+                    >
+                      <Grid
+                        item
+                        xs={12}
+                        sm={3}
+                        md={3}
+                        sx={{ marginBottom: { xs: "10px", sm: 0 } }}
+                      >
+                        <LabelIput>Tên doanh nghiệp*</LabelIput>
+                      </Grid>
+                      <Grid item xs={12} sm={9} md={9}>
+                        <Controller
+                          name="nameCustomer"
+                          render={({ field }) => {
+                            return (
+                              <TextField
+                                {...field}
+                                label="Tên doanh nghiệp"
+                                style={{ width: "100%", marginBottom: "10px" }}
+                                InputLabelProps={{ style: { fontSize: 14 } }}
+                                required
+                              />
+                            );
+                          }}
+                          control={control}
+                          defaultValue=""
+                        />
+                      </Grid>
+                    </Grid>
+                  ) : null}
+                  {user.role === "owner" ? (
+                    <Grid
+                      container
+                      sx={{ marginBottom: { xs: "10px", sm: "10px" } }}
+                    >
+                      <Grid
+                        item
+                        xs={12}
+                        sm={3}
+                        md={3}
+                        sx={{ marginBottom: { xs: "10px", sm: 0 } }}
+                      >
+                        <LabelIput>Thuế*</LabelIput>
+                      </Grid>
+                      <Grid item xs={12} sm={9} md={9}>
+                        <Controller
+                          name="tax"
+                          render={({ field }) => {
+                            return (
+                              <TextField
+                                {...field}
+                                label="Thuế"
+                                style={{ width: "100%", marginBottom: "10px" }}
+                                InputLabelProps={{ style: { fontSize: 14 } }}
+                                required
+                              />
+                            );
+                          }}
+                          control={control}
+                          defaultValue={0}
+                        />
+                      </Grid>
+                    </Grid>
+                  ) : null}
+
                   {/* <FormHelperText error={true}>
                 {errors.level?.message}
                 </FormHelperText> */}

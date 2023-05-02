@@ -37,17 +37,17 @@ const Card: React.FC<Iprops> = (props) => {
                     )}
                   </a>
                 </div>
-                <Link to={`/details/${item._id}`} className="link">
+                <Link to={`${item._id}`} className="link">
                   <h3>{item.title}</h3>
                 </Link>
-                <p>{item.description.slice(0, 180)}...</p>
+                <p>{item.description.slice(0, 120)}...</p>
                 <div className="date">
                   <AiOutlineClockCircle className="icon" />{" "}
                   <label htmlFor="">
                     {new Date(item.createdAt).toLocaleString()}
                   </label>
-                  <AiOutlineComment className="icon" />{" "}
-                  <label htmlFor="">27</label>
+                  {/* <AiOutlineComment className="icon" />{" "}
+                  <label htmlFor="">27</label> */}
                   <AiOutlineShareAlt className="icon" />{" "}
                   <label htmlFor="">SHARE</label>
                 </div>

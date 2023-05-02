@@ -7,6 +7,7 @@ import {
   deleteBlogCategoryApi,
   getAllBlogApi,
   getAllCategoryBlogApi,
+  getOneBlogApi,
   updateBlogApi,
   updateCategoryBlogApi,
 } from "../../api/blogApi";
@@ -99,6 +100,18 @@ export const deleteBlog = createAsyncThunk(
       return res;
     } catch (error) {
       console.log(error);
+    }
+  }
+);
+export const getOneBlog = createAsyncThunk(
+  "blog/getOne",
+  async (id: string, { rejectWithValue }) => {
+    console.log(id);
+    try {
+      const data = await getOneBlogApi(id);
+      return data;
+    } catch (err) {
+      console.error(err);
     }
   }
 );

@@ -31,10 +31,10 @@ const ExpiredCar: React.FC<Iprops> = (props) => {
         label="Active"
         onChange={handleChange}
         style={{
-          width: "120px",
+          width: "110px",
           textAlign: "left",
-          padding: "5px 5px",
           height: "40px",
+          background: `${car.active === "true" ? "#27ae60" : "#d32f2f"}`,
         }}
         value={value}
       >

@@ -67,8 +67,8 @@ const Home: React.FC = () => {
         <section className="recent padding">
           <div className="container">
             <Heading
-              title="Rental Car List"
-              subtitle="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam."
+              title="Danh sách xe cho thuê"
+              subtitle="Là công ty hoạt động nhiều năm trong lĩnh vực thuê xe, Công ty X cam kết gửi đến quý khách hàng những dịch vụ tuyệt vời nhất, uy tín nhất, chất lượng nhất"
             />
             <Box sx={{ display: "flex", justifyContent: "space-between" }}>
               <Typography
@@ -76,11 +76,11 @@ const Home: React.FC = () => {
                 mb={1}
                 sx={{ fontSize: "16px", textAlign: "left" }}
               >
-                Total:{total}
+                Tổng số:{total}
               </Typography>
               <Box sx={{ display: "flex", justifyContent: "right" }}>
                 <TextField
-                  label="Enter text"
+                  label="Tìm kiếm"
                   value={value}
                   onChange={handleChange}
                 />
@@ -93,9 +93,11 @@ const Home: React.FC = () => {
               </Box>
             </Box>
             <Box className="content grid3 mtop">
-              {cars.map((car: Icar) => {
-                return <CarItem car={car} />;
-              })}
+              {cars.length > 0
+                ? cars.map((car: Icar) => {
+                    return <CarItem car={car} />;
+                  })
+                : null}
             </Box>
           </div>
         </section>

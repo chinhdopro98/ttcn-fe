@@ -12,11 +12,11 @@ const Footer = () => {
         <div className="container">
           <div className="send flex">
             <div className="text">
-              <h1>Do You Have Questions ?</h1>
-              <p>We'll help you to grow your career and growth.</p>
+              <h1>Bạn có câu hỏi ?</h1>
+              <p>Chúng tôi sẽ giúp bạn phát triển sự nghiệp và phát triển.</p>
             </div>
             <button className="btn5">
-              <Link to="/app/contact">Contact Us Today</Link>
+              <Link to="/app/contact">Liên hệ</Link>
             </button>
           </div>
         </div>
@@ -33,10 +33,10 @@ const Footer = () => {
                   className="carimg w-full h-full"
                 />
               </Box>
-              <h2>Do You Need Help With Anything?</h2>
+              <h2>Bạn có cần giúp đỡ với bất cứ điều gì??</h2>
               <p>
-                Receive updates, hot deals, tutorials, discounts sent straignt
-                in your inbox every month
+                Nhận thông tin cập nhật, giao dịch hấp dẫn, hướng dẫn, giảm giá
+                được gửi thẳng trong hộp thư đến của bạn mỗi tháng
               </p>
 
               <div className="input flex">

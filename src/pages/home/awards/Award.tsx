@@ -9,7 +9,8 @@ const Award = () => {
       <section className="awards padding">
         <div className="container">
           <Heading
-            title="Over 1000+ Happy User Bieng With Us Still They Love Our Services"
+            title="
+            Hơn 1000 người dùng hài lòng với chúng tôi Họ vẫn yêu thích dịch vụ của chúng tôi"
             subtitle=""
           />
           <div className="content grid4 mtop">
