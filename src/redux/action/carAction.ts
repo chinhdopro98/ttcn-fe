@@ -7,12 +7,14 @@ import {
   findCarUser,
   getAll,
   getOneCar,
+  hideShowCarApi,
   updateCarApi,
   updateCarFormDataApi,
 } from "../../api/carApi";
 import {
   AddCar,
   ApproveCar,
+  HideShowCar,
   Icar,
   UpdateCar,
   pageSearch,
@@ -114,6 +116,17 @@ export const approveCar = createAsyncThunk(
   async (dataAprove: ApproveCar, { rejectWithValue }) => {
     try {
       const data = await approveCarApi(dataAprove);
+      return data;
+    } catch (err) {
+      console.error(err);
+    }
+  }
+);
+export const hideShowCar = createAsyncThunk(
+  "car/hide-show",
+  async (dataHide: HideShowCar, { rejectWithValue }) => {
+    try {
+      const data = await hideShowCarApi(dataHide);
       return data;
     } catch (err) {
       console.error(err);

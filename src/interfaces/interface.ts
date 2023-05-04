@@ -27,6 +27,7 @@ export interface Icar {
   provider?: string;
   user?: any;
   createdAt?: string;
+  hide?: boolean;
 }
 
 export interface bookingTime {
@@ -97,6 +98,7 @@ export interface AddCar {
   address?: string;
   provider?: string;
   user?: string;
+  hide?: boolean;
 }
 
 export interface IAutoMaker {
@@ -132,6 +134,7 @@ export interface UpdateCar {
   address?: string;
   provider?: string;
   user?: string;
+  hide?: boolean;
 }
 export interface IUserData {
   _id: string;
@@ -141,7 +144,7 @@ export interface IUserData {
   username: string;
   password?: string;
   phone: string;
-  role: any;
+  role?: any;
   createdAt?: any;
   nameCustomer?: string;
   tax?: number;
@@ -154,6 +157,11 @@ export interface UpdateStatus {
   _id: string;
   status?: number;
   approve?: any;
+}
+
+export interface HideShowCar {
+  _id: string;
+  hide: boolean;
 }
 export interface pageSearch {
   page: number;

@@ -3,6 +3,7 @@ import { IUserData } from "../../interfaces/interface";
 import {
   deleteUser,
   getAllUser,
+  updateProfile,
   updateUser,
   userLogin,
   userRegister,
@@ -113,6 +114,12 @@ const userSlice = createSlice({
           if (user._id !== action.meta.arg._id) return user;
         });
       }
+    });
+
+    builder.addCase(updateProfile.fulfilled, (state, action) => {
+      state.labelSuccess = "";
+      state.error = `Update user success`;
+      state.openSnackbar = true;
     });
   },
 });

@@ -64,7 +64,7 @@ const MyVehicles: React.FC<Iprops> = (props) => {
             >
               <EditCar car={car} />
             </Typography>
-            <HideShowCar />
+            <HideShowCar car={car} />
           </Box>
         </Box>
         <p>

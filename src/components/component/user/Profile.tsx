@@ -11,6 +11,7 @@ import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import { IUserData } from "../../../interfaces/interface";
 import { useAppDispatch } from "../../../redux/hook/hook";
+import { updateProfile } from "../../../redux/action/userAction";
 const LabelIput = styled.div`
   font-size: 14px;
   color: #000;
@@ -60,16 +61,34 @@ const Profile = () => {
       firstname: user.firstname,
       lastname: user.lastname,
       username: user.username,
-      password: user.password,
       email: user.email,
       phone: user.phone,
-      nameCustomer: user.nameCustomer,
     });
-  }, [user]);
+  }, []);
   const handleOpen = async () => {
     setOpen(true);
   };
   const handleClose = () => {
+    setOpen(false);
+    reset({
+      firstname: user.firstname,
+      lastname: user.lastname,
+      username: user.username,
+      email: user.email,
+      phone: user.phone,
+    });
+  };
+  const handleUpdate = (data: IUserData) => {
+    dispatch(
+      updateProfile({
+        _id: user._id,
+        firstname: data.firstname,
+        lastname: data.lastname,
+        username: data.username,
+        email: data.email,
+        phone: data.phone,
+      })
+    );
     setOpen(false);
   };
   return (
@@ -120,7 +139,7 @@ const Profile = () => {
               <form
                 action=""
                 autoComplete="off"
-                // onSubmit={handleSubmit(handleUpdate)}
+                onSubmit={handleSubmit(handleUpdate)}
               >
                 <Grid
                   container

@@ -4,6 +4,7 @@ import {
   getAllUserApi,
   loginApi,
   registerApi,
+  updateProfileApi,
   updateUserApi,
 } from "../../api/userApi";
 import { IRegister, IUser, IUserData } from "../../interfaces/interface";
@@ -66,6 +67,19 @@ export const deleteUser = createAsyncThunk(
     try {
       const res = await deleteUserApi(data);
       return res;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+);
+export const updateProfile = createAsyncThunk(
+  "user/update-profile",
+  async (data: IUserData, { rejectWithValue }) => {
+    try {
+      const res = await updateProfileApi(data);
+      localStorage.removeItem("user");
+      localStorage.setItem("user", JSON.stringify(res.data.updateUser));
+      return res.data;
     } catch (error) {
       console.log(error);
     }

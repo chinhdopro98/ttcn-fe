@@ -1,10 +1,22 @@
 import { Button } from "antd";
 import React, { useState } from "react";
-
-const HideShowCar = () => {
-  const [isOn, setIsOn] = useState(false);
-
+import { Icar } from "../../../interfaces/interface";
+import { useAppDispatch } from "../../../redux/hook/hook";
+import { hideShowCar } from "../../../redux/action/carAction";
+interface Iprops {
+  car: Icar;
+}
+const HideShowCar: React.FC<Iprops> = (props) => {
+  const { car } = props;
+  const dispatch = useAppDispatch();
+  const [isOn, setIsOn] = useState(car?.hide);
   const handleClick = () => {
+    dispatch(
+      hideShowCar({
+        _id: car._id,
+        hide: isOn,
+      })
+    );
     setIsOn(!isOn);
   };
   return (

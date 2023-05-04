@@ -3,6 +3,7 @@ import { URL } from "../constains/url";
 import {
   AddCar,
   ApproveCar,
+  HideShowCar,
   Icar,
   UpdateCar,
   pageSearch,
@@ -251,6 +252,17 @@ export const approveCarApi = async ({ id, active }: ApproveCar) => {
   try {
     const response = await instance.patch(`${URL.APPROVE_CAR}/${id}`, {
       active,
+    });
+    return response.data;
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export const hideShowCarApi = async ({ _id, hide }: HideShowCar) => {
+  try {
+    const response = await instance.patch(`${URL.HIDE_SHOW_CAR}/${_id}`, {
+      hide,
     });
     return response.data;
   } catch (err) {

@@ -81,3 +81,25 @@ export const deleteUserApi = async (data: IUserData) => {
     console.log(err);
   }
 };
+export const updateProfileApi = async ({
+  firstname,
+  lastname,
+  username,
+  email,
+  phone,
+  _id,
+}: IUserData) => {
+  try {
+    const response = await instance.post(`${URL.UPDATE_PROFILE}`, {
+      firstname,
+      lastname,
+      username,
+      email,
+      phone,
+      _id,
+    });
+    return response;
+  } catch (err) {
+    console.log(err);
+  }
+};

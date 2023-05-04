@@ -13,6 +13,7 @@ export const URL = {
   DELETE_CAR: "cars/delete",
   GET_CAR_USER: "cars/user-car",
   APPROVE_CAR: "cars/approve",
+  HIDE_SHOW_CAR: "cars/hideshow",
   ALL_USER: "users/getall",
   UPDATE_USER: "users/edit-user",
   DELETE_USER: "users/delete-user",
@@ -35,6 +36,7 @@ export const URL = {
   GET_ALL_PROVIDER: "providers/get-all",
   GET_BOOKING_OWNER: "bookings/get-booking/by-owner",
   UPDATE_BOOKING: "bookings/update",
+  UPDATE_PROFILE: "users/edit-profile",
 };
 export const LIMIT = 9;
 export const URL_LOCAL = "http://localhost:5000/";

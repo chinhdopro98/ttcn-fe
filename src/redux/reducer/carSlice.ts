@@ -9,6 +9,7 @@ import {
   getCar,
   getCarByUser,
   getCarOne,
+  hideShowCar,
   updateCar,
 } from "../action/carAction";
 
@@ -82,7 +83,6 @@ const carSlice = createSlice({
       state.loading = true;
     });
     builder.addCase(approveCar.fulfilled, (state, { payload }) => {
-      console.log(payload);
       if (payload.status === "success") {
         state.error = "";
         state.labelSuccess = `Update car success!`;
@@ -100,6 +100,31 @@ const carSlice = createSlice({
       state.labelSuccess = "";
       state.error = `Approve car failed`;
       state.openSnackbar = true;
+    });
+
+    //hide-show
+    builder.addCase(hideShowCar.pending, (state, action) => {
+      state.loading = true;
+    });
+    builder.addCase(hideShowCar.fulfilled, (state, { payload }) => {
+      console.log(payload);
+      // if (payload.status === "success") {
+      //   state.error = "";
+      //   state.labelSuccess = `Update car success!`;
+      //   state.openSnackbar = true;
+      //   state.cars = state.cars.map((car) => {
+      //     if (car._id === payload.id) {
+      //       const activeCar = payload.active === 1 ? "true" : "false";
+      //       car.active = activeCar;
+      //     }
+      //     return car;
+      //   });
+      // }
+    });
+    builder.addCase(hideShowCar.rejected, (state, { payload }) => {
+      // state.labelSuccess = "";
+      // state.error = `Approve car failed`;
+      // state.openSnackbar = true;
     });
     //update
     builder.addCase(updateCar.pending, (state, action) => {
