@@ -65,12 +65,19 @@ const Home: React.FC = () => {
       </Box>
       <Box>
         <section className="recent padding">
-          <div className="container">
+          <div className="container-listcar">
             <Heading
               title="Danh sách xe cho thuê"
               subtitle="Là công ty hoạt động nhiều năm trong lĩnh vực thuê xe, Công ty X cam kết gửi đến quý khách hàng những dịch vụ tuyệt vời nhất, uy tín nhất, chất lượng nhất"
             />
-            <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "space-between",
+                marginTop: "20px",
+                marginBottom: "20px",
+              }}
+            >
               <Typography
                 variant="h6"
                 mb={1}

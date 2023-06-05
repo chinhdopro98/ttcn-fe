@@ -4,7 +4,7 @@ import CreateCarAdmin from "../../../components/component/car/CreateCarAdmin";
 import { useAppDispatch } from "../../../redux/hook/hook";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../redux/store/store";
-import { closeSnackBar } from "../../../redux/reducer/carSlice";
+
 import { getAllAutoMaker } from "../../../redux/action/autoMakerAction";
 import { Box, Snackbar } from "@mui/material";
 import MuiAlert from "@mui/material/Alert";
@@ -12,6 +12,7 @@ import moment from "moment";
 import ItemBooking from "./ItemBooking";
 import { getAllBooking } from "../../../api/bookingApi";
 import { getListBooking } from "../../../redux/action/bookAction";
+import { closeSnackBar } from "../../../redux/reducer/bookingSlice";
 
 const BookingAdmin = () => {
   const [search, setSearch] = useState("");
@@ -19,11 +20,11 @@ const BookingAdmin = () => {
     (state: RootState) => state.booking.listBookings
   );
   const labelSuccess = useSelector(
-    (state: RootState) => state.car.labelSuccess
+    (state: RootState) => state.booking.labelSuccess
   );
-  const labelError = useSelector((state: RootState) => state.car.error);
+  const labelError = useSelector((state: RootState) => state.booking.error);
   const openSnackbar = useSelector(
-    (state: RootState) => state.car.openSnackbar
+    (state: RootState) => state.booking.openSnackbar
   );
   const dispatch = useAppDispatch();
   const handleCloseSnackBar = () => {
@@ -36,19 +37,9 @@ const BookingAdmin = () => {
   return (
     <>
       <div className="dashboard-content">
-        <HeaderAdmin name="List Car" />
+        <HeaderAdmin name="Danh sách đặt xe" />
         <div className="dashboard-content-container">
-          <div className="dashboard-content-header">
-            {/* <CreateCarAdmin />
-            <div className="dashboard-content-search">
-              <input
-                type="text"
-                value={search}
-                placeholder="Search.."
-                className="dashboard-content-input"
-              />
-            </div> */}
-          </div>
+          <div className="dashboard-content-header"></div>
 
           <table>
             <thead>
@@ -60,6 +51,7 @@ const BookingAdmin = () => {
               <th>Ngày tạo</th>
               <th>Người tạo</th>
               <th>Giá</th>
+              <th>Pay</th>
               <th>Trạng thái</th>
               <th>Edit</th>
               <th>Delete</th>

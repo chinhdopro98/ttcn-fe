@@ -48,7 +48,7 @@ const Register = () => {
   );
   const dispatch = useAppDispatch();
   const handleClose = () => {
-    dispatch(setOpenSnackbar(false));
+    dispatch(setOpenSnackbar());
   };
   const navigate = useNavigate();
   if (labelSuccess !== "") {
@@ -139,7 +139,7 @@ const Register = () => {
               />
 
               <Button variant="contained" color="primary" type="submit">
-                Register
+                Đăng ký
               </Button>
             </form>
           </Container>

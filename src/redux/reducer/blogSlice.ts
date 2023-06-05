@@ -16,26 +16,40 @@ interface BlogState {
   blogs: Blog[];
   blogCategory: BlogCategory;
   blog: Blog;
+  openSnackbar: boolean;
+  labelSuccess: string;
+  error: string;
 }
 const initialState: BlogState = {
   blogCategorys: [],
   blogCategory: null,
   blogs: [],
   blog: null,
+  labelSuccess: "",
+  openSnackbar: false,
+  error: "",
 };
 const blogSlice = createSlice({
   name: "blog",
   initialState,
-  reducers: {},
+  reducers: {
+    closeSnackBar: (state) => {
+      state.openSnackbar = false;
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(createBlogCategory.fulfilled, (state, action) => {
       if (action.payload.status === "success") {
         state.blogCategorys.push({
+          _id: action.payload.newBlogCategory._id,
           title: action.payload.newBlogCategory.title,
           description: action.payload.newBlogCategory.description,
           image: action.payload.newBlogCategory.image,
           createdAt: action.payload.newBlogCategory.createdAt,
         });
+        state.error = "";
+        state.labelSuccess = "Thêm danh mục tin tức thành công!";
+        state.openSnackbar = true;
       }
     });
     builder.addCase(getAllBlogCategory.fulfilled, (state, action) => {
@@ -54,6 +68,9 @@ const blogSlice = createSlice({
           }
           return item;
         });
+        state.error = "";
+        state.labelSuccess = "Cập nhật danh mục tin tức thành công!";
+        state.openSnackbar = true;
       }
     });
     builder.addCase(deleteBlogCategory.fulfilled, (state, action) => {
@@ -63,6 +80,9 @@ const blogSlice = createSlice({
             (item) => item._id !== action.payload.data.id
           );
         }
+        state.error = "";
+        state.labelSuccess = "Xóa danh mụctin tức thành công!";
+        state.openSnackbar = true;
       }
     });
 
@@ -72,14 +92,29 @@ const blogSlice = createSlice({
     });
     builder.addCase(getOneBlog.rejected, (state, { payload }) => {});
     builder.addCase(createBlog.fulfilled, (state, action) => {
-      state.blogCategory = action.payload.data;
+      if (action.payload.status === "success") {
+        state.blogs.push({
+          _id: action.payload.newBlog._id,
+          title: action.payload.newBlog.title,
+          description: action.payload.newBlog.description,
+          image: action.payload.newBlog.image,
+          createdAt: action.payload.newBlog.createdAt,
+          numViews: action.payload.newBlog.numViews,
+          likes: action.payload.newBlog.likes,
+        });
+        state.error = "";
+        state.labelSuccess = "Thêm tin tức thành công!";
+        state.openSnackbar = true;
+      }
     });
     builder.addCase(getAllBlog.fulfilled, (state, action) => {
       state.blogs = action.payload;
     });
     builder.addCase(updateBlog.fulfilled, (state, action) => {
       if (action.payload.status === "success") {
-        console.log(action.payload.updateBlog);
+        state.error = "";
+        state.labelSuccess = "Cập nhật tin tức thành công!";
+        state.openSnackbar = true;
         state.blogs = state.blogs.map((item) => {
           if (item._id === action.payload.updateBlog._id) {
             return {
@@ -103,9 +138,12 @@ const blogSlice = createSlice({
             (item) => item._id !== action.payload.data.id
           );
         }
+        state.error = "";
+        state.labelSuccess = "Xóa tin tức thành công!";
+        state.openSnackbar = true;
       }
     });
   },
 });
-export const {} = blogSlice.actions;
+export const { closeSnackBar } = blogSlice.actions;
 export default blogSlice.reducer;

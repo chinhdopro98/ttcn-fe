@@ -47,7 +47,7 @@ export interface IRegister {
   username: string;
   password: string;
   phone: string;
-  role: string;
+  role: any;
 }
 
 export interface IBooking {
@@ -102,7 +102,7 @@ export interface AddCar {
 }
 
 export interface IAutoMaker {
-  _id: string;
+  _id?: string;
   name_automaker: string;
   id_category: string;
 }
@@ -178,8 +178,8 @@ export interface BlogCategory {
 }
 export interface Blog {
   _id?: string;
-  title: string;
-  description: string;
+  title?: string;
+  description?: string;
   image?: any;
   createdAt?: string;
   numViews?: number;

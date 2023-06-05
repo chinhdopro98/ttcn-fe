@@ -132,6 +132,7 @@ const Booking = () => {
       setOpenModal(true);
     } else {
       const objectBook: IBooking = {
+        token: token,
         userid: user._id,
         carid: car?._id,
         totalHours: totalHours,
@@ -141,6 +142,8 @@ const Booking = () => {
           from: startTime,
           to: endTime,
         },
+        statusPayment: 1,
+        approve: 0,
       };
       await dispatch(bookingCar(objectBook));
     }
@@ -167,7 +170,7 @@ const Booking = () => {
             }}
           >
             <Box sx={{ display: "flex" }}>
-              <Box sx={{ width: "450px", height: "350px" }}>
+              <Box sx={{ width: "450px", height: "380px" }}>
                 {car?.image ? (
                   <img
                     src={`http://localhost:5000/${car.image}`}
@@ -306,7 +309,7 @@ const Booking = () => {
                         variant="h5"
                         sx={{ marginLeft: "50px", marginRight: "20px" }}
                       >
-                        Driver
+                        Có lái:
                       </Typography>
                     </FormLabel>
                     <RadioGroup
@@ -339,10 +342,10 @@ const Booking = () => {
                 ></textarea>
               </form>
               <Typography variant="h6" sx={{}} mb={1}>
-                Total Hours: {totalHours} h
+                Tổng giờ: {totalHours} h
               </Typography>
               <Typography variant="h6" sx={{}} mb={1}>
-                Total Money: {totalMoney?.toLocaleString()} VND
+                Tổng tiền: {totalMoney?.toLocaleString()} VND
               </Typography>
               {user.role !== "user" ? null : (
                 <Box sx={{ display: "flex", paddingBottom: "40px" }}>
@@ -435,7 +438,7 @@ const Booking = () => {
             horizontal: "right",
           }}
           open={openSnackbar}
-          autoHideDuration={1000}
+          autoHideDuration={5000}
           onClose={handleCloseSnackBar}
         >
           <Box>

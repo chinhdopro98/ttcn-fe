@@ -6,6 +6,7 @@ import { RootState } from "../../../redux/store/store";
 import { getAllAutoMaker } from "../../../redux/action/autoMakerAction";
 import moment from "moment";
 import StatusBooking from "./StatusBooking";
+import { Box, Typography } from "@mui/material";
 import EditBooking from "../../../components/component/booking/EditBooking";
 import DeleteBooking from "../../../components/component/booking/DeleteBooking";
 interface Iprops {
@@ -57,13 +58,48 @@ const ItemBooking: React.FC<Iprops> = (props) => {
         <span>{booking.totalMoney.toLocaleString()}VND</span>
       </td>
       <td>
+        {booking.statusPayment === 0 ? (
+          <Box
+            sx={{
+              width: "40px",
+              background: "#eb1e1e",
+              display: "inline-block",
+              padding: "4px",
+              borderRadius: "4px",
+              textAlign: "center",
+              color: "#fff",
+              fontWeight: "bold",
+              fontSize: "14px",
+            }}
+          >
+            NO
+          </Box>
+        ) : (
+          <Box
+            sx={{
+              width: "40px",
+              background: "#21d7ad",
+              display: "inline-block",
+              padding: "4px",
+              borderRadius: "4px",
+              textAlign: "center",
+              color: "#fff",
+              fontWeight: "bold",
+              fontSize: "14px",
+            }}
+          >
+            YES
+          </Box>
+        )}
+      </td>
+      <td>
         <StatusBooking booking={booking} />
       </td>
       <td>
         <EditBooking booking={booking} role={user.role} />
       </td>
       <td>
-        <DeleteBooking booking={booking} />
+        <DeleteBooking booking={booking} role={user.role} />
       </td>
       {/* <td>
         <span>

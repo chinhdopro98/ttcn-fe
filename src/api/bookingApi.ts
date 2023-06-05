@@ -10,6 +10,8 @@ export const newBookingCarApi = async ({
   totalMoney,
   driverRequired,
   bookedTimeSlots,
+  statusPayment,
+  approve,
 }: IBooking) => {
   try {
     const response = await instance.post(URL.BOOKING, {
@@ -20,6 +22,8 @@ export const newBookingCarApi = async ({
       totalMoney,
       driverRequired,
       bookedTimeSlots,
+      statusPayment,
+      approve,
     });
     return response.data;
   } catch (err) {
@@ -75,6 +79,21 @@ export const updateStatusBookingApi = async ({
     console.log(err);
   }
 };
+
+export const updateStatusApproveApi = async ({
+  _id,
+  approve,
+}: UpdateStatus) => {
+  try {
+    const response = await instance.post(URL.STATUS_APPROVE, {
+      _id,
+      approve,
+    });
+    return response;
+  } catch (err) {
+    console.log(err);
+  }
+};
 export const getAllBookingOwnerApi = async () => {
   try {
     const response = await instance.get(URL.GET_BOOKING_OWNER);
@@ -108,6 +127,15 @@ export const deleteBookingApi = async (_id: string) => {
     const response = await instance.post(URL.DELETE_BOOKING, {
       _id: _id,
     });
+    return response;
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export const chartApi = async () => {
+  try {
+    const response = await instance.get(URL.CHART_BOOKING);
     return response;
   } catch (err) {
     console.log(err);

@@ -49,6 +49,7 @@ const ListBookings = () => {
             <th>Kết thúc</th>
             <th>Ngày tạo</th>
             <th>Giá</th>
+            <th>Pay</th>
             <th>Trạng thái</th>
             <th>Edit</th>
             <th>Delete</th>
@@ -94,6 +95,41 @@ const ListBookings = () => {
                     <span>{booking.totalMoney.toLocaleString()}VND</span>
                   </td>
                   <td>
+                    {booking.statusPayment === 0 ? (
+                      <Box
+                        sx={{
+                          width: "40px",
+                          background: "#eb1e1e",
+                          display: "inline-block",
+                          padding: "4px",
+                          borderRadius: "4px",
+                          textAlign: "center",
+                          color: "#fff",
+                          fontWeight: "bold",
+                          fontSize: "14px",
+                        }}
+                      >
+                        NO
+                      </Box>
+                    ) : (
+                      <Box
+                        sx={{
+                          width: "40px",
+                          background: "#21d7ad",
+                          display: "inline-block",
+                          padding: "6px",
+                          borderRadius: "4px",
+                          textAlign: "center",
+                          color: "#fff",
+                          fontWeight: "bold",
+                          fontSize: "14px",
+                        }}
+                      >
+                        YES
+                      </Box>
+                    )}
+                  </td>
+                  <td>
                     {booking.approve === 0 ? (
                       <Box
                         sx={{
@@ -111,11 +147,24 @@ const ListBookings = () => {
                       <Box
                         sx={{
                           width: "80px",
-                          background: "#58CE81",
+                          background: "#e04deb",
                           display: "inline-block",
                           textAlign: "center",
                           padding: "6px",
                           borderRadius: "4px",
+                        }}
+                      >
+                        Approve
+                      </Box>
+                    ) : booking.approve === 2 ? (
+                      <Box
+                        sx={{
+                          width: "80px",
+                          background: "#58CE81",
+                          display: "inline-block",
+                          padding: "6px",
+                          borderRadius: "4px",
+                          textAlign: "center",
                         }}
                       >
                         Success
@@ -139,7 +188,7 @@ const ListBookings = () => {
                     <EditBooking booking={booking} role={user.role} />
                   </td>
                   <td>
-                    <DeleteBooking booking={booking} />
+                    <DeleteBooking booking={booking} role={user.role} />
                   </td>
                 </tr>
               );

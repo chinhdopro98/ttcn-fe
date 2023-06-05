@@ -9,6 +9,7 @@ import {
   getCar,
   getCarByUser,
   getCarOne,
+  getTotalData,
   hideShowCar,
   updateCar,
 } from "../action/carAction";
@@ -22,6 +23,12 @@ interface CarState {
   labelSuccess: string;
   total: number;
   car: Icar;
+  totalData: {
+    totalCar: number;
+    totalBlog: number;
+    totalBooking: number;
+    totalUser: number;
+  };
 }
 
 const initialState: CarState = {
@@ -33,6 +40,12 @@ const initialState: CarState = {
   openSnackbar: false,
   total: 0,
   car: null,
+  totalData: {
+    totalCar: 0,
+    totalBlog: 0,
+    totalBooking: 0,
+    totalUser: 0,
+  },
 };
 const carSlice = createSlice({
   name: "car",
@@ -52,6 +65,16 @@ const carSlice = createSlice({
       state.total = payload.carCount;
     });
     builder.addCase(getCar.rejected, (state, { payload }) => {
+      state.success = false;
+    });
+
+    builder.addCase(getTotalData.pending, (state, action) => {
+      state.loading = true;
+    });
+    builder.addCase(getTotalData.fulfilled, (state, { payload }) => {
+      state.totalData = payload;
+    });
+    builder.addCase(getTotalData.rejected, (state, { payload }) => {
       state.success = false;
     });
 
@@ -132,8 +155,9 @@ const carSlice = createSlice({
     });
     builder.addCase(updateCar.fulfilled, (state, { payload }) => {
       if (payload.status === "success") {
+        console.log(payload);
         state.error = "";
-        state.labelSuccess = `Update car success!`;
+        state.labelSuccess = `Cập nhật xe thành công!`;
         state.openSnackbar = true;
         state.cars = state.cars.map((car) => {
           if (car._id === payload.updateCar._id) {
@@ -168,7 +192,7 @@ const carSlice = createSlice({
     builder.addCase(createCarFormdata.fulfilled, (state, action) => {
       if (action.payload.status === "success") {
         state.error = "";
-        state.labelSuccess = "Create User Success!";
+        state.labelSuccess = "Bạn đã tạo xe thành công!";
         state.openSnackbar = true;
         state.cars.push({
           _id: action.payload.newCar._id,
@@ -204,7 +228,7 @@ const carSlice = createSlice({
     builder.addCase(createCar.fulfilled, (state, action) => {
       if (action.payload.status === "success") {
         state.error = "";
-        state.labelSuccess = "Create User Success!";
+        state.labelSuccess = "Bạn đã tạo xe thành công!";
         state.openSnackbar = true;
         state.cars.push({
           _id: action.payload.newCar._id,
@@ -267,7 +291,7 @@ const carSlice = createSlice({
       console.log(action.payload);
       if (action.payload.status === "success") {
         state.error = "";
-        state.labelSuccess = `Delete car success`;
+        state.labelSuccess = `Xóa xe thành công`;
         state.openSnackbar = true;
         state.cars = state.cars.filter((car) => {
           return car._id !== action.payload.id;

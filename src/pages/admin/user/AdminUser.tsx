@@ -17,7 +17,8 @@ import HeaderAdmin from "../header/HeaderAdmin";
 import AddUser from "./AddUser";
 import { Box, Snackbar } from "@mui/material";
 import MuiAlert from "@mui/material/Alert";
-import { closeSnackBar } from "../../../redux/reducer/carSlice";
+import { setOpenSnackbar } from "../../../redux/reducer/userSlice";
+
 interface Iprops {
   user: IUserData;
 }
@@ -26,14 +27,14 @@ const AdminUser = () => {
   const users = useSelector((state: RootState) => state.user.userInfos);
   const dispatch = useAppDispatch();
   const labelSuccess = useSelector(
-    (state: RootState) => state.car.labelSuccess
+    (state: RootState) => state.user.labelSuccess
   );
-  const labelError = useSelector((state: RootState) => state.car.error);
+  const labelError = useSelector((state: RootState) => state.user.error);
   const openSnackbar = useSelector(
-    (state: RootState) => state.car.openSnackbar
+    (state: RootState) => state.user.openSnackbar
   );
   const handleCloseSnackBar = () => {
-    dispatch(closeSnackBar());
+    dispatch(setOpenSnackbar());
   };
   useEffect(() => {
     dispatch(getAllUser());
@@ -41,7 +42,7 @@ const AdminUser = () => {
   return (
     <>
       <div className="dashboard-content">
-        <HeaderAdmin name="List User" />
+        <HeaderAdmin name="Danh sách người dùng" />
         <div className="dashboard-content-container">
           <div className="dashboard-content-header">
             <AddUser />

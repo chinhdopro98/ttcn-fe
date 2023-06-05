@@ -27,10 +27,10 @@ const AdminAutomaker = () => {
           <TableHead>
             <TableRow>
               <TableCell>ID</TableCell>
-              <TableCell align="left">Name</TableCell>
-              <TableCell align="left">Category</TableCell>
-              <TableCell align="left">Edit</TableCell>
-              <TableCell align="left">Delete</TableCell>
+              <TableCell align="left">Tên</TableCell>
+              <TableCell align="left">Loại</TableCell>
+              <TableCell align="left">Sửa</TableCell>
+              <TableCell align="left">Xóa</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>

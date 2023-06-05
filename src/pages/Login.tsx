@@ -54,7 +54,7 @@ const Login = () => {
   return (
     <HomeLogin className="home-form" style={styles.bg_img}>
       <BoxForm>
-        <h2>Login</h2>
+        <h2>Đăng nhập</h2>
         <form action="" autoComplete="off" onSubmit={handleSubmit(handleLogin)}>
           <Controller
             name="username"
@@ -100,7 +100,18 @@ const Login = () => {
               margin: "0 5px",
             }}
           >
-            Login
+            Đăng nhập
+          </Button>
+
+          <Button
+            type="button"
+            variant="contained"
+            sx={{
+              textTransform: "capitalize",
+              margin: "0 5px",
+            }}
+          >
+            <Link to="/register">Đăng ký</Link>
           </Button>
         </form>
       </BoxForm>

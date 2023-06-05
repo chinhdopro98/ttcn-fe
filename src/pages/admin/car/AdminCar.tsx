@@ -47,7 +47,7 @@ const AdminCar = () => {
   return (
     <>
       <div className="dashboard-content">
-        <HeaderAdmin name="List Car" />
+        <HeaderAdmin name="Danh sách xe" />
         <div className="dashboard-content-container">
           <div className="dashboard-content-header">
             <CreateCarAdmin />

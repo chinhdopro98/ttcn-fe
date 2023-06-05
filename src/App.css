@@ -98,7 +98,7 @@ body {
   max-width: 320px;
   margin: auto 1rem;
   margin-top: 10px;
-  height: 280px;
+  height: 250px;
   text-align: center;
   font-family: arial;
 }
@@ -287,4 +287,14 @@ img {
 .icon-on-off > i {
   color: #1976d2;
   font-size: 26px;
+}
+.total-data i {
+  font-size: 42px;
+  margin-right: 25px;
+  color: #fff;
+}
+.container-listcar {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: block;
 }

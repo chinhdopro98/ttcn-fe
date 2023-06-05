@@ -8,20 +8,20 @@ const Card = () => {
     <>
       <section className="contact mb">
         <Back
-          name="Contact Us"
-          title="Get Helps & Friendly Support"
+          name="Liên hệ với cúng tôi"
+          title="Nhận trợ giúp &; hỗ trợ thân thiện"
           cover={img}
         />
         <div className="container">
           <form className="shadow">
-            <h4>Fillup The Form</h4> <br />
+            <h4>Gửi về cho chúng tôi</h4> <br />
             <div>
-              <input type="text" placeholder="Name" />
+              <input type="text" placeholder="Tên" />
               <input type="text" placeholder="Email" />
             </div>
-            <input type="text" placeholder="Subject" />
-            <textarea cols={30} rows={10}></textarea>
-            <button>Submit Request</button>
+            <input type="text" placeholder="Nội dung" />
+            <textarea cols={20} rows={5}></textarea>
+            <button>Gửi</button>
           </form>
         </div>
       </section>

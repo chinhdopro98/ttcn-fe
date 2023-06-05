@@ -71,6 +71,7 @@ const EditBooking: React.FC<Iprops> = (props) => {
           from: startTime,
           to: endTime,
         },
+        approve: booking.approve,
         driverRequired: driver,
         totalHours: totalHours,
         totalMoney: totalMoney,

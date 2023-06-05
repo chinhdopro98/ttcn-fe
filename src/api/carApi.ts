@@ -207,7 +207,6 @@ export const updateCarFormDataApi = async ({
 }: UpdateCar) => {
   try {
     const formData = new FormData();
-
     formData.append("name", name);
     formData.append("image", image);
     formData.append("capacity", capacity.toString());
@@ -264,6 +263,14 @@ export const hideShowCarApi = async ({ _id, hide }: HideShowCar) => {
     const response = await instance.patch(`${URL.HIDE_SHOW_CAR}/${_id}`, {
       hide,
     });
+    return response.data;
+  } catch (err) {
+    console.log(err);
+  }
+};
+export const getTotalApi = async () => {
+  try {
+    const response = await instance.get(`${URL.DATA_TOTAL}`);
     return response.data;
   } catch (err) {
     console.log(err);

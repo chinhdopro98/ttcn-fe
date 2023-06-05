@@ -11,9 +11,10 @@ import { IBooking } from "../../../interfaces/interface";
 import { deleteBooking } from "../../../redux/action/bookAction";
 interface Iprops {
   booking: IBooking;
+  role: string;
 }
 const DeleteBooking: React.FC<Iprops> = (props) => {
-  const { booking } = props;
+  const { booking, role } = props;
   const [open, setOpen] = useState(false);
   const handleClose = () => {
     setOpen(false);
@@ -21,7 +22,6 @@ const DeleteBooking: React.FC<Iprops> = (props) => {
   const handleClick = () => setOpen(true);
   const dispatch = useAppDispatch();
   const handleDelete = () => {
-    console.log(123);
     dispatch(deleteBooking(booking._id));
     setOpen(false);
   };
@@ -98,6 +98,7 @@ const DeleteBooking: React.FC<Iprops> = (props) => {
             </Button>
             <Button
               variant="contained"
+              disabled={role === "user" && booking.approve !== 0}
               onClick={() => handleDelete()}
               sx={{ margin: "0 15px", textTransform: "Capitalize" }}
             >

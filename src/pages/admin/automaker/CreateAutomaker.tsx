@@ -49,6 +49,10 @@ const CreateAutomaker: React.FC = () => {
         id_category: data.id_category,
       })
     );
+    reset({
+      name_automaker: "",
+      id_category: "",
+    });
   };
   return (
     <Box sx={{ width: "700px", paddingLeft: "20px" }}>
@@ -57,7 +61,7 @@ const CreateAutomaker: React.FC = () => {
         mb={1}
         sx={{ fontSize: "18px", textAlign: "left" }}
       >
-        ADD AUTOMAKER
+        Thêm hãng xe
       </Typography>
       <form action="" autoComplete="off" onSubmit={handleSubmit(handleCreate)}>
         <Grid container sx={{ marginBottom: { xs: "10px", sm: "10px" } }}>
@@ -68,7 +72,7 @@ const CreateAutomaker: React.FC = () => {
             md={3}
             sx={{ marginBottom: { xs: "10px", sm: 0 } }}
           >
-            <LabelIput>Name *</LabelIput>
+            <LabelIput>Tên *</LabelIput>
           </Grid>
           <Grid item xs={12} sm={9} md={9}>
             <Controller
@@ -98,7 +102,7 @@ const CreateAutomaker: React.FC = () => {
             md={3}
             sx={{ marginBottom: { xs: "10px", sm: 0 } }}
           >
-            <LabelIput>Category*</LabelIput>
+            <LabelIput>Loại xe*</LabelIput>
           </Grid>
           <Grid item xs={12} sm={9} md={9}>
             <Controller

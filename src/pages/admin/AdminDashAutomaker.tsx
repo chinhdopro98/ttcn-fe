@@ -12,7 +12,7 @@ const AdminDashAutomaker = () => {
         p={2}
         sx={{ fontSize: "25px", textAlign: "center" }}
       >
-        Manager AutoMaker
+        Quản lý danh mục xe
       </Typography>
       <Box sx={{ display: "flex", justifyContent: "space-between" }}>
         <AdminAutomaker />

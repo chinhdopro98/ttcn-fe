@@ -1,11 +1,13 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import {
+  chartApi,
   createBookingApi,
   deleteBookingApi,
   getAllBooking,
   getAllBookingOwnerApi,
   newBookingCarApi,
   updateBookingApi,
+  updateStatusApproveApi,
   updateStatusBookingApi,
 } from "../../api/bookingApi";
 import { IBooking, UpdateStatus } from "../../interfaces/interface";
@@ -55,6 +57,18 @@ export const updateBookingCar = createAsyncThunk(
     }
   }
 );
+export const updateBookingApprove = createAsyncThunk(
+  "bookingCar/update-approve",
+  async (data: UpdateStatus, { rejectWithValue }) => {
+    console.log(data);
+    try {
+      const res = await updateStatusApproveApi(data);
+      return res;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+);
 export const getAllBookingOwner = createAsyncThunk(
   "bookingCar/getListBookingOwner",
   async (arg, { rejectWithValue }) => {
@@ -85,6 +99,18 @@ export const deleteBooking = createAsyncThunk(
       return res.data;
     } catch (error) {
       console.log(error);
+    }
+  }
+);
+
+export const getChartData = createAsyncThunk(
+  "bookingCar/geChart",
+  async (arg, { rejectWithValue }) => {
+    try {
+      const data = await chartApi();
+      return data;
+    } catch (err) {
+      console.error(err);
     }
   }
 );

@@ -13,8 +13,14 @@
   line-height: 30px;
   text-align: left;
 }
+.rleft-30px {
+  padding-right: 30px !important;
+}
 .width-50 {
   width: 50%;
+}
+.about-content {
+  margin-top: 50px;
 }
 button {
   border-radius: 5px;

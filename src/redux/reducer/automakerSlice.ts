@@ -29,7 +29,10 @@ const autoMakerSlice = createSlice({
     });
 
     builder.addCase(createAutomaker.fulfilled, (state, action) => {
-      // state.automakers = action.payload.data;
+      state.automakers.push({
+        name_automaker: action.payload.data.name_automaker,
+        id_category: action.payload.data.id_category,
+      });
     });
 
     builder.addCase(getAllCategory.fulfilled, (state, action) => {

@@ -46,49 +46,52 @@ const SideBarAdmin = () => {
                   <li className="item-link">
                     <Link to="/admin" className="sidebar-item">
                       <i className="fa-solid fa-house"></i>
-                      <span className="sidebar-item-label">Dashboard</span>
+                      <span className="sidebar-item-label">Trang chủ</span>
                     </Link>
                   </li>
                   <li className="item-link">
                     <Link to="/admin/car" className="sidebar-item">
                       {" "}
                       <i className="fa-solid fa-car"></i>
-                      <span className="sidebar-item-label">Car</span>
+                      <span className="sidebar-item-label">Danh sách xe</span>
                     </Link>
                   </li>
                   <li className="item-link">
                     <Link to="/admin/automaker" className="sidebar-item">
                       {" "}
                       <i className="fa-solid fa-layer-group"></i>
-                      <span className="sidebar-item-label">Automaker</span>
+                      <span className="sidebar-item-label">Hãng xe</span>
                     </Link>
                   </li>
                   <li className="item-link">
                     <Link to="/admin/user" className="sidebar-item">
                       {" "}
                       <i className="fa-solid fa-user"></i>
-                      <span className="sidebar-item-label">User</span>
+                      <span className="sidebar-item-label">Người dùng</span>
                     </Link>
                   </li>
                   <li className="item-link">
                     <Link to="/admin/listbooking" className="sidebar-item">
                       {" "}
-                      <i className="fa-solid fa-user"></i>
-                      <span className="sidebar-item-label">Bookings</span>
+                      <i className="fa-solid fa-star"></i>
+                      <span className="sidebar-item-label">Đặt xe</span>
                     </Link>
                   </li>
                   <li className="item-link">
                     <Link to="/admin/blog" className="sidebar-item">
                       {" "}
                       <i className="fa-solid fa-blog"></i>
-                      <span className="sidebar-item-label"> Categpry Blog</span>
+                      <span className="sidebar-item-label">
+                        {" "}
+                        Danh mục tin tức
+                      </span>
                     </Link>
                   </li>
                   <li className="item-link">
                     <Link to="/admin/new" className="sidebar-item">
                       {" "}
-                      <i className="fa-solid fa-blog"></i>
-                      <span className="sidebar-item-label">New</span>
+                      <i className="fa-solid fa-newspaper"></i>
+                      <span className="sidebar-item-label">Tin tức</span>
                     </Link>
                   </li>
                 </ul>
@@ -96,7 +99,7 @@ const SideBarAdmin = () => {
 
               <div className="sidebar-footer">
                 <Button onClick={logout}>
-                  <span className="sidebar-item-label">Logout</span>
+                  <span className="sidebar-item-label">Đăng xuất</span>
                 </Button>
               </div>
             </div>

@@ -70,7 +70,7 @@ const AddUser = () => {
         password: data.password,
         email: data.email,
         phone: data.phone,
-        role: data.role,
+        role: data.role === 0 ? "admin" : data.role === 1 ? "owner" : "user",
       })
     );
   };
@@ -85,7 +85,7 @@ const AddUser = () => {
             marginBottom: "10px",
           }}
         >
-          Add User
+          New
         </Button>
         <Modal
           open={open}
@@ -115,7 +115,7 @@ const AddUser = () => {
                   mb={1}
                   sx={{ fontSize: "18px", textAlign: "left" }}
                 >
-                  Create User
+                  TẠO MỚI NGƯỜI DÙNG
                 </Typography>
               </Box>
               <form
@@ -134,7 +134,7 @@ const AddUser = () => {
                     md={3}
                     sx={{ marginBottom: { xs: "10px", sm: 0 } }}
                   >
-                    <LabelIput>Full Name*</LabelIput>
+                    <LabelIput>First Name*</LabelIput>
                   </Grid>
                   <Grid item xs={12} sm={9} md={9}>
                     <Controller
@@ -144,6 +144,38 @@ const AddUser = () => {
                           <TextField
                             {...field}
                             label="First Name"
+                            style={{ width: "100%", marginBottom: "10px" }}
+                            InputLabelProps={{ style: { fontSize: 14 } }}
+                            required
+                          />
+                        );
+                      }}
+                      control={control}
+                      defaultValue=""
+                    />
+                  </Grid>
+                </Grid>
+                <Grid
+                  container
+                  sx={{ marginBottom: { xs: "10px", sm: "10px" } }}
+                >
+                  <Grid
+                    item
+                    xs={12}
+                    sm={3}
+                    md={3}
+                    sx={{ marginBottom: { xs: "10px", sm: 0 } }}
+                  >
+                    <LabelIput>Last Name*</LabelIput>
+                  </Grid>
+                  <Grid item xs={12} sm={9} md={9}>
+                    <Controller
+                      name="lastname"
+                      render={({ field }) => {
+                        return (
+                          <TextField
+                            {...field}
+                            label="Last Name"
                             style={{ width: "100%", marginBottom: "10px" }}
                             InputLabelProps={{ style: { fontSize: 14 } }}
                             required

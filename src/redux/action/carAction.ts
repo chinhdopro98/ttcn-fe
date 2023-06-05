@@ -7,6 +7,7 @@ import {
   findCarUser,
   getAll,
   getOneCar,
+  getTotalApi,
   hideShowCarApi,
   updateCarApi,
   updateCarFormDataApi,
@@ -127,6 +128,17 @@ export const hideShowCar = createAsyncThunk(
   async (dataHide: HideShowCar, { rejectWithValue }) => {
     try {
       const data = await hideShowCarApi(dataHide);
+      return data;
+    } catch (err) {
+      console.error(err);
+    }
+  }
+);
+export const getTotalData = createAsyncThunk(
+  "car/get-total",
+  async (arg, { rejectWithValue }) => {
+    try {
+      const data = await getTotalApi();
       return data;
     } catch (err) {
       console.error(err);

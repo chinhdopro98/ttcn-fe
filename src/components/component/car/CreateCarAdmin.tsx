@@ -185,7 +185,7 @@ const CreateCarAdmin = () => {
                 mb={1}
                 sx={{ fontSize: "18px", textAlign: "left" }}
               >
-                Create New Car
+                THÊM XE MỚI
               </Typography>
             </Box>
             <form

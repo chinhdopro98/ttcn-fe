@@ -35,10 +35,8 @@ const userSlice = createSlice({
   name: "user",
   initialState,
   reducers: {
-    setOpenSnackbar: (state, action) => {
-      state.openSnackbar = action.payload;
-      state.error = "";
-      state.labelSuccess = "";
+    setOpenSnackbar: (state) => {
+      state.openSnackbar = false;
     },
   },
   extraReducers: (builder) => {
@@ -48,7 +46,6 @@ const userSlice = createSlice({
     });
     builder.addCase(userLogin.fulfilled, (state, action) => {
       state.success = true;
-      console.log(action.payload);
       state.accessToken = action.payload.token;
       state.role = action.payload.role;
     });
@@ -62,7 +59,7 @@ const userSlice = createSlice({
     });
     builder.addCase(userRegister.fulfilled, (state, action) => {
       state.error = "";
-      state.labelSuccess = `Create user success!`;
+      state.labelSuccess = `Tạo người dùng thanh!`;
       state.openSnackbar = true;
     });
     builder.addCase(userRegister.rejected, (state, action) => {
@@ -78,7 +75,7 @@ const userSlice = createSlice({
     builder.addCase(updateUser.fulfilled, (state, action) => {
       if (action.payload.status === "success") {
         state.error = "";
-        state.labelSuccess = "Update user success";
+        state.labelSuccess = "Cập nhật người dùng thành công";
         state.openSnackbar = true;
         state.userInfos.map((user) => {
           if (user._id === action.payload.updateUser._id) {
@@ -102,9 +99,8 @@ const userSlice = createSlice({
       state.openSnackbar = true;
     });
     builder.addCase(deleteUser.fulfilled, (state, action) => {
-      console.log(action);
       state.error = "";
-      state.labelSuccess = `Create user success!`;
+      state.labelSuccess = `Xóa người dùng thành công!`;
       state.openSnackbar = true;
       if (action.payload.status === 200) {
         state.error = "";
@@ -118,7 +114,7 @@ const userSlice = createSlice({
 
     builder.addCase(updateProfile.fulfilled, (state, action) => {
       state.labelSuccess = "";
-      state.error = `Update user success`;
+      state.error = `Cập nhật thông tin cá nhân thành công`;
       state.openSnackbar = true;
     });
   },
