@@ -3,12 +3,14 @@ import { getCar } from "../redux/action/carAction";
 import { useAppDispatch } from "../redux/hook/hook";
 import { useSelector } from "react-redux";
 import { RootState } from "../redux/store/store";
-import { Await, Link } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { DatePicker } from "antd";
 import Button from "@mui/material/Button";
 import { Icar } from "../interfaces/interface";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
+import Snackbar from "@mui/material/Snackbar";
+import MuiAlert from "@mui/material/Alert";
 import car from "../assets/image/car/bg-car.png";
 import Navigation from "../components/component/Navigation";
 import { LIMIT } from "../constains/url";
@@ -22,8 +24,14 @@ import CarItem from "./home/cars/CarItem";
 import Heading from "./common/Heading";
 const Home: React.FC = () => {
   const { RangePicker } = DatePicker;
+  const location = useLocation();
+  const navigate = useNavigate();
   const cars = useSelector((state: RootState) => state.car.cars);
   const total = useSelector((state: RootState) => state.car.total);
+  const [openPaymentPopup, setOpenPaymentPopup] = useState(false);
+  const [paymentMessage, setPaymentMessage] = useState(
+    "Thanh toán thành công."
+  );
   const [value, setValue] = useState("");
   const handleChange = (event) => {
     setValue(event.target.value);
@@ -41,6 +49,24 @@ const Home: React.FC = () => {
       })
     );
   }, [page, dispatch, option, value]);
+
+  useEffect(() => {
+    const state = location.state as any;
+    const storageMessage = sessionStorage.getItem("checkout_success_message");
+
+    if (state?.paymentSuccess || storageMessage) {
+      setPaymentMessage(state?.paymentMessage || storageMessage || "Thanh toán thành công.");
+      setOpenPaymentPopup(true);
+      sessionStorage.removeItem("checkout_success_message");
+      if (state?.paymentSuccess) {
+        navigate(location.pathname, { replace: true });
+      }
+    }
+  }, [location.pathname, location.state, navigate]);
+
+  const handleClosePaymentPopup = () => {
+    setOpenPaymentPopup(false);
+  };
   return (
     <Box>
       <Box>
@@ -113,6 +139,20 @@ const Home: React.FC = () => {
       <Navigation page={page} setPage={setPage} total={total} />
       <Award />
       <Model />
+      <Snackbar
+        anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+        open={openPaymentPopup}
+        autoHideDuration={5000}
+        onClose={handleClosePaymentPopup}
+      >
+        <MuiAlert
+          onClose={handleClosePaymentPopup}
+          variant="filled"
+          severity="success"
+        >
+          {paymentMessage}
+        </MuiAlert>
+      </Snackbar>
     </Box>
   );
 };

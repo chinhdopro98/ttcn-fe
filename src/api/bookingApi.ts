@@ -1,7 +1,21 @@
 import instance from "./axios";
 import { URL } from "../constains/url";
 import { IBooking, UpdateStatus } from "../interfaces/interface";
-import { stat } from "fs";
+
+export interface CheckoutSessionPayload {
+  userid?: string;
+  carid?: string;
+  totalHours: number;
+  totalMoney: number;
+  driverRequired: string;
+  bookedTimeSlots: {
+    from: string;
+    to: string;
+  };
+  note?: string;
+  successUrl: string;
+  cancelUrl: string;
+}
 export const newBookingCarApi = async ({
   token,
   userid,
@@ -139,5 +153,33 @@ export const chartApi = async () => {
     return response;
   } catch (err) {
     console.log(err);
+  }
+};
+
+export const createCheckoutSessionApi = async (
+  payload: CheckoutSessionPayload
+) => {
+  try {
+    const response = await instance.post(URL.CREATE_CHECKOUT_SESSION, payload);
+    return response.data;
+  } catch (err) {
+    console.log(err);
+    return null;
+  }
+};
+
+export const confirmCheckoutSuccessApi = async (
+  sessionId: string,
+  bookingId?: string
+) => {
+  try {
+    const response = await instance.post(URL.CONFIRM_CHECKOUT_SUCCESS, {
+      sessionId,
+      bookingId,
+    });
+    return response.data;
+  } catch (err) {
+    console.log(err);
+    return null;
   }
 };

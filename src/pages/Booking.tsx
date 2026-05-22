@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { getCar, getCarOne } from "../redux/action/carAction";
+import { getCarOne } from "../redux/action/carAction";
 import { useAppDispatch } from "../redux/hook/hook";
 import { DatePicker } from "antd";
 import { RootState } from "../redux/store/store";
 import Box from "@mui/material/Box";
-import { IAutoMaker, IBooking, Icar } from "../interfaces/interface";
+import { IAutoMaker, IBooking } from "../interfaces/interface";
 import Radio from "@mui/material/Radio";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
@@ -14,25 +14,18 @@ import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormControl from "@mui/material/FormControl";
 import FormLabel from "@mui/material/FormLabel";
-import Grid from "@mui/material/Grid";
 import dayjs from "dayjs";
-import { bookingCar, createBookingCar } from "../redux/action/bookAction";
-import { Button } from "@mui/material";
-import Typography from "@mui/material/Typography";
+import { createBookingCar } from "../redux/action/bookAction";
+import { Button, Typography } from "@mui/material";
 import Modal from "@mui/material/Modal";
-import { CardElement, Elements, useElements, useStripe } from "@stripe/react-stripe-js";
-import { loadStripe } from "@stripe/stripe-js";
-import Table from "@mui/material/Table";
-import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
 import { getAllAutoMaker } from "../redux/action/autoMakerAction";
 import { closeSnackBar } from "../redux/reducer/bookingSlice";
 import car from "../assets/image/car/bg-book1.jpg";
 import styled from "styled-components";
 import Back from "./common/Back";
 import img from "../assets/image/car/bg-booking2.jpg";
+import { createCheckoutSessionApi } from "../api/bookingApi";
+
 const style = {
   position: "absolute" as "absolute",
   top: "30%",
@@ -44,103 +37,13 @@ const style = {
   boxShadow: 24,
   p: 4,
 };
+
 const HomeLogin = styled.div`
   width: 100%;
 `;
-const stripePromise = loadStripe(
-  import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY ||
-    import.meta.env.REACT_APP_STRIPE_PUBLISHABLE_KEY ||
-    "pk_test_51MLq0vDswle805HzRg29Zx4VUNm49azYkiOdnC6cZmd2manYdeqnWaiCFsmyJdrTnpK3lC6H18wRehD2HW7qXf3a00gLz9F2em"
-);
-
-const cardElementOptions = {
-  style: {
-    base: {
-      fontSize: "16px",
-      color: "#2f3640",
-      "::placeholder": {
-        color: "#9aa5b1",
-      },
-    },
-    invalid: {
-      color: "#e74c3c",
-    },
-  },
-};
-
-type StripePaymentButtonProps = {
-  onToken: (token: any) => Promise<void>;
-  disabled: boolean;
-};
-
-const StripePaymentButton = ({ onToken, disabled }: StripePaymentButtonProps) => {
-  const stripe = useStripe();
-  const elements = useElements();
-  const [isPaying, setIsPaying] = useState(false);
-  const [paymentError, setPaymentError] = useState("");
-
-  const handlePay = async () => {
-    if (!stripe || !elements || disabled) {
-      return;
-    }
-
-    const cardElement = elements.getElement(CardElement);
-    if (!cardElement) {
-      setPaymentError("Không thể khởi tạo thẻ thanh toán.");
-      return;
-    }
-
-    setIsPaying(true);
-    setPaymentError("");
-
-    const { token, error } = await stripe.createToken(cardElement);
-    if (error || !token) {
-      setPaymentError(error?.message || "Thanh toán thất bại. Vui lòng thử lại.");
-      setIsPaying(false);
-      return;
-    }
-
-    await onToken(token);
-    cardElement.clear();
-    setIsPaying(false);
-  };
-
-  return (
-    <Box sx={{ width: "340px", marginRight: "10px" }}>
-      <Box
-        sx={{
-          border: "1px solid #d9d9d9",
-          borderRadius: "6px",
-          padding: "12px",
-          background: "#fff",
-        }}
-      >
-        <CardElement options={cardElementOptions} />
-      </Box>
-      {paymentError ? (
-        <Typography sx={{ color: "#e74c3c", marginTop: "8px", fontSize: "14px" }}>
-          {paymentError}
-        </Typography>
-      ) : null}
-      <Button
-        variant="contained"
-        onClick={handlePay}
-        disabled={!stripe || isPaying || disabled}
-        sx={{
-          marginTop: "12px",
-          textTransform: "capitalize",
-        }}
-      >
-        {isPaying ? "Đang xử lý..." : "Thanh toán bằng thẻ"}
-      </Button>
-    </Box>
-  );
-};
 
 const Booking = () => {
-  const user = JSON.parse(localStorage.getItem("user"))
-    ? JSON.parse(localStorage.getItem("user"))
-    : null;
+  const user = JSON.parse(localStorage.getItem("user") || "null");
   const { RangePicker } = DatePicker;
   const paramId = useParams();
   const dispatch = useAppDispatch();
@@ -148,10 +51,11 @@ const Booking = () => {
   const automakers = useSelector(
     (state: RootState) => state.automaker.automakers
   );
+
   useEffect(() => {
     dispatch(getCarOne(paramId.carid));
     dispatch(getAllAutoMaker());
-  }, [dispatch]);
+  }, [dispatch, paramId.carid]);
 
   const [startTime, setStartTime] = useState("");
   const [endTime, setEndTime] = useState("");
@@ -161,14 +65,18 @@ const Booking = () => {
   const [totalMoney, setTotalMoney] = useState(0);
   const [open, setOpen] = React.useState(false);
   const [openModal, setOpenModal] = React.useState(false);
-  const handleOpen = () => setOpen(true);
+  const [isCreatingCheckout, setIsCreatingCheckout] = useState(false);
+  const [checkoutError, setCheckoutError] = useState("");
+
   const handleNoteChange = (event) => {
     setText(event.target.value);
   };
+
   const handleClose = () => {
     setOpen(false);
     setOpenModal(false);
   };
+
   const labelSuccess = useSelector(
     (state: RootState) => state.booking.labelSuccess
   );
@@ -176,72 +84,106 @@ const Booking = () => {
   const openSnackbar = useSelector(
     (state: RootState) => state.booking.openSnackbar
   );
+
   const handleCloseSnackBar = () => {
     dispatch(closeSnackBar());
   };
+
   const handleChangeDriver = (event: React.ChangeEvent<HTMLInputElement>) => {
     setDriver((event.target as HTMLInputElement).value);
   };
-  const calculateHours = async (values: any) => {
-    await setStartTime(dayjs(values[0]).format("MMM DD YYYY HH:mm"));
-    await setEndTime(dayjs(values[1]).format("MMM DD YYYY HH:mm"));
-    await setTotalHours(values[1].diff(values[0], "hours"));
-  };
-  useEffect(() => {
-    if (car?.price) {
-      setTotalMoney(totalHours * car.price);
-    }
-    if (driver !== "no") {
-      setTotalMoney(totalMoney + 30000 * totalHours);
-    }
-  }, [driver, totalHours]);
-  const submitBooking = async (e: React.SyntheticEvent) => {
-    e.preventDefault();
-    if (startTime === "" && endTime === "") {
-      setOpenModal(true);
-    } else {
-      const objectBook: IBooking = {
-        userid: user._id,
-        carid: car?._id,
-        totalHours: totalHours,
-        totalMoney: totalMoney,
-        driverRequired: driver,
-        bookedTimeSlots: {
-          from: startTime,
-          to: endTime,
-        },
-        statusPayment: 1,
-        approve: 0,
-      };
-      await dispatch(createBookingCar(objectBook));
+
+  const calculateHours = (values: any) => {
+    if (!values || values.length !== 2) {
       setStartTime("");
       setEndTime("");
+      setTotalHours(0);
+      return;
     }
+
+    setStartTime(dayjs(values[0]).format("MMM DD YYYY HH:mm"));
+    setEndTime(dayjs(values[1]).format("MMM DD YYYY HH:mm"));
+    setTotalHours(values[1].diff(values[0], "hours"));
   };
-  async function onToken(token) {
-    if (startTime === "" && endTime === "") {
-      setOpenModal(true);
-    } else {
-      const objectBook: IBooking = {
-        token: token,
-        userid: user._id,
-        carid: car?._id,
-        totalHours: totalHours,
-        totalMoney: totalMoney,
-        driverRequired: driver,
-        bookedTimeSlots: {
-          from: startTime,
-          to: endTime,
-        },
-        statusPayment: 1,
-        approve: 0,
-      };
-      await dispatch(bookingCar(objectBook));
+
+  useEffect(() => {
+    const carPrice = car?.price || 0;
+    const base = totalHours * carPrice;
+    const driverFee = driver !== "no" ? 30000 * totalHours : 0;
+    setTotalMoney(base + driverFee);
+  }, [car?.price, driver, totalHours]);
+
+  const buildBookingPayload = (): IBooking | null => {
+    if (!user?._id || !car?._id || !startTime || !endTime || totalHours <= 0) {
+      return null;
     }
-  }
+
+    return {
+      userid: user._id,
+      carid: car._id,
+      totalHours,
+      totalMoney,
+      driverRequired: driver,
+      bookedTimeSlots: {
+        from: startTime,
+        to: endTime,
+      },
+      statusPayment: 1,
+      approve: 0,
+    };
+  };
+
+  const submitBooking = async (e: React.SyntheticEvent) => {
+    e.preventDefault();
+    const objectBook = buildBookingPayload();
+    if (!objectBook) {
+      setOpenModal(true);
+      return;
+    }
+
+    await dispatch(createBookingCar(objectBook));
+    setStartTime("");
+    setEndTime("");
+  };
+
+  const createCheckoutSession = async () => {
+    setCheckoutError("");
+
+    const objectBook = buildBookingPayload();
+    if (!objectBook) {
+      setOpenModal(true);
+      return;
+    }
+
+    setIsCreatingCheckout(true);
+
+    const successUrl = `${window.location.origin}/app/payment-success`;
+    const cancelUrl = `${window.location.origin}/app/booking/${paramId.carid}?checkout=cancelled`;
+
+    const checkout = await createCheckoutSessionApi({
+      ...objectBook,
+      note: text,
+      successUrl,
+      cancelUrl,
+    } as any);
+
+    const checkoutUrl =
+      checkout?.checkoutUrl || checkout?.url || checkout?.sessionUrl;
+
+    if (!checkoutUrl) {
+      setCheckoutError("Không tạo được link thanh toán. Vui lòng thử lại.");
+      setIsCreatingCheckout(false);
+      return;
+    }
+
+    window.open(checkoutUrl, "_blank", "noopener,noreferrer");
+    setIsCreatingCheckout(false);
+  };
+
   if (!car) {
     return <div>Loading...</div>;
   }
+
   return (
     <>
       <Back
@@ -318,7 +260,7 @@ const Booking = () => {
                       Tình trạng: {car?.status === 1 ? "Mới" : "Cũ"}
                     </Typography>
                     <Typography variant="h6" sx={{ fontSize: "16px" }} mb={1}>
-                      Gara: {car?.user.nameCustomer}
+                      Gara: {car?.user?.nameCustomer}
                     </Typography>
                   </Box>
                   <Box sx={{ width: "50%" }}>
@@ -351,7 +293,6 @@ const Booking = () => {
                   </Typography>
                 </Box>
                 <Box>
-                  {" "}
                   <Typography
                     variant="h6"
                     sx={{
@@ -362,8 +303,7 @@ const Booking = () => {
                     }}
                     mb={1}
                   >
-                    {" "}
-                    Giá thuê: {car?.price.toLocaleString()}VND/1h{" "}
+                    Giá thuê: {car?.price?.toLocaleString()}VND/1h
                   </Typography>
                 </Box>
               </Box>
@@ -432,28 +372,32 @@ const Booking = () => {
                   onChange={handleNoteChange}
                 ></textarea>
               </form>
-              <Typography variant="h6" sx={{}} mb={1}>
+              <Typography variant="h6" mb={1}>
                 Tổng giờ: {totalHours} h
               </Typography>
-              <Typography variant="h6" sx={{}} mb={1}>
+              <Typography variant="h6" mb={1}>
                 Tổng tiền: {totalMoney?.toLocaleString()} VND
               </Typography>
-              {user.role !== "user" ? null : (
-                <Box sx={{ display: "flex", paddingBottom: "40px" }}>
-                  <Elements stripe={stripePromise}>
-                    <StripePaymentButton
-                      onToken={onToken}
-                      disabled={!totalMoney || totalHours <= 0}
-                    />
-                  </Elements>
+              {checkoutError ? (
+                <Typography sx={{ color: "#e74c3c", marginBottom: "8px" }}>
+                  {checkoutError}
+                </Typography>
+              ) : null}
+              {user?.role !== "user" ? null : (
+                <Box sx={{ display: "flex", paddingBottom: "40px", gap: "10px" }}>
+                  <Button
+                    variant="contained"
+                    onClick={createCheckoutSession}
+                    disabled={isCreatingCheckout || !totalMoney || totalHours <= 0}
+                    sx={{ textTransform: "capitalize" }}
+                  >
+                    {isCreatingCheckout ? "Đang tạo link..." : "Thanh toán online"}
+                  </Button>
                   <Button
                     variant="contained"
                     type="submit"
                     onClick={submitBooking}
-                    sx={{
-                      margin: "0 10px",
-                      textTransform: "capitalize",
-                    }}
+                    sx={{ textTransform: "capitalize" }}
                   >
                     Booking now
                   </Button>
@@ -462,6 +406,7 @@ const Booking = () => {
             </Box>
           </Box>
         </Box>
+
         <Modal
           open={open}
           onClose={handleClose}
@@ -494,6 +439,7 @@ const Booking = () => {
             </Typography>
           </Box>
         </Modal>
+
         <Modal
           open={openModal}
           onClose={handleClose}
@@ -521,6 +467,7 @@ const Booking = () => {
             </Button>
           </Box>
         </Modal>
+
         <Snackbar
           anchorOrigin={{
             vertical: "bottom",
@@ -555,6 +502,7 @@ const Booking = () => {
     </>
   );
 };
+
 const styles = {
   bg_img: {
     backgroundImage: "url(" + car + ")",
@@ -562,4 +510,5 @@ const styles = {
     backgroundRepeat: "no-repeat",
   },
 } as const;
+
 export default Booking;

@@ -40,6 +40,8 @@ export const URL = {
   GET_BOOKING_OWNER: "bookings/get-booking/by-owner",
   UPDATE_BOOKING: "bookings/update",
   UPDATE_PROFILE: "users/edit-profile",
+  CREATE_CHECKOUT_SESSION: "bookings/create-checkout-session",
+  CONFIRM_CHECKOUT_SUCCESS: "bookings/checkout-success",
 };
 export const LIMIT = 9;
 export const URL_LOCAL = "http://localhost:5000/";

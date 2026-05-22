@@ -11,6 +11,7 @@ import NotFound from "../../pages/notfound/NotFound";
 import CarOwner from "../../pages/carowner/CarOwner";
 import ListCar from "../../pages/listcar/ListCar";
 import DetailBlog from "../../pages/detail/DetailBlog";
+import PaymentSuccess from "../../pages/PaymentSuccess";
 const MainContent = styled.div``;
 const Content = styled.div``;
 const MainView: React.FC = () => {
@@ -28,6 +29,7 @@ const MainView: React.FC = () => {
           <Route path="new/:newid" element={<DetailBlog />} />
           <Route path="listcar" element={<ListCar />} />
           <Route path="register" element={<CarOwner />} />
+          <Route path="payment-success" element={<PaymentSuccess />} />
         </Routes>
       </Content>
     </MainContent>
