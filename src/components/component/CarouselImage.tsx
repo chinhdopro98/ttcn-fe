@@ -4,12 +4,13 @@ import { Paper, Button } from "@mui/material";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import { responsive, productData } from "../../constains/data";
+import { getImageUrl } from "../../utils/assets";
 const CarouselImage = () => {
   const automakers = productData.map((item) => (
     <div className="card">
       <img
         className="product--image"
-        src={require(`../../assets/image/automaker/${item.imageurl}`)}
+        src={getImageUrl(`automaker/${item.imageurl}`)}
         alt="product image"
       />
       <p>{item.name}</p>

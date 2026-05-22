@@ -20,7 +20,8 @@ import { bookingCar, createBookingCar } from "../redux/action/bookAction";
 import { Button } from "@mui/material";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
-import StripeCheckout from "react-stripe-checkout";
+import { CardElement, Elements, useElements, useStripe } from "@stripe/react-stripe-js";
+import { loadStripe } from "@stripe/stripe-js";
 import Table from "@mui/material/Table";
 import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
@@ -46,6 +47,96 @@ const style = {
 const HomeLogin = styled.div`
   width: 100%;
 `;
+const stripePromise = loadStripe(
+  import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY ||
+    import.meta.env.REACT_APP_STRIPE_PUBLISHABLE_KEY ||
+    "pk_test_51MLq0vDswle805HzRg29Zx4VUNm49azYkiOdnC6cZmd2manYdeqnWaiCFsmyJdrTnpK3lC6H18wRehD2HW7qXf3a00gLz9F2em"
+);
+
+const cardElementOptions = {
+  style: {
+    base: {
+      fontSize: "16px",
+      color: "#2f3640",
+      "::placeholder": {
+        color: "#9aa5b1",
+      },
+    },
+    invalid: {
+      color: "#e74c3c",
+    },
+  },
+};
+
+type StripePaymentButtonProps = {
+  onToken: (token: any) => Promise<void>;
+  disabled: boolean;
+};
+
+const StripePaymentButton = ({ onToken, disabled }: StripePaymentButtonProps) => {
+  const stripe = useStripe();
+  const elements = useElements();
+  const [isPaying, setIsPaying] = useState(false);
+  const [paymentError, setPaymentError] = useState("");
+
+  const handlePay = async () => {
+    if (!stripe || !elements || disabled) {
+      return;
+    }
+
+    const cardElement = elements.getElement(CardElement);
+    if (!cardElement) {
+      setPaymentError("Không thể khởi tạo thẻ thanh toán.");
+      return;
+    }
+
+    setIsPaying(true);
+    setPaymentError("");
+
+    const { token, error } = await stripe.createToken(cardElement);
+    if (error || !token) {
+      setPaymentError(error?.message || "Thanh toán thất bại. Vui lòng thử lại.");
+      setIsPaying(false);
+      return;
+    }
+
+    await onToken(token);
+    cardElement.clear();
+    setIsPaying(false);
+  };
+
+  return (
+    <Box sx={{ width: "340px", marginRight: "10px" }}>
+      <Box
+        sx={{
+          border: "1px solid #d9d9d9",
+          borderRadius: "6px",
+          padding: "12px",
+          background: "#fff",
+        }}
+      >
+        <CardElement options={cardElementOptions} />
+      </Box>
+      {paymentError ? (
+        <Typography sx={{ color: "#e74c3c", marginTop: "8px", fontSize: "14px" }}>
+          {paymentError}
+        </Typography>
+      ) : null}
+      <Button
+        variant="contained"
+        onClick={handlePay}
+        disabled={!stripe || isPaying || disabled}
+        sx={{
+          marginTop: "12px",
+          textTransform: "capitalize",
+        }}
+      >
+        {isPaying ? "Đang xử lý..." : "Thanh toán bằng thẻ"}
+      </Button>
+    </Box>
+  );
+};
+
 const Booking = () => {
   const user = JSON.parse(localStorage.getItem("user"))
     ? JSON.parse(localStorage.getItem("user"))
@@ -349,14 +440,12 @@ const Booking = () => {
               </Typography>
               {user.role !== "user" ? null : (
                 <Box sx={{ display: "flex", paddingBottom: "40px" }}>
-                  <StripeCheckout
-                    token={onToken}
-                    stripeKey="pk_test_51MLq0vDswle805HzRg29Zx4VUNm49azYkiOdnC6cZmd2manYdeqnWaiCFsmyJdrTnpK3lC6H18wRehD2HW7qXf3a00gLz9F2em"
-                    name="Tesla Roadster"
-                    amount={totalMoney}
-                    currency="inr"
-                    shippingAddress
-                  />
+                  <Elements stripe={stripePromise}>
+                    <StripePaymentButton
+                      onToken={onToken}
+                      disabled={!totalMoney || totalHours <= 0}
+                    />
+                  </Elements>
                   <Button
                     variant="contained"
                     type="submit"

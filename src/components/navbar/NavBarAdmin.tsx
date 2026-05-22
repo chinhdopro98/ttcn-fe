@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Button from "@mui/material/Button";
 import ClickAwayListener from "@mui/material/ClickAwayListener";
 import Box from "@mui/material/Box";
@@ -8,9 +8,8 @@ import Paper from "@mui/material/Paper";
 import Popper from "@mui/material/Popper";
 import MenuItem from "@mui/material/MenuItem";
 import MenuList from "@mui/material/MenuList";
-import Stack from "@mui/material/Stack";
+import { getImageUrl } from "../../utils/assets";
 const NavBarAdmin = () => {
-  const navigate = useNavigate();
   const logout = () => {
     localStorage.clear();
     window.location.reload();
@@ -52,7 +51,7 @@ const NavBarAdmin = () => {
       <div>
         <Box sx={{ height: "70px", width: 120 }}>
           <img
-            src={require(`../../assets/image/car/auto-car.jpg`)}
+            src={getImageUrl("car/auto-car.jpg")}
             alt=""
             className="carimg w-full h-full"
           />

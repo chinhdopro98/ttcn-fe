@@ -1,14 +1,14 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import "./style.css";
 import Button from "@mui/material/Button";
+import { getImageUrl } from "../../../utils/assets";
 // import { DashboardIcon } from "../../../assets/icon/dashboard.svg";
 // import ShippingIcon from "../assets/icons/shipping.svg";
 // import ProductIcon from "../assets/icons/product.svg";
 // import UserIcon from "../assets/icons/user.svg";
 const SideBarAdmin = () => {
   const [open, setOpen] = useState(false);
-  const navigate = useNavigate();
   const openMenu = () => {
     setOpen(true);
   };
@@ -34,10 +34,7 @@ const SideBarAdmin = () => {
         <nav className="sidebar">
           <div className="sidebar-container">
             <div className="sidebar-logo-container">
-              <img
-                src={require("../../../assets/image/car/auto-car.jpg")}
-                alt="logo"
-              />
+              <img src={getImageUrl("car/auto-car.jpg")} alt="logo" />
             </div>
 
             <div className="sidebar-container">

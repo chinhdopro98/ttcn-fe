@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Button from "@mui/material/Button";
 import ClickAwayListener from "@mui/material/ClickAwayListener";
 import Grow from "@mui/material/Grow";
@@ -8,17 +8,15 @@ import Popper from "@mui/material/Popper";
 import MenuItem from "@mui/material/MenuItem";
 import Box from "@mui/material/Box";
 import MenuList from "@mui/material/MenuList";
-import Stack from "@mui/material/Stack";
 import Profile from "../component/user/Profile";
+import { getStoredUser } from "../../utils/auth";
+import { getImageUrl } from "../../utils/assets";
 const NavBar = () => {
-  const navigate = useNavigate();
   const logout = () => {
     localStorage.clear();
     window.location.reload();
   };
-  const user = JSON.parse(localStorage.getItem("user"))
-    ? JSON.parse(localStorage.getItem("user"))
-    : null;
+  const user = getStoredUser();
   const [open, setOpen] = React.useState(false);
   const anchorRef = React.useRef<HTMLButtonElement>(null);
   const handleToggle = () => {
@@ -56,7 +54,7 @@ const NavBar = () => {
       <div>
         <Box sx={{ height: "70px", width: 120, marginLeft: "100px" }}>
           <img
-            src={require(`../../assets/image/car/auto-car.jpg`)}
+            src={getImageUrl("car/auto-car.jpg")}
             alt=""
             className="carimg w-full h-full"
           />
@@ -76,17 +74,17 @@ const NavBar = () => {
           <li className="item-link">
             <Link to="/app/contact">Liên hệ</Link>
           </li>
-          {user.role === "user" ? (
+          {user?.role === "user" ? (
             <li className="item-link">
               <Link to="/app/listbookings">Đặt xe</Link>
             </li>
           ) : null}
-          {user.role === "owner" ? (
+          {user?.role === "owner" ? (
             <li className="item-link">
               <Link to="/app/register">Đăng ký</Link>
             </li>
           ) : null}
-          {user.role === "owner" ? (
+          {user?.role === "owner" ? (
             <li className="item-link">
               <Link to="/app/listcar">Danh sách</Link>
             </li>
@@ -167,3 +165,4 @@ const NavBar = () => {
   );
 };
 export default NavBar;
+

@@ -12,6 +12,7 @@ import MenuItem from "@mui/material/MenuItem";
 import { IUserData } from "../../../interfaces/interface";
 import { useAppDispatch } from "../../../redux/hook/hook";
 import { updateProfile } from "../../../redux/action/userAction";
+import { getStoredUser } from "../../../utils/auth";
 const LabelIput = styled.div`
   font-size: 14px;
   color: #000;
@@ -45,9 +46,7 @@ const style1 = {
   zIndex: "999",
 };
 const Profile = () => {
-  const user = JSON.parse(localStorage.getItem("user"))
-    ? JSON.parse(localStorage.getItem("user"))
-    : null;
+  const user = getStoredUser();
   const [open, setOpen] = useState(false);
   const dispatch = useAppDispatch();
   const {
@@ -57,6 +56,7 @@ const Profile = () => {
     formState: { errors },
   } = useForm<IUserData>({});
   useEffect(() => {
+    if (!user) return;
     reset({
       firstname: user.firstname,
       lastname: user.lastname,
@@ -64,11 +64,13 @@ const Profile = () => {
       email: user.email,
       phone: user.phone,
     });
-  }, []);
+  }, [reset, user]);
   const handleOpen = async () => {
+    if (!user) return;
     setOpen(true);
   };
   const handleClose = () => {
+    if (!user) return;
     setOpen(false);
     reset({
       firstname: user.firstname,
@@ -79,6 +81,7 @@ const Profile = () => {
     });
   };
   const handleUpdate = (data: IUserData) => {
+    if (!user?._id) return;
     dispatch(
       updateProfile({
         _id: user._id,

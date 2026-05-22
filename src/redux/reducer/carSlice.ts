@@ -61,10 +61,12 @@ const carSlice = createSlice({
       state.loading = true;
     });
     builder.addCase(getCar.fulfilled, (state, { payload }) => {
-      state.cars = payload.cars;
-      state.total = payload.carCount;
+      state.loading = false;
+      state.cars = payload?.cars || [];
+      state.total = payload?.carCount || 0;
     });
     builder.addCase(getCar.rejected, (state, { payload }) => {
+      state.loading = false;
       state.success = false;
     });
 
@@ -72,9 +74,16 @@ const carSlice = createSlice({
       state.loading = true;
     });
     builder.addCase(getTotalData.fulfilled, (state, { payload }) => {
-      state.totalData = payload;
+      state.loading = false;
+      state.totalData = payload || {
+        totalCar: 0,
+        totalBlog: 0,
+        totalBooking: 0,
+        totalUser: 0,
+      };
     });
     builder.addCase(getTotalData.rejected, (state, { payload }) => {
+      state.loading = false;
       state.success = false;
     });
 
@@ -83,10 +92,11 @@ const carSlice = createSlice({
       state.loading = true;
     });
     builder.addCase(getCarByUser.fulfilled, (state, { payload }) => {
-      console.log(payload);
-      state.cars = payload;
+      state.loading = false;
+      state.cars = payload || [];
     });
     builder.addCase(getCarByUser.rejected, (state, { payload }) => {
+      state.loading = false;
       state.success = false;
     });
     //get-one
@@ -95,9 +105,11 @@ const carSlice = createSlice({
       state.loading = true;
     });
     builder.addCase(getCarOne.fulfilled, (state, { payload }) => {
-      state.car = payload;
+      state.loading = false;
+      state.car = payload || null;
     });
     builder.addCase(getCarOne.rejected, (state, { payload }) => {
+      state.loading = false;
       state.success = false;
     });
 

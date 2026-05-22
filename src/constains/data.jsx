@@ -1,4 +1,4 @@
-export const responsive = {
+﻿export const responsive = {
   superLargeDesktop: {
     // the naming can be any, depends on you.
     breakpoint: { max: 4000, min: 1024 },
@@ -68,24 +68,24 @@ export const productData = [
 
 export const awards = [
   {
-    icon: <i class="fa-solid fa-car"></i>,
+    icon: <i className="fa-solid fa-car"></i>,
     num: "132 +	",
     name: "Xe",
   },
   {
-    icon: <i class="fa-solid fa-users"></i>,
+    icon: <i className="fa-solid fa-users"></i>,
     num: "1433 +",
-    name: "Khách hàng",
+    name: "KhÃ¡ch hÃ ng",
   },
   {
-    icon: <i class="fa-solid fa-globe"></i>,
+    icon: <i className="fa-solid fa-globe"></i>,
     num: "50 +",
-    name: "Tỉnh thành",
+    name: "Tá»‰nh thÃ nh",
   },
   {
-    icon: <i class="fa-solid fa-heart"></i>,
+    icon: <i className="fa-solid fa-heart"></i>,
     num: "1000 +",
-    name: "Đặt xe",
+    name: "Äáº·t xe",
   },
 ];
 export const footer = [
@@ -307,3 +307,4 @@ export const blog = [
     date: "February 20, 2018",
   },
 ];
+

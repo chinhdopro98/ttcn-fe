@@ -1,8 +1,5 @@
 import React, { useState, useEffect } from "react";
-import ReactDOM from "react-dom";
 import { Line } from "@ant-design/plots";
-import { useSelector } from "react-redux";
-import { RootState } from "../../../redux/store/store";
 const Chart = () => {
   const [data, setData] = useState([]);
 

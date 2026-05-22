@@ -2,6 +2,7 @@ import React from "react";
 import Heading from "../../common/Heading";
 import "./models.css";
 import { models } from "../../../constains/data";
+import { getImageUrl } from "../../../utils/assets";
 const Model = () => {
   return (
     <>
@@ -16,7 +17,7 @@ const Model = () => {
             {models.map((item, index) => (
               <div className="box" key={index}>
                 <img
-                  src={require(`../../../assets/image/home/${item.cover}`)}
+                  src={getImageUrl(`home/${item.cover}`)}
                   alt=""
                 />
                 <div className="overlay">

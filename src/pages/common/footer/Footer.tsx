@@ -4,6 +4,7 @@ import "./footer.css";
 import { footer } from "../../../constains/data";
 import { Box } from "@mui/material";
 import { Link } from "react-router-dom";
+import { getImageUrl } from "../../../utils/assets";
 
 const Footer = () => {
   return (
@@ -28,7 +29,7 @@ const Footer = () => {
             <div className="logo">
               <Box sx={{ height: "70px", width: 120 }}>
                 <img
-                  src={require(`../../../assets/image/car/auto-car.jpg`)}
+                  src={getImageUrl("car/auto-car.jpg")}
                   alt=""
                   className="carimg w-full h-full"
                 />

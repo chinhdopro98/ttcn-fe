@@ -25,9 +25,13 @@ export const getCar = createAsyncThunk(
   async (datas: pageSearch, { rejectWithValue }) => {
     try {
       const data = await getAll(datas);
+      if (!data) {
+        return rejectWithValue("Failed to fetch cars");
+      }
       return data;
     } catch (err) {
       console.error(err);
+      return rejectWithValue("Failed to fetch cars");
     }
   }
 );
@@ -37,9 +41,13 @@ export const getCarOne = createAsyncThunk(
   async (id: string, { rejectWithValue }) => {
     try {
       const data = await getOneCar(id);
+      if (!data) {
+        return rejectWithValue("Failed to fetch car");
+      }
       return data;
     } catch (err) {
       console.error(err);
+      return rejectWithValue("Failed to fetch car");
     }
   }
 );
@@ -105,9 +113,13 @@ export const getCarByUser = createAsyncThunk(
   async (arg, { rejectWithValue }) => {
     try {
       const data = await findCarUser();
+      if (!data) {
+        return rejectWithValue("Failed to fetch user cars");
+      }
       return data;
     } catch (err) {
       console.error(err);
+      return rejectWithValue("Failed to fetch user cars");
     }
   }
 );
@@ -139,9 +151,13 @@ export const getTotalData = createAsyncThunk(
   async (arg, { rejectWithValue }) => {
     try {
       const data = await getTotalApi();
+      if (!data) {
+        return rejectWithValue("Failed to fetch totals");
+      }
       return data;
     } catch (err) {
       console.error(err);
+      return rejectWithValue("Failed to fetch totals");
     }
   }
 );

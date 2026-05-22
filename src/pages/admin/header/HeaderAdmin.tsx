@@ -1,6 +1,7 @@
 import React from "react";
 import "./headeradmin.css";
 import Button from "@mui/material/Button";
+import { getImageUrl } from "../../../utils/assets";
 interface Iprops {
   name: string;
 }
@@ -13,7 +14,7 @@ const HeaderAdmin: React.FC<Iprops> = (props) => {
       <div className="dashbord-header-right">
         <img
           className="dashbord-header-avatar"
-          src={require("../../../assets/image/home/avatar.png")}
+          src={getImageUrl("home/avatar.png")}
         />
       </div>
     </div>
